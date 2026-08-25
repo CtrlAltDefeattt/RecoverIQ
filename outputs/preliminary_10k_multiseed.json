@@ -1,0 +1,669 @@
+{
+  "events_per_seed": 10000,
+  "seed_count": 10,
+  "mean_relative_gain_pct_vs_rules": 0.097,
+  "std_relative_gain_pct_vs_rules": 2.438,
+  "mean_additional_simulated_rupees_vs_rules": 11811.98,
+  "runs": [
+    {
+      "seed": 0,
+      "random": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 25866343.63,
+        "recovered_revenue_rupees": 10679508.34,
+        "recovery_rate": 0.4178,
+        "avg_reward_rupees": 1065.68,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 1901,
+        "action_counts": {
+          "PAYMENT_LINK": 1643,
+          "ALT_PAYMENT": 1604,
+          "NO_ACTION": 1901,
+          "RETRY_24H": 1471,
+          "PARTIAL_PAYMENT": 1624,
+          "REMINDER": 1757
+        }
+      },
+      "rules": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 25866343.63,
+        "recovered_revenue_rupees": 12686400.88,
+        "recovery_rate": 0.5065,
+        "avg_reward_rupees": 1265.96,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 540,
+        "action_counts": {
+          "PAYMENT_LINK": 4602,
+          "ALT_PAYMENT": 3081,
+          "NO_ACTION": 540,
+          "RETRY_24H": 1658,
+          "PARTIAL_PAYMENT": 119
+        }
+      },
+      "linucb": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 25866343.63,
+        "recovered_revenue_rupees": 11959083.93,
+        "recovery_rate": 0.4886,
+        "avg_reward_rupees": 1193.47,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 959,
+        "action_counts": {
+          "NO_ACTION": 959,
+          "REMINDER": 1840,
+          "RETRY_24H": 1916,
+          "PAYMENT_LINK": 1844,
+          "ALT_PAYMENT": 1851,
+          "PARTIAL_PAYMENT": 1590
+        }
+      },
+      "comparison": {
+        "linucb_additional_simulated_rupees_vs_rules": -727316.95,
+        "linucb_relative_gain_pct_vs_rules": -5.73
+      }
+    },
+    {
+      "seed": 1,
+      "random": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26222912.59,
+        "recovered_revenue_rupees": 11003096.35,
+        "recovery_rate": 0.4277,
+        "avg_reward_rupees": 1098.03,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 1886,
+        "action_counts": {
+          "REMINDER": 1764,
+          "ALT_PAYMENT": 1650,
+          "NO_ACTION": 1886,
+          "RETRY_24H": 1424,
+          "PAYMENT_LINK": 1637,
+          "PARTIAL_PAYMENT": 1639
+        }
+      },
+      "rules": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26222912.59,
+        "recovered_revenue_rupees": 13059398.6,
+        "recovery_rate": 0.51,
+        "avg_reward_rupees": 1303.25,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 541,
+        "action_counts": {
+          "ALT_PAYMENT": 3156,
+          "PAYMENT_LINK": 4548,
+          "PARTIAL_PAYMENT": 133,
+          "RETRY_24H": 1622,
+          "NO_ACTION": 541
+        }
+      },
+      "linucb": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26222912.59,
+        "recovered_revenue_rupees": 13188378.01,
+        "recovery_rate": 0.5158,
+        "avg_reward_rupees": 1316.36,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 951,
+        "action_counts": {
+          "NO_ACTION": 951,
+          "REMINDER": 1581,
+          "RETRY_24H": 1938,
+          "PAYMENT_LINK": 1752,
+          "ALT_PAYMENT": 2001,
+          "PARTIAL_PAYMENT": 1777
+        }
+      },
+      "comparison": {
+        "linucb_additional_simulated_rupees_vs_rules": 128979.41,
+        "linucb_relative_gain_pct_vs_rules": 0.99
+      }
+    },
+    {
+      "seed": 2,
+      "random": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26200492.82,
+        "recovered_revenue_rupees": 11254027.93,
+        "recovery_rate": 0.4221,
+        "avg_reward_rupees": 1123.14,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 1933,
+        "action_counts": {
+          "NO_ACTION": 1933,
+          "RETRY_24H": 1484,
+          "REMINDER": 1696,
+          "PARTIAL_PAYMENT": 1628,
+          "ALT_PAYMENT": 1612,
+          "PAYMENT_LINK": 1647
+        }
+      },
+      "rules": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26200492.82,
+        "recovered_revenue_rupees": 13257120.99,
+        "recovery_rate": 0.5165,
+        "avg_reward_rupees": 1323.03,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 568,
+        "action_counts": {
+          "PAYMENT_LINK": 4690,
+          "ALT_PAYMENT": 3051,
+          "PARTIAL_PAYMENT": 118,
+          "NO_ACTION": 568,
+          "RETRY_24H": 1573
+        }
+      },
+      "linucb": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26200492.82,
+        "recovered_revenue_rupees": 13366041.74,
+        "recovery_rate": 0.5128,
+        "avg_reward_rupees": 1334.19,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 1052,
+        "action_counts": {
+          "NO_ACTION": 1052,
+          "REMINDER": 1783,
+          "PAYMENT_LINK": 1338,
+          "RETRY_24H": 1882,
+          "ALT_PAYMENT": 2245,
+          "PARTIAL_PAYMENT": 1700
+        }
+      },
+      "comparison": {
+        "linucb_additional_simulated_rupees_vs_rules": 108920.75,
+        "linucb_relative_gain_pct_vs_rules": 0.82
+      }
+    },
+    {
+      "seed": 3,
+      "random": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26303334.98,
+        "recovered_revenue_rupees": 11420406.76,
+        "recovery_rate": 0.4336,
+        "avg_reward_rupees": 1139.78,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 1891,
+        "action_counts": {
+          "REMINDER": 1750,
+          "PARTIAL_PAYMENT": 1562,
+          "ALT_PAYMENT": 1623,
+          "RETRY_24H": 1516,
+          "PAYMENT_LINK": 1658,
+          "NO_ACTION": 1891
+        }
+      },
+      "rules": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26303334.98,
+        "recovered_revenue_rupees": 13132252.73,
+        "recovery_rate": 0.5072,
+        "avg_reward_rupees": 1310.54,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 542,
+        "action_counts": {
+          "RETRY_24H": 1636,
+          "ALT_PAYMENT": 3050,
+          "PARTIAL_PAYMENT": 105,
+          "PAYMENT_LINK": 4667,
+          "NO_ACTION": 542
+        }
+      },
+      "linucb": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26303334.98,
+        "recovered_revenue_rupees": 12805033.98,
+        "recovery_rate": 0.5028,
+        "avg_reward_rupees": 1277.99,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 894,
+        "action_counts": {
+          "NO_ACTION": 894,
+          "REMINDER": 1521,
+          "RETRY_24H": 1961,
+          "PAYMENT_LINK": 1554,
+          "ALT_PAYMENT": 2602,
+          "PARTIAL_PAYMENT": 1468
+        }
+      },
+      "comparison": {
+        "linucb_additional_simulated_rupees_vs_rules": -327218.75,
+        "linucb_relative_gain_pct_vs_rules": -2.49
+      }
+    },
+    {
+      "seed": 4,
+      "random": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26020661.08,
+        "recovered_revenue_rupees": 11116318.88,
+        "recovery_rate": 0.4279,
+        "avg_reward_rupees": 1109.36,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 1916,
+        "action_counts": {
+          "REMINDER": 1736,
+          "RETRY_24H": 1421,
+          "NO_ACTION": 1916,
+          "PARTIAL_PAYMENT": 1641,
+          "ALT_PAYMENT": 1640,
+          "PAYMENT_LINK": 1646
+        }
+      },
+      "rules": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26020661.08,
+        "recovered_revenue_rupees": 12841110.22,
+        "recovery_rate": 0.5022,
+        "avg_reward_rupees": 1281.42,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 524,
+        "action_counts": {
+          "PAYMENT_LINK": 4679,
+          "RETRY_24H": 1597,
+          "ALT_PAYMENT": 3093,
+          "NO_ACTION": 524,
+          "PARTIAL_PAYMENT": 107
+        }
+      },
+      "linucb": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26020661.08,
+        "recovered_revenue_rupees": 13028126.05,
+        "recovery_rate": 0.4989,
+        "avg_reward_rupees": 1300.33,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 1147,
+        "action_counts": {
+          "NO_ACTION": 1147,
+          "REMINDER": 1183,
+          "RETRY_24H": 1959,
+          "PAYMENT_LINK": 1683,
+          "ALT_PAYMENT": 2228,
+          "PARTIAL_PAYMENT": 1800
+        }
+      },
+      "comparison": {
+        "linucb_additional_simulated_rupees_vs_rules": 187015.83,
+        "linucb_relative_gain_pct_vs_rules": 1.46
+      }
+    },
+    {
+      "seed": 5,
+      "random": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 25725936.9,
+        "recovered_revenue_rupees": 10467764.84,
+        "recovery_rate": 0.4135,
+        "avg_reward_rupees": 1044.51,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 1930,
+        "action_counts": {
+          "ALT_PAYMENT": 1629,
+          "RETRY_24H": 1432,
+          "PARTIAL_PAYMENT": 1618,
+          "NO_ACTION": 1930,
+          "PAYMENT_LINK": 1630,
+          "REMINDER": 1761
+        }
+      },
+      "rules": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 25725936.9,
+        "recovered_revenue_rupees": 12708092.35,
+        "recovery_rate": 0.5071,
+        "avg_reward_rupees": 1268.13,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 552,
+        "action_counts": {
+          "ALT_PAYMENT": 3068,
+          "RETRY_24H": 1659,
+          "PAYMENT_LINK": 4624,
+          "NO_ACTION": 552,
+          "PARTIAL_PAYMENT": 97
+        }
+      },
+      "linucb": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 25725936.9,
+        "recovered_revenue_rupees": 12744213.28,
+        "recovery_rate": 0.5045,
+        "avg_reward_rupees": 1271.97,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 937,
+        "action_counts": {
+          "NO_ACTION": 937,
+          "REMINDER": 1814,
+          "RETRY_24H": 2004,
+          "PAYMENT_LINK": 1505,
+          "ALT_PAYMENT": 2055,
+          "PARTIAL_PAYMENT": 1685
+        }
+      },
+      "comparison": {
+        "linucb_additional_simulated_rupees_vs_rules": 36120.93,
+        "linucb_relative_gain_pct_vs_rules": 0.28
+      }
+    },
+    {
+      "seed": 6,
+      "random": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 25509521.66,
+        "recovered_revenue_rupees": 11110343.48,
+        "recovery_rate": 0.4385,
+        "avg_reward_rupees": 1108.76,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 1934,
+        "action_counts": {
+          "ALT_PAYMENT": 1566,
+          "NO_ACTION": 1934,
+          "PAYMENT_LINK": 1729,
+          "REMINDER": 1708,
+          "PARTIAL_PAYMENT": 1652,
+          "RETRY_24H": 1411
+        }
+      },
+      "rules": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 25509521.66,
+        "recovered_revenue_rupees": 12627144.04,
+        "recovery_rate": 0.5105,
+        "avg_reward_rupees": 1260.02,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 505,
+        "action_counts": {
+          "PAYMENT_LINK": 4651,
+          "ALT_PAYMENT": 3142,
+          "RETRY_24H": 1613,
+          "NO_ACTION": 505,
+          "PARTIAL_PAYMENT": 89
+        }
+      },
+      "linucb": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 25509521.66,
+        "recovered_revenue_rupees": 12766867.34,
+        "recovery_rate": 0.5074,
+        "avg_reward_rupees": 1274.21,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 1161,
+        "action_counts": {
+          "NO_ACTION": 1161,
+          "REMINDER": 1378,
+          "RETRY_24H": 2071,
+          "PAYMENT_LINK": 1774,
+          "ALT_PAYMENT": 1921,
+          "PARTIAL_PAYMENT": 1695
+        }
+      },
+      "comparison": {
+        "linucb_additional_simulated_rupees_vs_rules": 139723.3,
+        "linucb_relative_gain_pct_vs_rules": 1.11
+      }
+    },
+    {
+      "seed": 7,
+      "random": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26236077.92,
+        "recovered_revenue_rupees": 11215922.99,
+        "recovery_rate": 0.4342,
+        "avg_reward_rupees": 1119.35,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 1977,
+        "action_counts": {
+          "RETRY_24H": 1446,
+          "REMINDER": 1782,
+          "PAYMENT_LINK": 1631,
+          "PARTIAL_PAYMENT": 1623,
+          "NO_ACTION": 1977,
+          "ALT_PAYMENT": 1541
+        }
+      },
+      "rules": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26236077.92,
+        "recovered_revenue_rupees": 13124452.87,
+        "recovery_rate": 0.5092,
+        "avg_reward_rupees": 1309.77,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 569,
+        "action_counts": {
+          "RETRY_24H": 1614,
+          "ALT_PAYMENT": 3107,
+          "PAYMENT_LINK": 4624,
+          "NO_ACTION": 569,
+          "PARTIAL_PAYMENT": 86
+        }
+      },
+      "linucb": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26236077.92,
+        "recovered_revenue_rupees": 13059361.45,
+        "recovery_rate": 0.5076,
+        "avg_reward_rupees": 1303.44,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 1038,
+        "action_counts": {
+          "NO_ACTION": 1038,
+          "REMINDER": 1515,
+          "RETRY_24H": 1983,
+          "PAYMENT_LINK": 1415,
+          "ALT_PAYMENT": 2198,
+          "PARTIAL_PAYMENT": 1851
+        }
+      },
+      "comparison": {
+        "linucb_additional_simulated_rupees_vs_rules": -65091.42,
+        "linucb_relative_gain_pct_vs_rules": -0.5
+      }
+    },
+    {
+      "seed": 8,
+      "random": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26059699.08,
+        "recovered_revenue_rupees": 10766876.19,
+        "recovery_rate": 0.4175,
+        "avg_reward_rupees": 1074.43,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 1950,
+        "action_counts": {
+          "REMINDER": 1723,
+          "PAYMENT_LINK": 1647,
+          "NO_ACTION": 1950,
+          "ALT_PAYMENT": 1626,
+          "PARTIAL_PAYMENT": 1627,
+          "RETRY_24H": 1427
+        }
+      },
+      "rules": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26059699.08,
+        "recovered_revenue_rupees": 12939799.05,
+        "recovery_rate": 0.5058,
+        "avg_reward_rupees": 1291.29,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 523,
+        "action_counts": {
+          "RETRY_24H": 1680,
+          "ALT_PAYMENT": 3136,
+          "PAYMENT_LINK": 4548,
+          "NO_ACTION": 523,
+          "PARTIAL_PAYMENT": 113
+        }
+      },
+      "linucb": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 26059699.08,
+        "recovered_revenue_rupees": 13121347.64,
+        "recovery_rate": 0.5054,
+        "avg_reward_rupees": 1309.71,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 1093,
+        "action_counts": {
+          "NO_ACTION": 1093,
+          "REMINDER": 1667,
+          "RETRY_24H": 1820,
+          "PAYMENT_LINK": 1592,
+          "ALT_PAYMENT": 2073,
+          "PARTIAL_PAYMENT": 1755
+        }
+      },
+      "comparison": {
+        "linucb_additional_simulated_rupees_vs_rules": 181548.59,
+        "linucb_relative_gain_pct_vs_rules": 1.4
+      }
+    },
+    {
+      "seed": 9,
+      "random": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 25678612.04,
+        "recovered_revenue_rupees": 10948934.41,
+        "recovery_rate": 0.4313,
+        "avg_reward_rupees": 1092.64,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 1974,
+        "action_counts": {
+          "PAYMENT_LINK": 1617,
+          "ALT_PAYMENT": 1659,
+          "RETRY_24H": 1395,
+          "REMINDER": 1756,
+          "NO_ACTION": 1974,
+          "PARTIAL_PAYMENT": 1599
+        }
+      },
+      "rules": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 25678612.04,
+        "recovered_revenue_rupees": 12538970.41,
+        "recovery_rate": 0.5053,
+        "avg_reward_rupees": 1251.21,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 554,
+        "action_counts": {
+          "PAYMENT_LINK": 4567,
+          "ALT_PAYMENT": 3158,
+          "RETRY_24H": 1619,
+          "NO_ACTION": 554,
+          "PARTIAL_PAYMENT": 102
+        }
+      },
+      "linucb": {
+        "events": 10000,
+        "revenue_at_risk_rupees": 25678612.04,
+        "recovered_revenue_rupees": 12994408.48,
+        "recovery_rate": 0.503,
+        "avg_reward_rupees": 1296.96,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 10000,
+        "observed_outcomes": 10000,
+        "no_actions": 1069,
+        "action_counts": {
+          "NO_ACTION": 1069,
+          "REMINDER": 1705,
+          "RETRY_24H": 1821,
+          "PAYMENT_LINK": 1798,
+          "ALT_PAYMENT": 1776,
+          "PARTIAL_PAYMENT": 1831
+        }
+      },
+      "comparison": {
+        "linucb_additional_simulated_rupees_vs_rules": 455438.07,
+        "linucb_relative_gain_pct_vs_rules": 3.63
+      }
+    }
+  ]
+}

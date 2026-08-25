@@ -1,0 +1,207 @@
+{
+  "events_per_seed": 1000,
+  "seed_count": 3,
+  "mean_relative_gain_pct_vs_rules": -11.623,
+  "std_relative_gain_pct_vs_rules": 1.355,
+  "mean_additional_simulated_rupees_vs_rules": -150930.6,
+  "runs": [
+    {
+      "seed": 0,
+      "random": {
+        "events": 1000,
+        "revenue_at_risk_rupees": 2528177.41,
+        "recovered_revenue_rupees": 1051966.85,
+        "recovery_rate": 0.415,
+        "avg_reward_rupees": 1049.75,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 1000,
+        "observed_outcomes": 1000,
+        "no_actions": 214,
+        "action_counts": {
+          "PAYMENT_LINK": 179,
+          "ALT_PAYMENT": 151,
+          "NO_ACTION": 214,
+          "RETRY_24H": 132,
+          "PARTIAL_PAYMENT": 159,
+          "REMINDER": 165
+        }
+      },
+      "rules": {
+        "events": 1000,
+        "revenue_at_risk_rupees": 2528177.41,
+        "recovered_revenue_rupees": 1262289.82,
+        "recovery_rate": 0.521,
+        "avg_reward_rupees": 1259.59,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 1000,
+        "observed_outcomes": 1000,
+        "no_actions": 53,
+        "action_counts": {
+          "PAYMENT_LINK": 471,
+          "ALT_PAYMENT": 310,
+          "NO_ACTION": 53,
+          "RETRY_24H": 156,
+          "PARTIAL_PAYMENT": 10
+        }
+      },
+      "linucb": {
+        "events": 1000,
+        "revenue_at_risk_rupees": 2528177.41,
+        "recovered_revenue_rupees": 1106038.7,
+        "recovery_rate": 0.463,
+        "avg_reward_rupees": 1103.73,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 1000,
+        "observed_outcomes": 1000,
+        "no_actions": 161,
+        "action_counts": {
+          "NO_ACTION": 161,
+          "REMINDER": 195,
+          "RETRY_24H": 145,
+          "PAYMENT_LINK": 179,
+          "ALT_PAYMENT": 169,
+          "PARTIAL_PAYMENT": 151
+        }
+      },
+      "comparison": {
+        "linucb_additional_simulated_rupees_vs_rules": -156251.12,
+        "linucb_relative_gain_pct_vs_rules": -12.38
+      }
+    },
+    {
+      "seed": 1,
+      "random": {
+        "events": 1000,
+        "revenue_at_risk_rupees": 2556142.95,
+        "recovered_revenue_rupees": 1080909.36,
+        "recovery_rate": 0.417,
+        "avg_reward_rupees": 1078.62,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 1000,
+        "observed_outcomes": 1000,
+        "no_actions": 188,
+        "action_counts": {
+          "REMINDER": 172,
+          "ALT_PAYMENT": 166,
+          "NO_ACTION": 188,
+          "RETRY_24H": 144,
+          "PAYMENT_LINK": 161,
+          "PARTIAL_PAYMENT": 169
+        }
+      },
+      "rules": {
+        "events": 1000,
+        "revenue_at_risk_rupees": 2556142.95,
+        "recovered_revenue_rupees": 1294867.7,
+        "recovery_rate": 0.522,
+        "avg_reward_rupees": 1292.17,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 1000,
+        "observed_outcomes": 1000,
+        "no_actions": 54,
+        "action_counts": {
+          "ALT_PAYMENT": 317,
+          "PAYMENT_LINK": 473,
+          "PARTIAL_PAYMENT": 10,
+          "RETRY_24H": 146,
+          "NO_ACTION": 54
+        }
+      },
+      "linucb": {
+        "events": 1000,
+        "revenue_at_risk_rupees": 2556142.95,
+        "recovered_revenue_rupees": 1169020.56,
+        "recovery_rate": 0.464,
+        "avg_reward_rupees": 1166.63,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 1000,
+        "observed_outcomes": 1000,
+        "no_actions": 158,
+        "action_counts": {
+          "NO_ACTION": 158,
+          "REMINDER": 155,
+          "RETRY_24H": 160,
+          "PAYMENT_LINK": 161,
+          "ALT_PAYMENT": 201,
+          "PARTIAL_PAYMENT": 165
+        }
+      },
+      "comparison": {
+        "linucb_additional_simulated_rupees_vs_rules": -125847.14,
+        "linucb_relative_gain_pct_vs_rules": -9.72
+      }
+    },
+    {
+      "seed": 2,
+      "random": {
+        "events": 1000,
+        "revenue_at_risk_rupees": 2623545.42,
+        "recovered_revenue_rupees": 1061510.55,
+        "recovery_rate": 0.401,
+        "avg_reward_rupees": 1059.22,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 1000,
+        "observed_outcomes": 1000,
+        "no_actions": 193,
+        "action_counts": {
+          "NO_ACTION": 193,
+          "RETRY_24H": 144,
+          "REMINDER": 166,
+          "PARTIAL_PAYMENT": 166,
+          "ALT_PAYMENT": 161,
+          "PAYMENT_LINK": 170
+        }
+      },
+      "rules": {
+        "events": 1000,
+        "revenue_at_risk_rupees": 2623545.42,
+        "recovered_revenue_rupees": 1336743.02,
+        "recovery_rate": 0.511,
+        "avg_reward_rupees": 1334.05,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 1000,
+        "observed_outcomes": 1000,
+        "no_actions": 60,
+        "action_counts": {
+          "PAYMENT_LINK": 470,
+          "ALT_PAYMENT": 321,
+          "PARTIAL_PAYMENT": 9,
+          "NO_ACTION": 60,
+          "RETRY_24H": 140
+        }
+      },
+      "linucb": {
+        "events": 1000,
+        "revenue_at_risk_rupees": 2623545.42,
+        "recovered_revenue_rupees": 1166049.47,
+        "recovery_rate": 0.453,
+        "avg_reward_rupees": 1163.65,
+        "blocked_actions": 0,
+        "approval_required": 0,
+        "executed_actions": 1000,
+        "observed_outcomes": 1000,
+        "no_actions": 134,
+        "action_counts": {
+          "NO_ACTION": 134,
+          "REMINDER": 191,
+          "PAYMENT_LINK": 147,
+          "RETRY_24H": 142,
+          "ALT_PAYMENT": 225,
+          "PARTIAL_PAYMENT": 161
+        }
+      },
+      "comparison": {
+        "linucb_additional_simulated_rupees_vs_rules": -170693.55,
+        "linucb_relative_gain_pct_vs_rules": -12.77
+      }
+    }
+  ]
+}
