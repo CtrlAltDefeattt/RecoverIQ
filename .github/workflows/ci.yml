@@ -29,3 +29,8 @@ jobs:
 
       - name: Run deterministic smoke benchmark
         run: python -m experiments.run_benchmark --events 1000 --seed 42
+
+      - name: Run paired multi-seed evaluation smoke test
+        run: >-
+          python -m experiments.run_multiseed --events 100 --seeds 3
+          --output /tmp/recoveriq_ci_multiseed.json

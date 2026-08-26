@@ -176,6 +176,30 @@ class RecoveryGym:
 
         return max(0.01, min(p, 0.95))
 
+    def intervention_cost_paise(
+        self,
+        ctx: RecoveryContext,
+        action: RecoveryAction,
+    ) -> int:
+        fatigue_penalty = (
+            100 * ctx.contacts_last_7d
+            if action == RecoveryAction.REMINDER
+            else 0
+        )
+        return ACTION_COST_PAISE[action] + fatigue_penalty
+
+    def latent_recovery_rank(self, ctx: RecoveryContext) -> float:
+        """Return a deterministic evaluator latent shared by every action.
+
+        Sharing the latent rank creates paired potential outcomes: policies see
+        the same case and the same hidden customer response, while actions with
+        larger success probabilities can only improve the recovery outcome.
+        """
+        digest = hashlib.sha256(
+            f"{self.seed}:{ctx.case_id}:recovery".encode("utf-8")
+        ).digest()
+        return int.from_bytes(digest[:8], "big") / 2**64
+
     def step(
         self,
         ctx: RecoveryContext,
@@ -199,18 +223,9 @@ class RecoveryGym:
             )
 
         probability = self.success_probability(ctx, action)
-        digest = hashlib.sha256(
-            f"{self.seed}:{ctx.case_id}:{action.value}".encode("utf-8")
-        ).digest()
-        u = int.from_bytes(digest[:8], "big") / 2**64
-        recovered = u < probability
+        recovered = self.latent_recovery_rank(ctx) < probability
         amount = ctx.amount_paise if recovered else 0
-        fatigue_penalty = (
-            100 * ctx.contacts_last_7d
-            if action == RecoveryAction.REMINDER
-            else 0
-        )
-        reward = amount - ACTION_COST_PAISE[action] - fatigue_penalty
+        reward = amount - self.intervention_cost_paise(ctx, action)
 
         return RecoveryOutcome(
             recovered=recovered,

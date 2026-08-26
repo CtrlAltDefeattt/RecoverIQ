@@ -29,6 +29,12 @@ remain pending until account secrets are configured outside GitHub.
 
 ## August 28 — Evaluation-grade simulator
 
+**Code status:** paired potential outcomes, evaluator-only counterfactual access,
+natural-recovery and incremental-value decomposition, realized oracle regret,
+segment/action diagnostics, synthetic-data checks and paired 95% confidence
+intervals are complete. The committed report correctly identifies the rules
+baseline as ahead of the current cold-start LinUCB learner.
+
 - Add evaluator-only potential outcomes
 - Compute oracle best action and cumulative regret
 - Add paired multi-seed confidence reporting

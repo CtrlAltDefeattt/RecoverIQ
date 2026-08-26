@@ -8,7 +8,7 @@ RecoverIQ is an adaptive decision system for Razorpay AI Buildathon Track 03 —
 
 It is intentionally not an LLM-first system. Money-path decisions are measurable, bounded and auditable.
 
-> **Project status:** Day-2 integration foundation. The repository now contains a reproducible recovery simulator plus a tested Razorpay webhook-to-decision path. The real Test Mode call and public webhook receipt remain pending until deployment secrets are configured; no credentials belong in this repository.
+> **Project status:** Day-3 evaluation foundation. The repository now contains a tested Razorpay webhook-to-decision path plus a paired, evaluator-only counterfactual benchmark. The real Test Mode call and public webhook receipt remain pending until deployment secrets are configured; no credentials belong in this repository.
 
 ## Why this project
 
@@ -38,11 +38,16 @@ Razorpay already supplies recovery primitives such as Payment Links, reminders, 
 - Fail-closed execution switch and credential readiness endpoint
 - Render deployment blueprint and Test Mode smoke script
 - Deterministic single-seed and multi-seed benchmarks
+- Evaluator-only potential outcomes unavailable to policy selection or learning
+- Paired cases and latent outcomes across every policy
+- Explicit natural recovery, probability uplift and incremental net value
+- Realized net-value oracle regret over autonomously permitted actions
+- Segment/action diagnostics and synthetic-data validation
+- Paired 95% confidence intervals with automatic claim guardrails
 - Safety, adapter, signature, webhook and ordering tests
 
 ## Planned before September 5
 
-- Evaluator-only potential outcomes and oracle regret
 - Explicit estimated natural-recovery and intervention-uplift values
 - Two-step bounded recovery journey with `STOP`
 - Batch intervention budgets
@@ -71,6 +76,14 @@ additional simulated revenue versus fixed rules
 ```
 
 This is deliberately not described as real merchant uplift or a proven causal effect. Final submission numbers will use paired multi-seed runs and will be reported with variability and limitations.
+
+The committed Day-3 smoke evaluation uses 10 paired seeds with 1,000 cases per
+seed. In that configuration, the current cold-start LinUCB learner trails the
+rules policy by a mean ₹143,640 in simulated recovered revenue; the paired 95%
+interval is ₹99,090 to ₹188,191 in the rules policy's favor. The evaluator
+therefore emits `RULES_AHEAD`, and RecoverIQ keeps rules as the safe execution
+baseline while the learner is improved. This is a synthetic engineering result,
+not a merchant-performance claim.
 
 ## Architecture
 
@@ -124,7 +137,7 @@ Run the tests and benchmark:
 pytest -q
 python -m experiments.run_benchmark --events 1000 --seed 42
 python -m experiments.run_multiseed --events 10000 --seeds 10 \
-  --output outputs/preliminary_10k_multiseed.json
+  --output outputs/multiseed_results.json
 ```
 
 Run the API:
@@ -157,6 +170,7 @@ python -m scripts.razorpay_test_mode_smoke --amount-paise 100
 - The current in-memory duplicate set is development-only and will be replaced with a durable unique constraint.
 - The large-scale benchmark uses `RecoveryGym`; it does not create thousands of Test Mode Payment Links.
 - See `docs/DAY2_INTEGRATION.md` for deployment and webhook configuration.
+- See `docs/DAY3_EVALUATION.md` for the evaluation contract and metric definitions.
 
 References:
 

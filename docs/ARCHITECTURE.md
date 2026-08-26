@@ -38,11 +38,16 @@ Simulator      Razorpay
              |
              v
        Reward Engine
-             |
-             +----> Policy update
-             |
-             v
-        Audit / Metrics
+        /          \
+ observed only   selected action
+      |               |
+ Policy update   Evaluator-only truth
+                       |
+          natural / potential outcomes
+          uplift / oracle regret / CI
+                       |
+                       v
+                 Audit / Metrics
 ```
 
 ## Boundary rule
@@ -52,6 +57,18 @@ The simulator knows how to generate outcomes.
 The policy knows how to select actions.
 The safety engine can veto actions.
 These components remain separable so benchmark logic cannot accidentally depend on Razorpay network calls.
+
+## Day-3 evaluation boundary
+
+Every policy receives the same generated contexts and hidden recovery ranks.
+The selected action is executed before the `CounterfactualEvaluator` is called.
+Only the observed selected-action reward is passed to `policy.update()`;
+potential outcomes for unselected actions remain evaluator-only.
+
+The oracle is restricted to actions the safety engine permits autonomously. Its
+regret metric compares realized net value, after intervention and contact-fatigue
+costs, rather than comparing recovery probability alone. Multi-seed comparisons
+use paired per-seed differences and Student-t 95% confidence intervals.
 
 ## Day-2 terminal-state rule
 
