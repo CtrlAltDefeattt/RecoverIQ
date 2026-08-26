@@ -8,7 +8,7 @@ RecoverIQ is an adaptive decision system for Razorpay AI Buildathon Track 03 —
 
 It is intentionally not an LLM-first system. Money-path decisions are measurable, bounded and auditable.
 
-> **Project status:** Day-1 foundation. The repository currently contains a reproducible synthetic environment, three policies, safety rules, benchmark scripts, webhook signature verification and a Razorpay Payment Link adapter. Sequential journeys, explicit intervention-uplift estimation, durable persistence, budget allocation and the dashboard are scheduled milestones—not completed features.
+> **Project status:** Day-2 integration foundation. The repository now contains a reproducible recovery simulator plus a tested Razorpay webhook-to-decision path. The real Test Mode call and public webhook receipt remain pending until deployment secrets are configured; no credentials belong in this repository.
 
 ## Why this project
 
@@ -29,10 +29,16 @@ Razorpay already supplies recovery primitives such as Payment Links, reminders, 
 - Autonomous action masking before policy selection, plus final safety veto
 - No model update for blocked or approval-pending actions
 - Razorpay webhook HMAC-SHA256 verification
+- `payment.failed` and `payment.captured` normalization
 - Duplicate-event protection for the current single-process API
-- Standard Payment Link adapter
+- Protection against a late failure reopening an already captured payment
+- Shadow, Assisted and Autonomous execution gates
+- Standard and partial Payment Link adapter
+- Payment Link SMS/email notification adapter
+- Fail-closed execution switch and credential readiness endpoint
+- Render deployment blueprint and Test Mode smoke script
 - Deterministic single-seed and multi-seed benchmarks
-- Safety and signature tests
+- Safety, adapter, signature, webhook and ordering tests
 
 ## Planned before September 5
 
@@ -41,8 +47,7 @@ Razorpay already supplies recovery primitives such as Payment Links, reminders, 
 - Two-step bounded recovery journey with `STOP`
 - Batch intervention budgets
 - Durable SQLite event, action and audit stores
-- Out-of-order webhook handling and idempotent execution
-- Shadow, Assisted and Autonomous operating modes
+- Durable out-of-order event handling and idempotent execution
 - Four-screen React dashboard
 - End-to-end Razorpay Test Mode recovery demo
 
@@ -132,16 +137,26 @@ Endpoints:
 
 ```text
 GET  /health
+GET  /readiness
 POST /api/simulations/run?events=1000&seed=42
 POST /webhooks/razorpay
+```
+
+Test Mode Payment Link smoke test, after configuring Test credentials locally:
+
+```bash
+python -m scripts.razorpay_test_mode_smoke --amount-paise 100
 ```
 
 ## Razorpay integration notes
 
 - Webhook signatures use the unmodified raw request body.
 - Duplicate events are identified with `x-razorpay-event-id`.
+- A captured payment is terminal, so a later failure for the same payment is ignored.
+- Live execution requires both `RECOVERIQ_MODE=autonomous` and `RECOVERIQ_EXECUTE_RAZORPAY_ACTIONS=true`.
 - The current in-memory duplicate set is development-only and will be replaced with a durable unique constraint.
 - The large-scale benchmark uses `RecoveryGym`; it does not create thousands of Test Mode Payment Links.
+- See `docs/DAY2_INTEGRATION.md` for deployment and webhook configuration.
 
 References:
 

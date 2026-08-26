@@ -87,3 +87,14 @@ def test_autonomous_action_mask_excludes_approval_and_blocked_actions():
     assert RecoveryAction.PAYMENT_LINK not in opted_out_actions
     assert RecoveryAction.NO_ACTION in high_value_actions
     assert RecoveryAction.NO_ACTION in opted_out_actions
+
+
+def test_reviewable_mask_keeps_approval_but_excludes_blocked_actions():
+    engine = SafetyEngine()
+    high_value_actions = engine.reviewable_actions(
+        context(amount_paise=2_500_000)
+    )
+    opted_out_actions = engine.reviewable_actions(context(opted_out=True))
+
+    assert RecoveryAction.PAYMENT_LINK in high_value_actions
+    assert RecoveryAction.PAYMENT_LINK not in opted_out_actions

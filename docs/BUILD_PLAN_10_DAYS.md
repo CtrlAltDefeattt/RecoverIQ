@@ -13,6 +13,11 @@
 
 ## August 27 — Razorpay integration spike
 
+**Code status:** webhook validation, normalization, mode gating, ordering tests,
+Payment Link adapter, notification adapter, smoke script and deployment
+blueprint are complete. Public staging receipt and a genuine Test Mode API call
+remain pending until account secrets are configured outside GitHub.
+
 - Deploy a minimal public staging webhook
 - Configure Test Mode keys and webhook secret
 - Verify signatures from the raw request body

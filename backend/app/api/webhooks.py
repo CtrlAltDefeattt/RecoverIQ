@@ -1,19 +1,28 @@
 from __future__ import annotations
-import json
-import os
 
+import json
+
+import httpx
 from fastapi import APIRouter, Header, HTTPException, Request
+
 from backend.app.adapters.razorpay import RazorpayAdapter
+from backend.app.core.config import get_settings
+from backend.app.services.razorpay_integration import RazorpayIntegrationService
+
 
 router = APIRouter(prefix="/webhooks", tags=["webhooks"])
-PROCESSED_EVENT_IDS: set[str] = set()
+integration_service = RazorpayIntegrationService()
 
 
 def _adapter() -> RazorpayAdapter:
+    settings = get_settings()
+    integration_service.safety.autonomous_limit_paise = (
+        settings.recoveriq_autonomous_limit_paise
+    )
     return RazorpayAdapter(
-        key_id=os.getenv("RAZORPAY_KEY_ID", ""),
-        key_secret=os.getenv("RAZORPAY_KEY_SECRET", ""),
-        webhook_secret=os.getenv("RAZORPAY_WEBHOOK_SECRET", ""),
+        key_id=settings.razorpay_key_id,
+        key_secret=settings.razorpay_key_secret,
+        webhook_secret=settings.razorpay_webhook_secret,
     )
 
 
@@ -24,28 +33,39 @@ async def razorpay_webhook(
     x_razorpay_event_id: str | None = Header(default=None),
 ):
     raw_body = await request.body()
+    settings = get_settings()
 
     if not x_razorpay_signature:
         raise HTTPException(status_code=401, detail="Missing Razorpay signature")
+    if not x_razorpay_event_id:
+        raise HTTPException(status_code=400, detail="Missing Razorpay event id")
+    if not settings.webhook_configured:
+        raise HTTPException(status_code=503, detail="Webhook secret not configured")
 
     adapter = _adapter()
-    if not adapter.webhook_secret:
-        raise HTTPException(status_code=500, detail="Webhook secret not configured")
-
     if not adapter.verify_webhook_signature(raw_body, x_razorpay_signature):
         raise HTTPException(status_code=401, detail="Invalid signature")
 
-    if x_razorpay_event_id and x_razorpay_event_id in PROCESSED_EVENT_IDS:
-        return {"status": "duplicate_ignored"}
+    try:
+        payload = json.loads(raw_body.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise HTTPException(status_code=400, detail="Invalid JSON payload") from exc
 
-    payload = json.loads(raw_body.decode("utf-8"))
-    event = payload.get("event")
-
-    if x_razorpay_event_id:
-        PROCESSED_EVENT_IDS.add(x_razorpay_event_id)
-
-    return {
-        "status": "accepted",
-        "event": event,
-        "event_id": x_razorpay_event_id,
-    }
+    try:
+        return await integration_service.process(
+            x_razorpay_event_id,
+            payload,
+            mode=settings.recoveriq_mode,
+            execute_razorpay_actions=(
+                settings.recoveriq_execute_razorpay_actions
+                and settings.razorpay_api_configured
+            ),
+            adapter=adapter,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except httpx.HTTPStatusError as exc:
+        raise HTTPException(
+            status_code=502,
+            detail="Razorpay execution API returned an error",
+        ) from exc

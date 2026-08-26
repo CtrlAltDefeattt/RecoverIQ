@@ -41,6 +41,14 @@ class SafetyEngine:
             if self.evaluate(ctx, action).decision == PolicyDecision.ALLOW
         ]
 
+    def reviewable_actions(self, ctx: RecoveryContext) -> list[RecoveryAction]:
+        """Return actions that are allowed or can be escalated for approval."""
+        return [
+            action
+            for action in RecoveryAction
+            if self.evaluate(ctx, action).decision != PolicyDecision.BLOCK
+        ]
+
     def evaluate(self, ctx: RecoveryContext, action: RecoveryAction) -> SafetyResult:
         if ctx.duplicate_event:
             return SafetyResult(PolicyDecision.BLOCK, "DUPLICATE_EVENT")
