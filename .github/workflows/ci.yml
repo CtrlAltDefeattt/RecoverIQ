@@ -34,3 +34,9 @@ jobs:
         run: >-
           python -m experiments.run_multiseed --events 100 --seeds 3
           --output /tmp/recoveriq_ci_multiseed.json
+
+      - name: Run bounded journey and budget smoke test
+        run: >-
+          python -m experiments.run_day5_scenarios --journey-cases 50
+          --batch-cases 25 --seed 42 --budget-paise 2000 --max-actions 5
+          --output /tmp/recoveriq_ci_day5.json

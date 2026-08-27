@@ -20,6 +20,10 @@ Razorpay Test Mode / RecoveryGym
              |
          proposal
              v
+    Journey Orchestrator
+ (wait / stop / two-action limit)
+             |
+             v
         Policy Engine
       /      |       \
    ALLOW   APPROVE   BLOCK
@@ -85,6 +89,21 @@ Historical warm-start generation stores one safety-permitted action and one
 observed outcome per case. During live simulation, only the executed action's
 model is updated. Unchosen potential outcomes remain available solely to the
 post-decision evaluator for calibration and regret reporting.
+
+## Day-5 journey and budget boundary
+
+The journey orchestrator owns temporal case state. Before execution it checks
+terminal status, the two-intervention ceiling, the 24-hour cooldown, previously
+used actions and the safety engine's permitted set. `STOP`, `WAIT` and
+`ESCALATE` are orchestration commands rather than learnable recovery actions.
+After execution, only the observed selected action updates the policy.
+
+The batch allocator operates one level above individual journeys. It admits
+only safety-permitted actions with positive estimated incremental value, ranks
+them deterministically by value per synthetic action cost and then respects the
+portfolio budget, action-count cap and one-action-per-case constraint. The
+journey simulator and API use deep-copied demo policies so one request cannot
+mutate another request's cached model.
 
 ## Day-2 terminal-state rule
 

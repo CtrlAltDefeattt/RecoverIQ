@@ -60,6 +60,11 @@ rate. These figures are explicitly synthetic.
 
 ## August 30 — Bounded journey and budget
 
+**Code status:** the two-intervention state machine, explicit wait/stop/
+exhaustion/escalation outcomes, 24-hour cooldown, no-repeat action rule, batch
+budget allocator, API endpoints and deterministic 500-journey scenario are
+complete. All scenario invariants are machine-checked.
+
 - Add a two-intervention case state machine
 - Add `STOP`, exhausted and escalation terminal states
 - Add cooldown/contact budgets

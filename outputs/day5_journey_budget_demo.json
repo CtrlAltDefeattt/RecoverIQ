@@ -1,0 +1,691 @@
+{
+  "configuration": {
+    "journey_cases": 500,
+    "batch_cases": 100,
+    "seed": 42,
+    "max_interventions_per_journey": 2,
+    "minimum_intervention_interval_hours": 24,
+    "batch_budget_paise": 5000,
+    "batch_max_actions": 25
+  },
+  "journey_summary": {
+    "terminal_status_counts": {
+      "ESCALATED": 10,
+      "EXHAUSTED": 22,
+      "RECOVERED": 263,
+      "STOPPED": 205
+    },
+    "all_journeys_terminal": true,
+    "maximum_interventions_observed": 2,
+    "cooldown_wait_count": 163,
+    "explicit_stop_count": 205,
+    "recovered_amount_paise": 63471115
+  },
+  "batch_allocation": {
+    "budget_paise": 5000,
+    "spent_paise": 5000,
+    "remaining_paise": 0,
+    "max_actions": 25,
+    "selected_count": 21,
+    "candidate_count": 94,
+    "expected_incremental_value_paise": 1763443.874,
+    "segment_counts": {
+      "RETRY_PRONE": 13,
+      "NEW_ECOM": 4,
+      "LOYAL_SAAS": 3,
+      "PRICE_SENSITIVE": 1
+    },
+    "skipped": {
+      "duplicate_case": 0,
+      "no_positive_action": 6,
+      "budget_or_action_cap": 73
+    },
+    "selected": [
+      {
+        "case_id": "case_43_37",
+        "segment": "RETRY_PRONE",
+        "action": "RETRY_24H",
+        "action_cost_paise": 200,
+        "expected_incremental_value_paise": 198322.295,
+        "priority_score": 991.611476,
+        "estimate": {
+          "action": "RETRY_24H",
+          "natural_recovery_probability": 0.5199874714831925,
+          "action_recovery_probability": 0.7979380301099742,
+          "estimated_probability_uplift": 0.27795055862678175,
+          "intervention_cost_paise": 200,
+          "expected_net_value_paise": 569716.0668736276,
+          "expected_incremental_value_paise": 198322.29519135813,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_31",
+        "segment": "RETRY_PRONE",
+        "action": "RETRY_24H",
+        "action_cost_paise": 200,
+        "expected_incremental_value_paise": 163449.548,
+        "priority_score": 817.247738,
+        "estimate": {
+          "action": "RETRY_24H",
+          "natural_recovery_probability": 0.3556942166695436,
+          "action_recovery_probability": 0.6859664224249685,
+          "estimated_probability_uplift": 0.33027220575542493,
+          "intervention_cost_paise": 200,
+          "expected_net_value_paise": 339695.67634514946,
+          "expected_incremental_value_paise": 163449.5476796073,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_95",
+        "segment": "NEW_ECOM",
+        "action": "PAYMENT_LINK",
+        "action_cost_paise": 300,
+        "expected_incremental_value_paise": 183616.348,
+        "priority_score": 612.054492,
+        "estimate": {
+          "action": "PAYMENT_LINK",
+          "natural_recovery_probability": 0.31639773532336274,
+          "action_recovery_probability": 0.5897041331927065,
+          "estimated_probability_uplift": 0.2733063978693438,
+          "intervention_cost_paise": 300,
+          "expected_net_value_paise": 396530.1920535012,
+          "expected_incremental_value_paise": 183616.3476246154,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_40",
+        "segment": "RETRY_PRONE",
+        "action": "RETRY_24H",
+        "action_cost_paise": 200,
+        "expected_incremental_value_paise": 117747.44,
+        "priority_score": 588.737201,
+        "estimate": {
+          "action": "RETRY_24H",
+          "natural_recovery_probability": 0.49656345168296473,
+          "action_recovery_probability": 0.7667492302081312,
+          "estimated_probability_uplift": 0.2701857785251665,
+          "intervention_cost_paise": 200,
+          "expected_net_value_paise": 334518.24245351803,
+          "expected_incremental_value_paise": 117747.44012893323,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_59",
+        "segment": "LOYAL_SAAS",
+        "action": "ALT_PAYMENT",
+        "action_cost_paise": 300,
+        "expected_incremental_value_paise": 128187.331,
+        "priority_score": 427.291103,
+        "estimate": {
+          "action": "ALT_PAYMENT",
+          "natural_recovery_probability": 0.60526230549881,
+          "action_recovery_probability": 0.8501815520198076,
+          "estimated_probability_uplift": 0.2449192465209976,
+          "intervention_cost_paise": 300,
+          "expected_net_value_paise": 445714.5941866633,
+          "expected_incremental_value_paise": 128187.33083662705,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_68",
+        "segment": "RETRY_PRONE",
+        "action": "RETRY_24H",
+        "action_cost_paise": 200,
+        "expected_incremental_value_paise": 84908.684,
+        "priority_score": 424.54342,
+        "estimate": {
+          "action": "RETRY_24H",
+          "natural_recovery_probability": 0.3867666988857651,
+          "action_recovery_probability": 0.763258840090783,
+          "estimated_probability_uplift": 0.37649214120501795,
+          "intervention_cost_paise": 200,
+          "expected_net_value_paise": 172340.00361440214,
+          "expected_incremental_value_paise": 84908.68396438274,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_8",
+        "segment": "RETRY_PRONE",
+        "action": "RETRY_24H",
+        "action_cost_paise": 200,
+        "expected_incremental_value_paise": 82843.179,
+        "priority_score": 414.215893,
+        "estimate": {
+          "action": "RETRY_24H",
+          "natural_recovery_probability": 0.41675682262835356,
+          "action_recovery_probability": 0.7632797444983738,
+          "estimated_probability_uplift": 0.3465229218700202,
+          "intervention_cost_paise": 200,
+          "expected_net_value_paise": 182717.70092980177,
+          "expected_incremental_value_paise": 82843.17865738472,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_43",
+        "segment": "NEW_ECOM",
+        "action": "ALT_PAYMENT",
+        "action_cost_paise": 300,
+        "expected_incremental_value_paise": 119851.752,
+        "priority_score": 399.50584,
+        "estimate": {
+          "action": "ALT_PAYMENT",
+          "natural_recovery_probability": 0.2374249929173409,
+          "action_recovery_probability": 0.42151087695916634,
+          "estimated_probability_uplift": 0.18408588404182544,
+          "intervention_cost_paise": 300,
+          "expected_net_value_paise": 274817.6203259861,
+          "expected_incremental_value_paise": 119851.75199879523,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_58",
+        "segment": "RETRY_PRONE",
+        "action": "RETRY_24H",
+        "action_cost_paise": 200,
+        "expected_incremental_value_paise": 68540.811,
+        "priority_score": 342.704053,
+        "estimate": {
+          "action": "RETRY_24H",
+          "natural_recovery_probability": 0.5484160671192706,
+          "action_recovery_probability": 0.8085230399156521,
+          "estimated_probability_uplift": 0.2601069727963815,
+          "intervention_cost_paise": 200,
+          "expected_net_value_paise": 213475.66046586863,
+          "expected_incremental_value_paise": 68540.8106636549,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_71",
+        "segment": "RETRY_PRONE",
+        "action": "RETRY_24H",
+        "action_cost_paise": 200,
+        "expected_incremental_value_paise": 63724.556,
+        "priority_score": 318.622781,
+        "estimate": {
+          "action": "RETRY_24H",
+          "natural_recovery_probability": 0.47464954610314175,
+          "action_recovery_probability": 0.7476039477863871,
+          "estimated_probability_uplift": 0.2729544016832453,
+          "intervention_cost_paise": 200,
+          "expected_net_value_paise": 174885.10655183293,
+          "expected_incremental_value_paise": 63724.55610220764,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_6",
+        "segment": "RETRY_PRONE",
+        "action": "RETRY_24H",
+        "action_cost_paise": 200,
+        "expected_incremental_value_paise": 62337.151,
+        "priority_score": 311.685756,
+        "estimate": {
+          "action": "RETRY_24H",
+          "natural_recovery_probability": 0.3396983375118774,
+          "action_recovery_probability": 0.5596842359030856,
+          "estimated_probability_uplift": 0.2199858983912082,
+          "intervention_cost_paise": 200,
+          "expected_net_value_paise": 158905.91521405737,
+          "expected_incremental_value_paise": 62337.151222855886,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_74",
+        "segment": "RETRY_PRONE",
+        "action": "PAYMENT_LINK",
+        "action_cost_paise": 300,
+        "expected_incremental_value_paise": 84400.385,
+        "priority_score": 281.334615,
+        "estimate": {
+          "action": "PAYMENT_LINK",
+          "natural_recovery_probability": 0.4227546271641422,
+          "action_recovery_probability": 0.5407679229562904,
+          "estimated_probability_uplift": 0.1180132957921482,
+          "intervention_cost_paise": 300,
+          "expected_net_value_paise": 387819.4128962658,
+          "expected_incremental_value_paise": 84400.38464264484,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_85",
+        "segment": "RETRY_PRONE",
+        "action": "RETRY_24H",
+        "action_cost_paise": 200,
+        "expected_incremental_value_paise": 53809.464,
+        "priority_score": 269.047319,
+        "estimate": {
+          "action": "RETRY_24H",
+          "natural_recovery_probability": 0.5148678409508507,
+          "action_recovery_probability": 0.7537695449288052,
+          "estimated_probability_uplift": 0.23890170397795452,
+          "intervention_cost_paise": 200,
+          "expected_net_value_paise": 170207.69610023472,
+          "expected_incremental_value_paise": 53809.46382511211,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_41",
+        "segment": "LOYAL_SAAS",
+        "action": "ALT_PAYMENT",
+        "action_cost_paise": 300,
+        "expected_incremental_value_paise": 67341.63,
+        "priority_score": 224.4721,
+        "estimate": {
+          "action": "ALT_PAYMENT",
+          "natural_recovery_probability": 0.7545152024304631,
+          "action_recovery_probability": 0.8814883253419437,
+          "estimated_probability_uplift": 0.12697312291148055,
+          "intervention_cost_paise": 300,
+          "expected_net_value_paise": 469289.9866294616,
+          "expected_incremental_value_paise": 67341.62992989557,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_1",
+        "segment": "RETRY_PRONE",
+        "action": "RETRY_24H",
+        "action_cost_paise": 200,
+        "expected_incremental_value_paise": 41561.649,
+        "priority_score": 207.808245,
+        "estimate": {
+          "action": "RETRY_24H",
+          "natural_recovery_probability": 0.5469426292849494,
+          "action_recovery_probability": 0.7929162595071501,
+          "estimated_probability_uplift": 0.24597363022220065,
+          "intervention_cost_paise": 200,
+          "expected_net_value_paise": 134422.11545538343,
+          "expected_incremental_value_paise": 41561.64891275544,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_19",
+        "segment": "RETRY_PRONE",
+        "action": "RETRY_24H",
+        "action_cost_paise": 200,
+        "expected_incremental_value_paise": 41464.042,
+        "priority_score": 207.320208,
+        "estimate": {
+          "action": "RETRY_24H",
+          "natural_recovery_probability": 0.4454867276345238,
+          "action_recovery_probability": 0.7388541523489645,
+          "estimated_probability_uplift": 0.29336742471444066,
+          "intervention_cost_paise": 200,
+          "expected_net_value_paise": 104732.06671659993,
+          "expected_incremental_value_paise": 41464.041657944865,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_39",
+        "segment": "RETRY_PRONE",
+        "action": "RETRY_24H",
+        "action_cost_paise": 200,
+        "expected_incremental_value_paise": 31833.299,
+        "priority_score": 159.166497,
+        "estimate": {
+          "action": "RETRY_24H",
+          "natural_recovery_probability": 0.5298586121955065,
+          "action_recovery_probability": 0.7887470289561221,
+          "estimated_probability_uplift": 0.2588884167606157,
+          "intervention_cost_paise": 200,
+          "expected_net_value_paise": 97394.82488085682,
+          "expected_incremental_value_paise": 31833.29935945802,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_47",
+        "segment": "PRICE_SENSITIVE",
+        "action": "PARTIAL_PAYMENT",
+        "action_cost_paise": 400,
+        "expected_incremental_value_paise": 63356.45,
+        "priority_score": 158.391125,
+        "estimate": {
+          "action": "PARTIAL_PAYMENT",
+          "natural_recovery_probability": 0.5625216437872508,
+          "action_recovery_probability": 0.7806938022693487,
+          "estimated_probability_uplift": 0.21817215848209792,
+          "intervention_cost_paise": 400,
+          "expected_net_value_paise": 227742.14983717178,
+          "expected_incremental_value_paise": 63356.44987322349,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_16",
+        "segment": "LOYAL_SAAS",
+        "action": "ALT_PAYMENT",
+        "action_cost_paise": 300,
+        "expected_incremental_value_paise": 46971.896,
+        "priority_score": 156.572988,
+        "estimate": {
+          "action": "ALT_PAYMENT",
+          "natural_recovery_probability": 0.7136325456589363,
+          "action_recovery_probability": 0.8197415873272728,
+          "estimated_probability_uplift": 0.10610904166833646,
+          "intervention_cost_paise": 300,
+          "expected_net_value_paise": 364897.336379062,
+          "expected_incremental_value_paise": 46971.89639036887,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_75",
+        "segment": "NEW_ECOM",
+        "action": "ALT_PAYMENT",
+        "action_cost_paise": 300,
+        "expected_incremental_value_paise": 46257.736,
+        "priority_score": 154.192455,
+        "estimate": {
+          "action": "ALT_PAYMENT",
+          "natural_recovery_probability": 0.43764704363226903,
+          "action_recovery_probability": 0.5207082853702497,
+          "estimated_probability_uplift": 0.08306124173798068,
+          "intervention_cost_paise": 300,
+          "expected_net_value_paise": 291568.9702405885,
+          "expected_incremental_value_paise": 46257.73640269815,
+          "training_observations": 4000
+        }
+      },
+      {
+        "case_id": "case_43_32",
+        "segment": "NEW_ECOM",
+        "action": "REMINDER",
+        "action_cost_paise": 100,
+        "expected_incremental_value_paise": 12918.229,
+        "priority_score": 129.18229,
+        "estimate": {
+          "action": "REMINDER",
+          "natural_recovery_probability": 0.46098404789923364,
+          "action_recovery_probability": 0.5280237002458059,
+          "estimated_probability_uplift": 0.06703965234657228,
+          "intervention_cost_paise": 100,
+          "expected_net_value_paise": 102435.33827963231,
+          "expected_incremental_value_paise": 12918.228970223834,
+          "training_observations": 4000
+        }
+      }
+    ]
+  },
+  "invariant_checks": {
+    "all_journeys_terminal": true,
+    "journey_limit_respected": true,
+    "budget_respected": true,
+    "action_cap_respected": true,
+    "one_action_per_case": true,
+    "only_positive_allocations": true
+  },
+  "representative_journeys": {
+    "RECOVERED": {
+      "journey_id": "journey_case_42_0",
+      "status": "RECOVERED",
+      "stop_reason": "PAYMENT_RECOVERED",
+      "max_interventions": 2,
+      "min_interval_hours": 24.0,
+      "intervention_count": 1,
+      "interventions": [
+        {
+          "sequence": 1,
+          "action": "PARTIAL_PAYMENT",
+          "executed_at_hours": 6.746057270034656,
+          "recovered": true,
+          "recovered_amount_paise": 522970,
+          "reward_paise": 522570,
+          "estimate": {
+            "action": "PARTIAL_PAYMENT",
+            "natural_recovery_probability": 0.359883045953643,
+            "action_recovery_probability": 0.7091001276261605,
+            "estimated_probability_uplift": 0.34921708167251747,
+            "intervention_cost_paise": 400,
+            "expected_net_value_paise": 370438.09374465316,
+            "expected_incremental_value_paise": 182230.05720227648,
+            "training_observations": 4000
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "at_hours": 6.746,
+          "command": "EXECUTE",
+          "reason": "POSITIVE_PERMITTED_INCREMENTAL_VALUE",
+          "action": "PARTIAL_PAYMENT",
+          "retry_after_hours": null,
+          "estimate": {
+            "action": "PARTIAL_PAYMENT",
+            "natural_recovery_probability": 0.359883045953643,
+            "action_recovery_probability": 0.7091001276261605,
+            "estimated_probability_uplift": 0.34921708167251747,
+            "intervention_cost_paise": 400,
+            "expected_net_value_paise": 370438.09374465316,
+            "expected_incremental_value_paise": 182230.05720227648,
+            "training_observations": 4000
+          },
+          "outcome": {
+            "recovered": true,
+            "recovered_amount_paise": 522970,
+            "reward_paise": 522570
+          }
+        }
+      ]
+    },
+    "STOPPED": {
+      "journey_id": "journey_case_42_1",
+      "status": "STOPPED",
+      "stop_reason": "NO_POSITIVE_INCREMENTAL_VALUE",
+      "max_interventions": 2,
+      "min_interval_hours": 24.0,
+      "intervention_count": 1,
+      "interventions": [
+        {
+          "sequence": 1,
+          "action": "RETRY_24H",
+          "executed_at_hours": 38.7030423755224,
+          "recovered": false,
+          "recovered_amount_paise": 0,
+          "reward_paise": -200,
+          "estimate": {
+            "action": "RETRY_24H",
+            "natural_recovery_probability": 0.48746505784736677,
+            "action_recovery_probability": 0.6502310377302576,
+            "estimated_probability_uplift": 0.16276597988289082,
+            "intervention_cost_paise": 200,
+            "expected_net_value_paise": 100485.02503734174,
+            "expected_incremental_value_paise": 25003.498154966233,
+            "training_observations": 4000
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "at_hours": 38.703,
+          "command": "EXECUTE",
+          "reason": "POSITIVE_PERMITTED_INCREMENTAL_VALUE",
+          "action": "RETRY_24H",
+          "retry_after_hours": null,
+          "estimate": {
+            "action": "RETRY_24H",
+            "natural_recovery_probability": 0.48746505784736677,
+            "action_recovery_probability": 0.6502310377302576,
+            "estimated_probability_uplift": 0.16276597988289082,
+            "intervention_cost_paise": 200,
+            "expected_net_value_paise": 100485.02503734174,
+            "expected_incremental_value_paise": 25003.498154966233,
+            "training_observations": 4000
+          },
+          "outcome": {
+            "recovered": false,
+            "recovered_amount_paise": 0,
+            "reward_paise": -200
+          }
+        },
+        {
+          "at_hours": 38.703,
+          "command": "WAIT",
+          "reason": "INTERVENTION_COOLDOWN",
+          "action": null,
+          "retry_after_hours": 24.0,
+          "estimate": null
+        },
+        {
+          "at_hours": 62.703,
+          "command": "STOP",
+          "reason": "NO_POSITIVE_INCREMENTAL_VALUE",
+          "action": null,
+          "retry_after_hours": null,
+          "estimate": {
+            "action": "NO_ACTION",
+            "natural_recovery_probability": 0.4048933375624051,
+            "action_recovery_probability": 0.4048933375624051,
+            "estimated_probability_uplift": 0.0,
+            "intervention_cost_paise": 0,
+            "expected_net_value_paise": 62695.708854850614,
+            "expected_incremental_value_paise": 0.0,
+            "training_observations": 4000
+          }
+        }
+      ]
+    },
+    "ESCALATED": {
+      "journey_id": "journey_case_42_23",
+      "status": "ESCALATED",
+      "stop_reason": "AMOUNT_ABOVE_AUTONOMOUS_LIMIT",
+      "max_interventions": 2,
+      "min_interval_hours": 24.0,
+      "intervention_count": 0,
+      "interventions": [],
+      "timeline": [
+        {
+          "at_hours": 35.312,
+          "command": "ESCALATE",
+          "reason": "AMOUNT_ABOVE_AUTONOMOUS_LIMIT",
+          "action": "RETRY_24H",
+          "retry_after_hours": null,
+          "estimate": {
+            "action": "RETRY_24H",
+            "natural_recovery_probability": 0.4344461214225379,
+            "action_recovery_probability": 0.8201504997677344,
+            "estimated_probability_uplift": 0.38570437834519644,
+            "intervention_cost_paise": 200,
+            "expected_net_value_paise": 1400381.6704098568,
+            "expected_incremental_value_paise": 658472.3810570104,
+            "training_observations": 4004
+          }
+        }
+      ]
+    },
+    "EXHAUSTED": {
+      "journey_id": "journey_case_42_57",
+      "status": "EXHAUSTED",
+      "stop_reason": "MAX_INTERVENTIONS_REACHED",
+      "max_interventions": 2,
+      "min_interval_hours": 24.0,
+      "intervention_count": 2,
+      "interventions": [
+        {
+          "sequence": 1,
+          "action": "RETRY_24H",
+          "executed_at_hours": 36.03588290454842,
+          "recovered": false,
+          "recovered_amount_paise": 0,
+          "reward_paise": -200,
+          "estimate": {
+            "action": "RETRY_24H",
+            "natural_recovery_probability": 0.7098024586444189,
+            "action_recovery_probability": 0.7494880021108477,
+            "estimated_probability_uplift": 0.03968554346642872,
+            "intervention_cost_paise": 200,
+            "expected_net_value_paise": 69634.29408468034,
+            "expected_incremental_value_paise": 3497.7401980279683,
+            "training_observations": 4008
+          }
+        },
+        {
+          "sequence": 2,
+          "action": "ALT_PAYMENT",
+          "executed_at_hours": 60.03588290454842,
+          "recovered": false,
+          "recovered_amount_paise": 0,
+          "reward_paise": -300,
+          "estimate": {
+            "action": "ALT_PAYMENT",
+            "natural_recovery_probability": 0.6363271520627857,
+            "action_recovery_probability": 0.6707349888433808,
+            "estimated_probability_uplift": 0.034407836780595114,
+            "intervention_cost_paise": 300,
+            "expected_net_value_paise": 62196.40332047085,
+            "expected_incremental_value_paise": 2905.9845998687306,
+            "training_observations": 4022
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "at_hours": 36.036,
+          "command": "EXECUTE",
+          "reason": "POSITIVE_PERMITTED_INCREMENTAL_VALUE",
+          "action": "RETRY_24H",
+          "retry_after_hours": null,
+          "estimate": {
+            "action": "RETRY_24H",
+            "natural_recovery_probability": 0.7098024586444189,
+            "action_recovery_probability": 0.7494880021108477,
+            "estimated_probability_uplift": 0.03968554346642872,
+            "intervention_cost_paise": 200,
+            "expected_net_value_paise": 69634.29408468034,
+            "expected_incremental_value_paise": 3497.7401980279683,
+            "training_observations": 4008
+          },
+          "outcome": {
+            "recovered": false,
+            "recovered_amount_paise": 0,
+            "reward_paise": -200
+          }
+        },
+        {
+          "at_hours": 36.036,
+          "command": "WAIT",
+          "reason": "INTERVENTION_COOLDOWN",
+          "action": null,
+          "retry_after_hours": 24.0,
+          "estimate": null
+        },
+        {
+          "at_hours": 60.036,
+          "command": "EXECUTE",
+          "reason": "POSITIVE_PERMITTED_INCREMENTAL_VALUE",
+          "action": "ALT_PAYMENT",
+          "retry_after_hours": null,
+          "estimate": {
+            "action": "ALT_PAYMENT",
+            "natural_recovery_probability": 0.6363271520627857,
+            "action_recovery_probability": 0.6707349888433808,
+            "estimated_probability_uplift": 0.034407836780595114,
+            "intervention_cost_paise": 300,
+            "expected_net_value_paise": 62196.40332047085,
+            "expected_incremental_value_paise": 2905.9845998687306,
+            "training_observations": 4022
+          },
+          "outcome": {
+            "recovered": false,
+            "recovered_amount_paise": 0,
+            "reward_paise": -300
+          }
+        }
+      ]
+    }
+  }
+}

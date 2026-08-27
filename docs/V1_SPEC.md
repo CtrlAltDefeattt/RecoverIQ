@@ -9,7 +9,7 @@ Merchants lose revenue after failed or abandoned payment journeys. Existing reco
 3. **When should we stop?**
 4. **How do we learn from the outcome without allowing unsafe autonomous actions?**
 
-RecoverIQ treats revenue recovery as a **sequential, safety-constrained decision problem**. The current Day-1 implementation is a single-decision contextual-bandit baseline; the journey state machine is a scheduled V1 milestone.
+RecoverIQ treats revenue recovery as a **sequential, safety-constrained decision problem**. The Day-5 implementation combines an observable incremental-value learner with a bounded two-intervention journey state machine and a constrained batch allocator.
 
 ## 2. Product hypothesis
 
@@ -60,6 +60,23 @@ A recovery case contains:
 | PARTIAL_PAYMENT | Offer partial-payment link | Approval for high values |
 
 `STOP` is produced by policy/terminal state rather than treated as a bandit action.
+
+### Journey contract
+
+- A case receives at most two executed interventions.
+- Consecutive interventions are separated by at least 24 hours.
+- An action is not repeated within the same journey.
+- Recovery, explicit stop, exhaustion and escalation are terminal.
+- A positive action that requires approval becomes an escalation; it is not silently executed or learned as a failure.
+- The learner updates only after the selected action executes and its outcome is observed.
+
+### Batch contract
+
+The allocator considers each case's best safety-permitted action with positive
+estimated incremental value, ranks candidates by value per synthetic action
+cost, and applies both a batch budget and action-count cap. It allocates at most
+one action per case. This deterministic heuristic is auditable; it is not
+presented as a globally optimal knapsack solver.
 
 ## 6. Safety policy
 

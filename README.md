@@ -8,7 +8,7 @@ RecoverIQ is an adaptive decision system for Razorpay AI Buildathon Track 03 —
 
 It is intentionally not an LLM-first system. Money-path decisions are measurable, bounded and auditable.
 
-> **Project status:** Day-4 incremental-value foundation. RecoverIQ now learns observable-feature recovery models from one logged action outcome per case, selects the safety-permitted action with the highest estimated net value, and validates it with paired evaluator-only counterfactuals. The real Test Mode call and public webhook receipt remain pending until deployment secrets are configured; no credentials belong in this repository.
+> **Project status:** Day-5 bounded recovery journey. RecoverIQ now carries each case through at most two interventions, enforces a 24-hour cooldown, terminates with an explicit recovery/stop/exhaustion/escalation state, and allocates a batch action budget by positive expected incremental value. The real Test Mode call and public webhook receipt remain pending until deployment secrets are configured; no credentials belong in this repository.
 
 ## Why this project
 
@@ -49,12 +49,15 @@ Razorpay already supplies recovery primitives such as Payment Links, reminders, 
 - Realized net-value oracle regret over autonomously permitted actions
 - Segment/action diagnostics and synthetic-data validation
 - Paired 95% confidence intervals with automatic claim guardrails
+- Two-intervention journey orchestration with explicit `WAIT` and `STOP` commands
+- Recovered, stopped, exhausted and approval-escalated terminal states
+- 24-hour inter-intervention cooldown and no repeated action within a journey
+- Batch allocator with budget, action-count and one-action-per-case constraints
+- Journey and batch simulation API endpoints
 - Safety, adapter, signature, webhook and ordering tests
 
 ## Planned before September 5
 
-- Two-step bounded recovery journey with `STOP`
-- Batch intervention budgets
 - Durable SQLite event, action and audit stores
 - Durable out-of-order event handling and idempotent execution
 - Four-screen React dashboard
@@ -89,6 +92,13 @@ all 10 seeds. Its mean selected-action probability MAE against evaluator truth
 is 5.89%. The evaluator emits `INCREMENTAL_VALUE_AHEAD`. These remain synthetic
 engineering results, not merchant-performance claims.
 
+The committed Day-5 scenario runs 500 bounded journeys and a 100-case batch.
+Every journey reaches a terminal state, no journey exceeds two interventions,
+and all 163 required cooldowns are observed. With a synthetic ₹50 intervention
+budget and a 25-action cap, the allocator spends exactly ₹50 on 21 unique,
+positive-value cases and reports ₹17,634.44 of estimated incremental value.
+That value is a model estimate inside RecoveryGym, not realized merchant uplift.
+
 ## Architecture
 
 ```text
@@ -99,6 +109,9 @@ Razorpay Test Mode / RecoveryGym
        Context builder
              |
       Adaptive policy
+             |
+    Journey orchestrator
+    (wait / stop / limit)
              |
         Safety engine
        /      |      \
@@ -142,6 +155,9 @@ pytest -q
 python -m experiments.run_benchmark --events 1000 --seed 42
 python -m experiments.run_multiseed --events 10000 --seeds 10 \
   --output outputs/multiseed_results.json
+python -m experiments.run_day5_scenarios --journey-cases 500 \
+  --batch-cases 100 --seed 42 --budget-paise 5000 --max-actions 25 \
+  --output outputs/day5_journey_budget_demo.json
 ```
 
 Run the API:
@@ -156,7 +172,9 @@ Endpoints:
 GET  /health
 GET  /readiness
 GET  /api/simulations/decision?seed=42&event_index=0
+GET  /api/simulations/journey?seed=42&event_index=0
 POST /api/simulations/run?events=1000&seed=42
+POST /api/simulations/batch?events=100&seed=42&budget_paise=5000&max_actions=25
 POST /webhooks/razorpay
 ```
 
@@ -177,6 +195,7 @@ python -m scripts.razorpay_test_mode_smoke --amount-paise 100
 - See `docs/DAY2_INTEGRATION.md` for deployment and webhook configuration.
 - See `docs/DAY3_EVALUATION.md` for the evaluation contract and metric definitions.
 - See `docs/DAY4_INCREMENTAL_VALUE.md` for the learner, leakage boundary and results.
+- See `docs/DAY5_JOURNEY_BUDGET.md` for the state machine, allocation rules and scenario results.
 
 References:
 
