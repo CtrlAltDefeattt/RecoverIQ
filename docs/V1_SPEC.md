@@ -167,6 +167,17 @@ Why LinUCB for V1:
 
 Blocked and approval-pending proposals are never used as zero-reward learning examples. The policy updates only after an action was executed and its outcome observed.
 
+### D. IncrementalValuePolicy
+An observable logistic T-learner:
+- one response model for `NO_ACTION` natural recovery
+- one response model for each intervention
+- action selection by estimated net value
+- warm-started from one logged action/outcome per historical case
+- updates only the model for the executed, observed action
+- exposes probability, uplift and value estimates for decision explanation
+
+Simulator probabilities and unselected potential outcomes are forbidden inputs.
+
 ## 11. Experiment design
 
 ### Main benchmark
@@ -174,6 +185,7 @@ Run the exact same seeded synthetic environment for:
 - RandomPolicy
 - RuleBasedPolicy
 - LinUCBPolicy
+- IncrementalValuePolicy
 
 Recommended runs:
 - smoke test: 1,000 events

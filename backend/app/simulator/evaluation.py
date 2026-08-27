@@ -170,9 +170,13 @@ def confidence_interval_95(values: list[float]) -> dict:
     }
 
 
-def directional_claim(interval: dict) -> str:
+def directional_claim(
+    interval: dict,
+    positive_label: str = "LINUCB_AHEAD",
+    negative_label: str = "RULES_AHEAD",
+) -> str:
     lower = interval["lower"]
     upper = interval["upper"]
     if lower is None or upper is None or lower <= 0 <= upper:
         return "INCONCLUSIVE"
-    return "LINUCB_AHEAD" if lower > 0 else "RULES_AHEAD"
+    return positive_label if lower > 0 else negative_label

@@ -3,6 +3,7 @@ from __future__ import annotations
 from statistics import mean
 
 from backend.app.policies.baselines import RandomPolicy, RuleBasedPolicy
+from backend.app.policies.incremental_value import IncrementalValuePolicy
 from backend.app.policies.linucb import LinUCBPolicy
 from backend.app.simulator.environment import (
     FAILURES,
@@ -15,6 +16,7 @@ from backend.app.simulator.evaluation import (
     confidence_interval_95,
     directional_claim,
 )
+from backend.app.simulator.training import train_incremental_value_policy
 
 
 def _analysis_bucket() -> dict:
@@ -141,12 +143,31 @@ def run_policy(policy, events: int, seed: int) -> dict:
     probability_uplifts = []
     segment_buckets = {}
     action_buckets = {}
+    estimation_count = 0
+    predicted_natural_probability = 0.0
+    predicted_action_probability = 0.0
+    predicted_probability_uplift = 0.0
+    predicted_incremental_value_paise = 0.0
+    selected_probability_absolute_error = 0.0
+    natural_probability_absolute_error = 0.0
+    selected_brier_score = 0.0
+    natural_brier_score = 0.0
+    pre_evaluation_training = (
+        policy.training_summary()
+        if isinstance(policy, IncrementalValuePolicy)
+        else None
+    )
 
     for i in range(events):
         ctx = env.sample_context(i)
         at_risk_paise += ctx.amount_paise
         allowed_actions = env.safety.allowed_actions(ctx)
         action = policy.select_action(ctx, allowed_actions=allowed_actions)
+        decision_estimate = (
+            policy.estimate_action(ctx, action)
+            if isinstance(policy, IncrementalValuePolicy)
+            else None
+        )
         action_counts[action.value] = action_counts.get(action.value, 0) + 1
         if action.value == "NO_ACTION":
             no_actions += 1
@@ -193,6 +214,37 @@ def run_policy(policy, events: int, seed: int) -> dict:
             oracle_action_counts.get(evaluation.oracle_action, 0) + 1
         )
 
+        if decision_estimate is not None:
+            estimation_count += 1
+            predicted_natural_probability += (
+                decision_estimate.natural_recovery_probability
+            )
+            predicted_action_probability += (
+                decision_estimate.action_recovery_probability
+            )
+            predicted_probability_uplift += (
+                decision_estimate.estimated_probability_uplift
+            )
+            predicted_incremental_value_paise += (
+                decision_estimate.expected_incremental_value_paise
+            )
+            selected_probability_absolute_error += abs(
+                decision_estimate.action_recovery_probability
+                - evaluation.selected_success_probability
+            )
+            natural_probability_absolute_error += abs(
+                decision_estimate.natural_recovery_probability
+                - evaluation.natural_recovery_probability
+            )
+            selected_brier_score += (
+                decision_estimate.action_recovery_probability
+                - float(outcome.recovered)
+            ) ** 2
+            natural_brier_score += (
+                decision_estimate.natural_recovery_probability
+                - float(evaluation.natural_recovered_amount_paise > 0)
+            ) ** 2
+
         for bucket_name, buckets in (
             (ctx.segment, segment_buckets),
             (action.value, action_buckets),
@@ -220,10 +272,10 @@ def run_policy(policy, events: int, seed: int) -> dict:
         # not a customer outcome. Learning from it would incorrectly teach the
         # policy that the action failed.
         if outcome.outcome_observed:
-            policy.update(ctx, action, outcome.reward_paise)
+            policy.update_observed_outcome(ctx, action, outcome)
 
     total_reward_paise = sum(rewards)
-    return {
+    result = {
         "events": events,
         "seed": seed,
         "revenue_at_risk_rupees": round(at_risk_paise / 100, 2),
@@ -265,6 +317,38 @@ def run_policy(policy, events: int, seed: int) -> dict:
         "no_actions": no_actions,
         "action_counts": action_counts,
     }
+    if estimation_count:
+        result["estimated_decision_metrics"] = {
+            "model_version": policy.model_version,
+            "estimates_from_observable_features_only": True,
+            "mean_estimated_natural_recovery_probability": round(
+                predicted_natural_probability / estimation_count, 4
+            ),
+            "mean_estimated_selected_action_probability": round(
+                predicted_action_probability / estimation_count, 4
+            ),
+            "mean_estimated_probability_uplift": round(
+                predicted_probability_uplift / estimation_count, 4
+            ),
+            "total_estimated_incremental_value_rupees": round(
+                predicted_incremental_value_paise / 100, 2
+            ),
+            "selected_probability_mae_against_evaluator": round(
+                selected_probability_absolute_error / estimation_count, 4
+            ),
+            "natural_probability_mae_against_evaluator": round(
+                natural_probability_absolute_error / estimation_count, 4
+            ),
+            "selected_outcome_brier_score": round(
+                selected_brier_score / estimation_count, 4
+            ),
+            "natural_outcome_brier_score": round(
+                natural_brier_score / estimation_count, 4
+            ),
+            "pre_evaluation_training": pre_evaluation_training,
+            "post_evaluation_training": policy.training_summary(),
+        }
+    return result
 
 
 def benchmark(events: int = 1000, seed: int = 42) -> dict:
@@ -281,6 +365,9 @@ def benchmark(events: int = 1000, seed: int = 42) -> dict:
         "random": run_policy(RandomPolicy(seed), events, seed),
         "rules": run_policy(RuleBasedPolicy(), events, seed),
         "linucb": run_policy(LinUCBPolicy(alpha=0.8), events, seed),
+        "incremental_value": run_policy(
+            train_incremental_value_policy(), events, seed
+        ),
     }
 
     rules_recovered = results["rules"]["recovered_revenue_rupees"]
@@ -289,6 +376,13 @@ def benchmark(events: int = 1000, seed: int = 42) -> dict:
     linucb_value = results["linucb"]["total_net_value_rupees"]
     rules_regret = results["rules"]["oracle_evaluation"]["oracle_regret_rupees"]
     linucb_regret = results["linucb"]["oracle_evaluation"]["oracle_regret_rupees"]
+    incremental_recovered = results["incremental_value"][
+        "recovered_revenue_rupees"
+    ]
+    incremental_value = results["incremental_value"]["total_net_value_rupees"]
+    incremental_regret = results["incremental_value"]["oracle_evaluation"][
+        "oracle_regret_rupees"
+    ]
 
     results["comparison"] = {
         "paired_case_count": events,
@@ -310,6 +404,25 @@ def benchmark(events: int = 1000, seed: int = 42) -> dict:
         "lower_regret_policy": "linucb"
         if linucb_regret < rules_regret
         else "rules",
+        "incremental_value_additional_simulated_rupees_vs_rules": round(
+            incremental_recovered - rules_recovered, 2
+        ),
+        "incremental_value_additional_net_value_rupees_vs_rules": round(
+            incremental_value - rules_value, 2
+        ),
+        "incremental_value_relative_gain_pct_vs_rules": round(
+            (
+                (incremental_recovered - rules_recovered)
+                / rules_recovered
+                * 100
+            )
+            if rules_recovered
+            else 0.0,
+            2,
+        ),
+        "incremental_value_oracle_regret_reduction_rupees_vs_rules": round(
+            rules_regret - incremental_regret, 2
+        ),
     }
     return results
 
@@ -336,8 +449,33 @@ def multiseed_benchmark(events: int = 10000, seeds: int = 10) -> dict:
     relative_gains = [
         run["comparison"]["linucb_relative_gain_pct_vs_rules"] for run in runs
     ]
+    incremental_revenue_differences = [
+        run["comparison"][
+            "incremental_value_additional_simulated_rupees_vs_rules"
+        ]
+        for run in runs
+    ]
+    incremental_value_differences = [
+        run["comparison"][
+            "incremental_value_additional_net_value_rupees_vs_rules"
+        ]
+        for run in runs
+    ]
+    incremental_regret_reductions = [
+        run["comparison"][
+            "incremental_value_oracle_regret_reduction_rupees_vs_rules"
+        ]
+        for run in runs
+    ]
+    incremental_relative_gains = [
+        run["comparison"]["incremental_value_relative_gain_pct_vs_rules"]
+        for run in runs
+    ]
 
     revenue_interval = confidence_interval_95(revenue_differences)
+    incremental_revenue_interval = confidence_interval_95(
+        incremental_revenue_differences
+    )
     return {
         "evaluation_contract": runs[0]["evaluation_contract"],
         "events_per_seed": events,
@@ -358,6 +496,28 @@ def multiseed_benchmark(events: int = 10000, seeds: int = 10) -> dict:
             "directional_claim": directional_claim(revenue_interval),
             "linucb_seed_win_rate": round(
                 sum(value > 0 for value in revenue_differences) / seeds, 3
+            ),
+            "incremental_value_additional_recovered_revenue_rupees_vs_rules_ci95": (
+                incremental_revenue_interval
+            ),
+            "incremental_value_additional_net_value_rupees_vs_rules_ci95": (
+                confidence_interval_95(incremental_value_differences)
+            ),
+            "incremental_value_oracle_regret_reduction_rupees_vs_rules_ci95": (
+                confidence_interval_95(incremental_regret_reductions)
+            ),
+            "incremental_value_relative_recovered_revenue_gain_pct_ci95": (
+                confidence_interval_95(incremental_relative_gains)
+            ),
+            "incremental_value_directional_claim": directional_claim(
+                incremental_revenue_interval,
+                positive_label="INCREMENTAL_VALUE_AHEAD",
+                negative_label="RULES_AHEAD",
+            ),
+            "incremental_value_seed_win_rate": round(
+                sum(value > 0 for value in incremental_revenue_differences)
+                / seeds,
+                3,
             ),
         },
         "claim_guardrail": (

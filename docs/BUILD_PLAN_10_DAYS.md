@@ -44,6 +44,13 @@ baseline as ahead of the current cold-start LinUCB learner.
 
 ## August 29 — Incremental-value layer
 
+**Code status:** a six-model observable logistic T-learner, balanced logged-
+history warm start, executed-action-only online updates, per-action probability/
+uplift/net-value estimates, calibration metrics and a decision explanation API
+are complete. Across 10 paired seeds, it beats rules by a mean 9.61% simulated
+recovered revenue with a 95% interval of 7.47% to 11.75% and a 10/10 seed win
+rate. These figures are explicitly synthetic.
+
 - Estimate no-action recovery from observable features
 - Estimate candidate-action outcomes
 - Calculate estimated uplift and expected net value

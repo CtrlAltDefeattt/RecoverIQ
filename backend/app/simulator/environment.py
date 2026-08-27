@@ -3,6 +3,7 @@ import math
 import random
 import hashlib
 
+from backend.app.domain.economics import intervention_cost_paise
 from backend.app.domain.models import (
     PolicyDecision,
     RecoveryAction,
@@ -19,15 +20,6 @@ FAILURES = [
     "NETWORK_ERROR",
 ]
 METHODS = ["card", "upi", "netbanking", "wallet"]
-
-ACTION_COST_PAISE = {
-    RecoveryAction.NO_ACTION: 0,
-    RecoveryAction.REMINDER: 100,
-    RecoveryAction.RETRY_24H: 200,
-    RecoveryAction.PAYMENT_LINK: 300,
-    RecoveryAction.ALT_PAYMENT: 300,
-    RecoveryAction.PARTIAL_PAYMENT: 400,
-}
 
 SEGMENT_ACTION_LIFT = {
     "LOYAL_SAAS": {
@@ -181,12 +173,7 @@ class RecoveryGym:
         ctx: RecoveryContext,
         action: RecoveryAction,
     ) -> int:
-        fatigue_penalty = (
-            100 * ctx.contacts_last_7d
-            if action == RecoveryAction.REMINDER
-            else 0
-        )
-        return ACTION_COST_PAISE[action] + fatigue_penalty
+        return intervention_cost_paise(ctx, action)
 
     def latent_recovery_rank(self, ctx: RecoveryContext) -> float:
         """Return a deterministic evaluator latent shared by every action.

@@ -16,7 +16,7 @@ Razorpay Test Mode / RecoveryGym
              |
              v
    Adaptive Recovery Policy
- (Random / Rules / LinUCB)
+ (Rules / LinUCB / Incremental Value)
              |
          proposal
              v
@@ -69,6 +69,22 @@ The oracle is restricted to actions the safety engine permits autonomously. Its
 regret metric compares realized net value, after intervention and contact-fatigue
 costs, rather than comparing recovery probability alone. Multi-seed comparisons
 use paired per-seed differences and Student-t 95% confidence intervals.
+
+## Day-4 learning boundary
+
+The incremental-value policy imports no simulator or evaluator component. It
+uses 26 observable context features and maintains one online logistic response
+model per action. The `NO_ACTION` model estimates natural recovery; candidate
+models estimate recovery after each intervention. Selection maximizes:
+
+```text
+estimated P(recovery | context, action) × amount - action cost
+```
+
+Historical warm-start generation stores one safety-permitted action and one
+observed outcome per case. During live simulation, only the executed action's
+model is updated. Unchosen potential outcomes remain available solely to the
+post-decision evaluator for calibration and regret reporting.
 
 ## Day-2 terminal-state rule
 
