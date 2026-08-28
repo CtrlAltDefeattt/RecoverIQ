@@ -11,10 +11,15 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--events", type=int, default=10000)
     parser.add_argument("--seeds", type=int, default=10)
+    parser.add_argument("--workers", type=int, default=1)
     parser.add_argument("--output", default="outputs/multiseed_results.json")
     args = parser.parse_args()
 
-    summary = multiseed_benchmark(events=args.events, seeds=args.seeds)
+    summary = multiseed_benchmark(
+        events=args.events,
+        seeds=args.seeds,
+        workers=args.workers,
+    )
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(summary, indent=2), encoding="utf-8")

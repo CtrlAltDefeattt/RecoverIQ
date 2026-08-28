@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from concurrent.futures import ProcessPoolExecutor
 from statistics import mean
 
 from backend.app.policies.baselines import RandomPolicy, RuleBasedPolicy
@@ -427,11 +428,29 @@ def benchmark(events: int = 1000, seed: int = 42) -> dict:
     return results
 
 
-def multiseed_benchmark(events: int = 10000, seeds: int = 10) -> dict:
+def _run_seed(arguments: tuple[int, int]) -> dict:
+    events, seed = arguments
+    return {"seed": seed, **benchmark(events, seed)}
+
+
+def multiseed_benchmark(
+    events: int = 10000,
+    seeds: int = 10,
+    workers: int = 1,
+) -> dict:
     if seeds <= 0:
         raise ValueError("seeds must be positive")
+    if workers <= 0:
+        raise ValueError("workers must be positive")
 
-    runs = [{"seed": seed, **benchmark(events, seed)} for seed in range(seeds)]
+    arguments = [(events, seed) for seed in range(seeds)]
+    if workers == 1:
+        runs = [_run_seed(item) for item in arguments]
+    else:
+        # executor.map preserves input order, so changing worker count cannot
+        # change the committed paired-seed report.
+        with ProcessPoolExecutor(max_workers=min(workers, seeds)) as executor:
+            runs = list(executor.map(_run_seed, arguments))
     revenue_differences = [
         run["comparison"]["linucb_additional_simulated_rupees_vs_rules"]
         for run in runs
