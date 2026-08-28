@@ -21,6 +21,13 @@ jobs:
           python-version: "3.12"
           cache: pip
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
       - name: Install dependencies
         run: pip install -r requirements.txt -r requirements-dev.txt
 
@@ -45,3 +52,15 @@ jobs:
         run: >-
           python -m experiments.run_day6_safety_gauntlet
           --output /tmp/recoveriq_ci_day6.json
+
+      - name: Install dashboard dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Lint dashboard
+        working-directory: frontend
+        run: npm run lint
+
+      - name: Test dashboard
+        working-directory: frontend
+        run: npm test
