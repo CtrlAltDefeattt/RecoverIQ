@@ -2,19 +2,19 @@
 @import "tw-animate-css";
 @import "../vendor/shadcn-tailwind-4.13.0.css";
 
-@utility scrollbar-thin {
+.scrollbar-thin {
   scrollbar-width: thin;
 }
 
-@utility scrollbar-none {
+.scrollbar-none {
   scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }
 
-@utility scrollbar-gutter-stable {
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-gutter-stable {
   scrollbar-gutter: stable;
 }
 
