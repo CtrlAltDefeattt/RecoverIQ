@@ -2,7 +2,7 @@
 @import "tw-animate-css";
 @import "../vendor/shadcn-tailwind-4.13.0.css";
 
-@source inline("scroll-fade-b");
+@source inline("scroll-fade-b shimmer");
 
 .scrollbar-thin {
   scrollbar-width: thin;
