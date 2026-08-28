@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from functools import lru_cache
 
 import httpx
 from fastapi import APIRouter, Header, HTTPException, Request
@@ -8,17 +9,21 @@ from fastapi import APIRouter, Header, HTTPException, Request
 from backend.app.adapters.razorpay import RazorpayAdapter
 from backend.app.core.config import get_settings
 from backend.app.services.razorpay_integration import RazorpayIntegrationService
+from backend.app.storage.sqlite import SQLiteRecoveryRepository
 
 
 router = APIRouter(prefix="/webhooks", tags=["webhooks"])
-integration_service = RazorpayIntegrationService()
+
+
+@lru_cache
+def get_integration_service(database_path: str) -> RazorpayIntegrationService:
+    return RazorpayIntegrationService(
+        repository=SQLiteRecoveryRepository(database_path)
+    )
 
 
 def _adapter() -> RazorpayAdapter:
     settings = get_settings()
-    integration_service.safety.autonomous_limit_paise = (
-        settings.recoveriq_autonomous_limit_paise
-    )
     return RazorpayAdapter(
         key_id=settings.razorpay_key_id,
         key_secret=settings.razorpay_key_secret,
@@ -52,6 +57,12 @@ async def razorpay_webhook(
         raise HTTPException(status_code=400, detail="Invalid JSON payload") from exc
 
     try:
+        integration_service = get_integration_service(
+            settings.recoveriq_database_path
+        )
+        integration_service.safety.autonomous_limit_paise = (
+            settings.recoveriq_autonomous_limit_paise
+        )
         return await integration_service.process(
             x_razorpay_event_id,
             payload,

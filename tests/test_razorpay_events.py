@@ -67,7 +67,8 @@ def test_captured_event_closes_case():
     )
 
     assert result["status"] == "case_closed"
-    assert service.payment_status["pay_test123"] == "RECOVERED"
+    assert service.repository.get_case("pay_test123")["status"] == "RECOVERED"
+    assert service.repository.counts()["outcomes"] == 1
 
 
 def test_captured_before_failed_does_not_reopen_case():
@@ -93,7 +94,7 @@ def test_captured_before_failed_does_not_reopen_case():
     )
 
     assert result["status"] == "stale_failure_ignored"
-    assert service.payment_status["pay_test123"] == "RECOVERED"
+    assert service.repository.get_case("pay_test123")["status"] == "RECOVERED"
 
 
 def test_duplicate_event_is_idempotently_ignored():

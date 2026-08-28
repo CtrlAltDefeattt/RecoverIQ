@@ -4,18 +4,22 @@ import json
 
 from fastapi.testclient import TestClient
 
-from backend.app.api.webhooks import integration_service
+from backend.app.api.webhooks import get_integration_service
 from backend.app.core.config import get_settings
 from backend.app.main import app
 from tests.test_razorpay_events import payment_payload
 
 
-def configure_test_environment(monkeypatch):
+def configure_test_environment(monkeypatch, tmp_path):
     monkeypatch.setenv("RAZORPAY_WEBHOOK_SECRET", "webhook-secret")
     monkeypatch.setenv("RECOVERIQ_MODE", "shadow")
     monkeypatch.setenv("RECOVERIQ_EXECUTE_RAZORPAY_ACTIONS", "false")
+    monkeypatch.setenv(
+        "RECOVERIQ_DATABASE_PATH",
+        str(tmp_path / "webhook.sqlite3"),
+    )
     get_settings.cache_clear()
-    integration_service.reset()
+    get_integration_service.cache_clear()
 
 
 def signed_headers(raw_body: bytes, event_id: str) -> dict:
@@ -31,8 +35,8 @@ def signed_headers(raw_body: bytes, event_id: str) -> dict:
     }
 
 
-def test_signed_failed_webhook_reaches_shadow_decision(monkeypatch):
-    configure_test_environment(monkeypatch)
+def test_signed_failed_webhook_reaches_shadow_decision(monkeypatch, tmp_path):
+    configure_test_environment(monkeypatch, tmp_path)
     raw_body = json.dumps(
         payment_payload("payment.failed"),
         separators=(",", ":"),
@@ -50,10 +54,13 @@ def test_signed_failed_webhook_reaches_shadow_decision(monkeypatch):
     assert body["status"] == "decision_recorded"
     assert body["execution_status"] == "shadow_logged"
     assert body["recommended_action"]
+    service = get_integration_service(str(tmp_path / "webhook.sqlite3"))
+    assert service.repository.counts()["decisions"] == 1
+    assert service.repository.counts()["actions"] == 1
 
 
-def test_duplicate_signed_webhook_is_ignored(monkeypatch):
-    configure_test_environment(monkeypatch)
+def test_duplicate_signed_webhook_is_ignored(monkeypatch, tmp_path):
+    configure_test_environment(monkeypatch, tmp_path)
     raw_body = json.dumps(payment_payload("payment.failed")).encode()
     headers = signed_headers(raw_body, "evt_api_duplicate")
 
@@ -65,8 +72,8 @@ def test_duplicate_signed_webhook_is_ignored(monkeypatch):
     assert second.json()["status"] == "duplicate_ignored"
 
 
-def test_invalid_signature_is_rejected(monkeypatch):
-    configure_test_environment(monkeypatch)
+def test_invalid_signature_is_rejected(monkeypatch, tmp_path):
+    configure_test_environment(monkeypatch, tmp_path)
     raw_body = json.dumps(payment_payload("payment.failed")).encode()
     headers = signed_headers(raw_body, "evt_api_bad_signature")
     headers["x-razorpay-signature"] = "invalid"
@@ -81,8 +88,8 @@ def test_invalid_signature_is_rejected(monkeypatch):
     assert response.status_code == 401
 
 
-def test_readiness_does_not_expose_secrets(monkeypatch):
-    configure_test_environment(monkeypatch)
+def test_readiness_does_not_expose_secrets(monkeypatch, tmp_path):
+    configure_test_environment(monkeypatch, tmp_path)
 
     with TestClient(app) as client:
         response = client.get("/readiness")

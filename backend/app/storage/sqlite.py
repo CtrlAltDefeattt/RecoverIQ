@@ -451,6 +451,19 @@ class SQLiteRecoveryRepository:
             )
             return action_id
 
+    def update_decision_execution_status(
+        self,
+        decision_id: int,
+        execution_status: str,
+    ) -> None:
+        with self.transaction() as connection:
+            cursor = connection.execute(
+                "UPDATE decisions SET execution_status = ? WHERE id = ?",
+                (execution_status, decision_id),
+            )
+            if cursor.rowcount != 1:
+                raise KeyError(decision_id)
+
     def complete_action(
         self,
         action_id: int,
@@ -503,6 +516,18 @@ class SQLiteRecoveryRepository:
             ORDER BY id
             """,
             (aggregate_type, aggregate_id),
+        )
+
+    def list_case_decisions(self, payment_id: str) -> list[dict]:
+        return self._all(
+            "SELECT * FROM decisions WHERE payment_id = ? ORDER BY id",
+            (payment_id,),
+        )
+
+    def list_case_actions(self, payment_id: str) -> list[dict]:
+        return self._all(
+            "SELECT * FROM actions WHERE payment_id = ? ORDER BY id",
+            (payment_id,),
         )
 
     def counts(self) -> dict[str, int]:
