@@ -8,7 +8,7 @@ RecoverIQ is an adaptive decision system for Razorpay AI Buildathon Track 03 —
 
 It is intentionally not an LLM-first system. Money-path decisions are measurable, bounded and auditable.
 
-> **Project status:** Day-7 reviewer dashboard. RecoverIQ now has a deployed four-screen command center for operations, decision explanation, paired learning evidence, and persisted safety audits. Dashboard values are fetched from its backend route and retain synthetic-data labels. The real Test Mode call and public webhook receipt remain pending until deployment secrets are configured; no credentials belong in this repository.
+> **Project status:** Day-8 final experiments. RecoverIQ now has a frozen 30-seed × 10,000-case paired benchmark, complete variability and negative-seed reporting, deterministic reviewer charts, a four-screen command center, and persisted safety audits. The real Test Mode call, public webhook receipt, and Vercel deployment remain pending until external configuration is completed; no credentials belong in this repository.
 
 ## Why this project
 
@@ -49,6 +49,10 @@ Razorpay already supplies recovery primitives such as Payment Links, reminders, 
 - Realized net-value oracle regret over autonomously permitted actions
 - Segment/action diagnostics and synthetic-data validation
 - Paired 95% confidence intervals with automatic claim guardrails
+- Frozen 30-seed × 10,000-case final benchmark with canonical config digest
+- Deterministic parallel execution with identical sequential results
+- Per-seed variability, win/loss and negative-seed reporting
+- Three accessible, dependency-free SVG evidence charts
 - Two-intervention journey orchestration with explicit `WAIT` and `STOP` commands
 - Recovered, stopped, exhausted and approval-escalated terminal states
 - 24-hour inter-intervention cooldown and no repeated action within a journey
@@ -92,13 +96,19 @@ additional simulated revenue versus fixed rules
 
 This is deliberately not described as real merchant uplift or a proven causal effect. Final submission numbers will use paired multi-seed runs and will be reported with variability and limitations.
 
-Day 3 established that cold-start LinUCB trails rules. The committed Day-4 run
-uses 10 paired seeds with 1,000 evaluation cases per seed. The new incremental-
-value policy beats rules by a mean ₹122,335 in simulated recovered revenue, or
-9.61%; the paired 95% interval for relative gain is 7.47% to 11.75%, and it wins
-all 10 seeds. Its mean selected-action probability MAE against evaluator truth
-is 5.89%. The evaluator emits `INCREMENTAL_VALUE_AHEAD`. These remain synthetic
-engineering results, not merchant-performance claims.
+Day 3 established that cold-start LinUCB trails rules. The frozen Day-8 run uses
+30 paired seeds with 10,000 evaluation cases per seed. The incremental-value
+policy beats rules by a mean ₹1,485,657.56 in simulated recovered revenue per
+seed, or 11.697%; the paired 95% interval for relative gain is 11.350% to
+12.043%, and it wins all 30 seeds. Its mean selected-action probability MAE
+against evaluator truth is 5.166 percentage points. The evaluator emits
+`INCREMENTAL_VALUE_AHEAD`. These remain synthetic engineering results, not
+merchant-performance claims.
+
+Cold-start LinUCB remains inconclusive in the same final run: its mean relative
+gain is 0.788%, its 95% interval crosses zero (-0.160% to 1.737%), and it has 11
+negative seeds. The repository retains those negative results rather than
+hiding them.
 
 The committed Day-5 scenario runs 500 bounded journeys and a 100-case batch.
 Every journey reaches a terminal state, no journey exceeds two interventions,
@@ -115,8 +125,12 @@ adapter execution and zero real network calls. The full suite contains 55 tests.
 Day 7 packages the committed Day 4–6 artifacts into a reviewer-facing command
 center. Its four interactive screens use a dashboard backend route rather than
 embedding showcase values in presentation markup. The production build, lint,
-and five frontend contract tests pass. Open the deployed dashboard at
-[recoveriq-command-center.vitkarprajwal.chatgpt.site](https://recoveriq-command-center.vitkarprajwal.chatgpt.site).
+and five frontend contract tests pass. The public deployment target is Vercel.
+
+Day 8 freezes the final evaluation contract and adds a canonical configuration
+digest, 30-seed evidence, negative-seed analysis, committed raw results and
+three reviewer-ready SVG charts. See `docs/DAY8_FINAL_EXPERIMENTS.md` for the
+exact configuration, results, limitations and submission-safe claim.
 
 ## Architecture
 
@@ -183,6 +197,7 @@ pytest -q
 python -m experiments.run_benchmark --events 1000 --seed 42
 python -m experiments.run_multiseed --events 10000 --seeds 10 \
   --output outputs/multiseed_results.json
+python -m experiments.run_day8_final
 python -m experiments.run_day5_scenarios --journey-cases 500 \
   --batch-cases 100 --seed 42 --budget-paise 5000 --max-actions 25 \
   --output outputs/day5_journey_budget_demo.json
@@ -236,7 +251,8 @@ python -m scripts.razorpay_test_mode_smoke --amount-paise 100
 - See `docs/DAY4_INCREMENTAL_VALUE.md` for the learner, leakage boundary and results.
 - See `docs/DAY5_JOURNEY_BUDGET.md` for the state machine, allocation rules and scenario results.
 - See `docs/DAY6_PERSISTENCE_SAFETY.md` for transaction boundaries, schema and Safety Gauntlet evidence.
-- See `docs/DAY7_DASHBOARD.md` for the screen contract, backend data boundary and deployed URL.
+- See `docs/DAY7_DASHBOARD.md` for the screen contract and backend data boundary.
+- See `docs/DAY8_FINAL_EXPERIMENTS.md` for the frozen final benchmark, charts, variability and limitations.
 
 References:
 

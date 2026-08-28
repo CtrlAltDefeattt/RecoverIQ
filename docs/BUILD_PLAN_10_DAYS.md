@@ -102,10 +102,20 @@ loading/error states, accessible navigation and five frontend contract tests.
 
 ## September 2 — Final experiments
 
+**Code status:** the benchmark is frozen at 30 paired seeds and 10,000 cases
+per seed, with a canonical configuration digest, deterministic parallel
+execution, complete per-seed evidence, variability and negative-seed analysis,
+and three committed SVG charts. The incremental-value policy wins 30/30 seeds
+against fixed rules with a mean 11.697% simulated recovered-revenue gain and a
+95% interval of 11.350% to 12.043%. These figures are explicitly synthetic.
+
 - Run 30 or more paired seeds if runtime permits
 - Generate final metrics and charts
 - Report variability, negative seeds and limitations
 - Freeze benchmark configuration
+
+**Exit criterion:** complete. Every final headline number traces to the frozen
+configuration and committed report.
 
 ## September 3 — Deployment and repository polish
 

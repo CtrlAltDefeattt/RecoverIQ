@@ -4,9 +4,10 @@ Day 7 turns RecoverIQ's committed engineering artifacts into a compact,
 reviewer-facing operational product. The interface is intentionally a working
 surface rather than a marketing landing page.
 
-## Live dashboard
+## Deployment target
 
-https://recoveriq-command-center.vitkarprajwal.chatgpt.site
+The public dashboard target is Vercel. The Day-7 temporary preview is not the
+submission deployment.
 
 ## Screen contract
 

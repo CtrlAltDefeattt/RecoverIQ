@@ -1,8 +1,7 @@
 # RecoverIQ Command Center
 
-The Day-7 frontend is a responsive Vinext/React reviewer dashboard deployed at:
-
-https://recoveriq-command-center.vitkarprajwal.chatgpt.site
+The Day-7 frontend is a responsive Vinext/React reviewer dashboard. Its public
+deployment target is Vercel.
 
 ## Screens
 
