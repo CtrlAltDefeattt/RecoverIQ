@@ -40,3 +40,8 @@ jobs:
           python -m experiments.run_day5_scenarios --journey-cases 50
           --batch-cases 25 --seed 42 --budget-paise 2000 --max-actions 5
           --output /tmp/recoveriq_ci_day5.json
+
+      - name: Run persistence Safety Gauntlet
+        run: >-
+          python -m experiments.run_day6_safety_gauntlet
+          --output /tmp/recoveriq_ci_day6.json

@@ -1,0 +1,50 @@
+{
+  "scenario_count": 7,
+  "passed_count": 7,
+  "all_passed": true,
+  "scenarios": {
+    "duplicate_event": {
+      "passed": true,
+      "result": "duplicate_ignored"
+    },
+    "customer_opt_out": {
+      "passed": true,
+      "result": "no_action"
+    },
+    "high_value_approval": {
+      "passed": true,
+      "result": "awaiting_human_approval"
+    },
+    "attempt_limit": {
+      "passed": true,
+      "result": "no_action"
+    },
+    "already_paid_terminal": {
+      "passed": true,
+      "result": "stale_failure_ignored"
+    },
+    "exactly_once_execution": {
+      "passed": true,
+      "result": "duplicate_ignored"
+    },
+    "audit_completeness": {
+      "passed": true,
+      "result": [
+        "ACTION_COMPLETED",
+        "ACTION_RECORDED",
+        "CASE_OPENED",
+        "DECISION_RECORDED"
+      ]
+    }
+  },
+  "persistence_counts": {
+    "webhook_events": 9,
+    "recovery_cases": 6,
+    "decisions": 7,
+    "actions": 7,
+    "outcomes": 1,
+    "audit_log": 44
+  },
+  "real_network_calls": 0,
+  "fake_adapter_calls": 1
+}
