@@ -92,6 +92,15 @@ presented as a globally optimal knapsack solver.
 - Terminal successful case → BLOCK further recovery
 - Policy decision is always persisted with reason codes
 
+### Durable enforcement
+
+Day 6 persists webhook events, recovery cases, decisions, action reservations,
+observed outcomes and append-only audit entries in SQLite. Event IDs and action
+idempotency keys have database unique constraints. A `payment.captured` state is
+terminal, so a later failure is recorded as stale without reopening the case.
+External execution is reserved before the adapter call and its completion or
+failure is written back to the ledger.
+
 ### Principle
 **The model proposes. The policy engine disposes.**
 

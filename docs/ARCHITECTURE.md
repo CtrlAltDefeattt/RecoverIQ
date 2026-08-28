@@ -6,7 +6,8 @@ Razorpay Test Mode / RecoveryGym
              v
       Event Ingestion
              |
- Signature / Event-ID Dedup
+ Signature / Durable Event Claim
+        (SQLite UNIQUE)
              |
       Event Normalizer
  (failed / captured / ignored)
@@ -52,6 +53,11 @@ Simulator      Razorpay
                        |
                        v
                  Audit / Metrics
+                       |
+                       v
+              SQLite Durable Ledger
+       events / cases / decisions / actions /
+                  outcomes / audit
 ```
 
 ## Boundary rule
@@ -112,6 +118,20 @@ mutate another request's cached model.
 not reopen or execute recovery. This matches Razorpay's documented possibility
 of a failed event being followed by capture for the same transaction.
 
-The current event and case stores are in memory. Durable uniqueness, atomic
-state transitions and an execution outbox are intentionally scheduled for the
-persistence milestone.
+## Day-6 persistence boundary
+
+SQLite is now the source of truth for webhook identity and case terminality.
+The service claims an event using a primary-key insert before normalization or
+decision work. A duplicate insert fails atomically and produces no second
+decision or action. Supported events then update case state and ledgers through
+`BEGIN IMMEDIATE` transactions.
+
+An autonomous external action is inserted with a unique idempotency key and a
+`pending_execution` status before the adapter call. Success or failure is then
+persisted, and only successful execution increments attempt/contact counters.
+This closes the in-process duplicate gap. A full transactional outbox with
+asynchronous delivery remains a production-hardening step beyond this V1.
+
+Capture is terminal in the database, including when it arrives before a failure
+or across process restarts. Later failure events are retained as ignored audit
+records but cannot reopen the case.

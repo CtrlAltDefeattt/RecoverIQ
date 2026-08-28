@@ -74,6 +74,11 @@ complete. All scenario invariants are machine-checked.
 
 ## August 31 — Persistence and Safety Gauntlet
 
+**Code status:** SQLite event/case/decision/action/outcome/audit tables,
+database-enforced event and action idempotency, terminal out-of-order capture
+handling, pre-call execution reservation and a seven-scenario persisted Safety
+Gauntlet are complete. The repository now passes 55 tests.
+
 - Replace in-memory event IDs with SQLite unique constraints
 - Persist cases, events, decisions, actions and outcomes
 - Handle out-of-order terminal events

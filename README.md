@@ -8,7 +8,7 @@ RecoverIQ is an adaptive decision system for Razorpay AI Buildathon Track 03 —
 
 It is intentionally not an LLM-first system. Money-path decisions are measurable, bounded and auditable.
 
-> **Project status:** Day-5 bounded recovery journey. RecoverIQ now carries each case through at most two interventions, enforces a 24-hour cooldown, terminates with an explicit recovery/stop/exhaustion/escalation state, and allocates a batch action budget by positive expected incremental value. The real Test Mode call and public webhook receipt remain pending until deployment secrets are configured; no credentials belong in this repository.
+> **Project status:** Day-6 durable recovery foundation. RecoverIQ now uses SQLite unique constraints and transactional ledgers for webhook events, cases, decisions, actions, outcomes and audits. Captures are terminal across process restarts, execution is reserved before the external call, and a seven-scenario Safety Gauntlet verifies the critical failure paths. The real Test Mode call and public webhook receipt remain pending until deployment secrets are configured; no credentials belong in this repository.
 
 ## Why this project
 
@@ -54,12 +54,15 @@ Razorpay already supplies recovery primitives such as Payment Links, reminders, 
 - 24-hour inter-intervention cooldown and no repeated action within a journey
 - Batch allocator with budget, action-count and one-action-per-case constraints
 - Journey and batch simulation API endpoints
+- Durable SQLite event, case, decision, action, outcome and audit storage
+- Database-enforced webhook and action idempotency
+- Terminal capture ordering that survives service restarts
+- Pre-execution action reservation and persisted execution status
+- Seven-scenario persisted Safety Gauntlet
 - Safety, adapter, signature, webhook and ordering tests
 
 ## Planned before September 5
 
-- Durable SQLite event, action and audit stores
-- Durable out-of-order event handling and idempotent execution
 - Four-screen React dashboard
 - End-to-end Razorpay Test Mode recovery demo
 
@@ -99,12 +102,20 @@ budget and a 25-action cap, the allocator spends exactly ₹50 on 21 unique,
 positive-value cases and reports ₹17,634.44 of estimated incremental value.
 That value is a model estimate inside RecoveryGym, not realized merchant uplift.
 
+Day 6 runs seven persisted safety scenarios: duplicate delivery, customer
+opt-out, high-value approval, attempt exhaustion, capture-before-failure,
+exactly-once execution and audit completeness. All seven pass, with one fake
+adapter execution and zero real network calls. The full suite contains 55 tests.
+
 ## Architecture
 
 ```text
 Razorpay Test Mode / RecoveryGym
              |
       Event validation
+             |
+    Durable event claim
+      (SQLite UNIQUE)
              |
        Context builder
              |
@@ -121,7 +132,9 @@ Razorpay Test Mode / RecoveryGym
        |
      Outcome
        |
- Reward + audit + learning
+ Durable outcome + audit
+       |
+ Reward + learning
 ```
 
 The model proposes; the safety engine disposes. A proposal that was blocked or is awaiting approval is not treated as a failed customer outcome.
@@ -158,6 +171,8 @@ python -m experiments.run_multiseed --events 10000 --seeds 10 \
 python -m experiments.run_day5_scenarios --journey-cases 500 \
   --batch-cases 100 --seed 42 --budget-paise 5000 --max-actions 25 \
   --output outputs/day5_journey_budget_demo.json
+python -m experiments.run_day6_safety_gauntlet \
+  --output outputs/day6_safety_gauntlet.json
 ```
 
 Run the API:
@@ -190,12 +205,14 @@ python -m scripts.razorpay_test_mode_smoke --amount-paise 100
 - Duplicate events are identified with `x-razorpay-event-id`.
 - A captured payment is terminal, so a later failure for the same payment is ignored.
 - Live execution requires both `RECOVERIQ_MODE=autonomous` and `RECOVERIQ_EXECUTE_RAZORPAY_ACTIONS=true`.
-- The current in-memory duplicate set is development-only and will be replaced with a durable unique constraint.
+- Webhook event IDs and action idempotency keys are enforced by SQLite unique constraints.
+- Set `RECOVERIQ_DATABASE_PATH` to a writable durable path; the default is `data/recoveriq.sqlite3`.
 - The large-scale benchmark uses `RecoveryGym`; it does not create thousands of Test Mode Payment Links.
 - See `docs/DAY2_INTEGRATION.md` for deployment and webhook configuration.
 - See `docs/DAY3_EVALUATION.md` for the evaluation contract and metric definitions.
 - See `docs/DAY4_INCREMENTAL_VALUE.md` for the learner, leakage boundary and results.
 - See `docs/DAY5_JOURNEY_BUDGET.md` for the state machine, allocation rules and scenario results.
+- See `docs/DAY6_PERSISTENCE_SAFETY.md` for transaction boundaries, schema and Safety Gauntlet evidence.
 
 References:
 
