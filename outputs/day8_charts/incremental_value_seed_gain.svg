@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">RecoverIQ gain versus fixed rules by seed</title>
+  <desc id="desc">Relative simulated recovered-revenue difference; every seed is shown</desc>
+  <rect width="1200" height="680" fill="#07111d"/>
+  <rect x="24" y="24" width="1152" height="632" rx="24" fill="#0c1724" stroke="#203247"/>
+  <text x="64" y="80" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="30" font-weight="700">RecoverIQ gain versus fixed rules by seed</text>
+  <text x="64" y="112" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="16">Relative simulated recovered-revenue difference; every seed is shown</text>
+  <line x1="72" y1="506.8" x2="1128" y2="506.8" stroke="#e7edf5" stroke-width="2"/>
+  <line x1="72" y1="544.0" x2="1128" y2="544.0" stroke="#26384a"/>
+  <text x="60" y="549.0" text-anchor="end" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">-1.6%</text>
+  <line x1="72" y1="448.0" x2="1128" y2="448.0" stroke="#26384a"/>
+  <text x="60" y="453.0" text-anchor="end" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">2.5%</text>
+  <line x1="72" y1="352.0" x2="1128" y2="352.0" stroke="#26384a"/>
+  <text x="60" y="357.0" text-anchor="end" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">6.5%</text>
+  <line x1="72" y1="256.0" x2="1128" y2="256.0" stroke="#26384a"/>
+  <text x="60" y="261.0" text-anchor="end" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">10.6%</text>
+  <line x1="72" y1="160.0" x2="1128" y2="160.0" stroke="#26384a"/>
+  <text x="60" y="165.0" text-anchor="end" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">14.6%</text>
+  <rect x="77.6" y="205.9" width="23.9" height="300.9" rx="3" fill="#24d39a"><title>Seed 0: 12.68%</title></rect>
+  <text x="89.6" y="570" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="11">0</text>
+  <rect x="112.8" y="269.5" width="23.9" height="237.3" rx="3" fill="#24d39a"><title>Seed 1: 10.00%</title></rect>
+  <rect x="148.0" y="241.1" width="23.9" height="265.8" rx="3" fill="#24d39a"><title>Seed 2: 11.20%</title></rect>
+  <text x="160.0" y="570" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="11">2</text>
+  <rect x="183.2" y="214.5" width="23.9" height="292.4" rx="3" fill="#24d39a"><title>Seed 3: 12.32%</title></rect>
+  <rect x="218.4" y="257.0" width="23.9" height="249.9" rx="3" fill="#24d39a"><title>Seed 4: 10.53%</title></rect>
+  <text x="230.4" y="570" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="11">4</text>
+  <rect x="253.6" y="205.7" width="23.9" height="301.1" rx="3" fill="#24d39a"><title>Seed 5: 12.69%</title></rect>
+  <rect x="288.8" y="203.1" width="23.9" height="303.7" rx="3" fill="#24d39a"><title>Seed 6: 12.80%</title></rect>
+  <text x="300.8" y="570" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="11">6</text>
+  <rect x="324.0" y="248.7" width="23.9" height="258.2" rx="3" fill="#24d39a"><title>Seed 7: 10.88%</title></rect>
+  <rect x="359.2" y="242.0" width="23.9" height="264.8" rx="3" fill="#24d39a"><title>Seed 8: 11.16%</title></rect>
+  <text x="371.2" y="570" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="11">8</text>
+  <rect x="394.4" y="223.5" width="23.9" height="283.3" rx="3" fill="#24d39a"><title>Seed 9: 11.94%</title></rect>
+  <rect x="429.6" y="217.6" width="23.9" height="289.3" rx="3" fill="#24d39a"><title>Seed 10: 12.19%</title></rect>
+  <text x="441.6" y="570" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="11">10</text>
+  <rect x="464.8" y="210.0" width="23.9" height="296.9" rx="3" fill="#24d39a"><title>Seed 11: 12.51%</title></rect>
+  <rect x="500.0" y="210.0" width="23.9" height="296.9" rx="3" fill="#24d39a"><title>Seed 12: 12.51%</title></rect>
+  <text x="512.0" y="570" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="11">12</text>
+  <rect x="535.2" y="252.7" width="23.9" height="254.1" rx="3" fill="#24d39a"><title>Seed 13: 10.71%</title></rect>
+  <rect x="570.4" y="220.4" width="23.9" height="286.4" rx="3" fill="#24d39a"><title>Seed 14: 12.07%</title></rect>
+  <text x="582.4" y="570" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="11">14</text>
+  <rect x="605.6" y="245.3" width="23.9" height="261.5" rx="3" fill="#24d39a"><title>Seed 15: 11.02%</title></rect>
+  <rect x="640.8" y="243.4" width="23.9" height="263.4" rx="3" fill="#24d39a"><title>Seed 16: 11.10%</title></rect>
+  <text x="652.8" y="570" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="11">16</text>
+  <rect x="676.0" y="229.2" width="23.9" height="277.6" rx="3" fill="#24d39a"><title>Seed 17: 11.70%</title></rect>
+  <rect x="711.2" y="210.2" width="23.9" height="296.6" rx="3" fill="#24d39a"><title>Seed 18: 12.50%</title></rect>
+  <text x="723.2" y="570" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="11">18</text>
+  <rect x="746.4" y="210.0" width="23.9" height="296.9" rx="3" fill="#24d39a"><title>Seed 19: 12.51%</title></rect>
+  <rect x="781.6" y="197.2" width="23.9" height="309.7" rx="3" fill="#24d39a"><title>Seed 20: 13.05%</title></rect>
+  <text x="793.6" y="570" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="11">20</text>
+  <rect x="816.8" y="291.1" width="23.9" height="215.7" rx="3" fill="#24d39a"><title>Seed 21: 9.09%</title></rect>
+  <rect x="852.0" y="211.4" width="23.9" height="295.4" rx="3" fill="#24d39a"><title>Seed 22: 12.45%</title></rect>
+  <text x="864.0" y="570" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="11">22</text>
+  <rect x="887.2" y="226.6" width="23.9" height="280.3" rx="3" fill="#24d39a"><title>Seed 23: 11.81%</title></rect>
+  <rect x="922.4" y="210.9" width="23.9" height="295.9" rx="3" fill="#24d39a"><title>Seed 24: 12.47%</title></rect>
+  <text x="934.4" y="570" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="11">24</text>
+  <rect x="957.6" y="244.4" width="23.9" height="262.5" rx="3" fill="#24d39a"><title>Seed 25: 11.06%</title></rect>
+  <rect x="992.8" y="242.2" width="23.9" height="264.6" rx="3" fill="#24d39a"><title>Seed 26: 11.15%</title></rect>
+  <text x="1004.8" y="570" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="11">26</text>
+  <rect x="1028.0" y="217.1" width="23.9" height="289.7" rx="3" fill="#24d39a"><title>Seed 27: 12.21%</title></rect>
+  <rect x="1063.2" y="235.1" width="23.9" height="271.7" rx="3" fill="#24d39a"><title>Seed 28: 11.45%</title></rect>
+  <text x="1075.2" y="570" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="11">28</text>
+  <rect x="1098.4" y="242.5" width="23.9" height="264.4" rx="3" fill="#24d39a"><title>Seed 29: 11.14%</title></rect>
+  <text x="600.0" y="596" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="14">Paired seed</text>
+  <text x="64" y="626" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="14">Synthetic paired evaluation — not measured merchant uplift</text>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">Mean oracle regret by policy</title>
+  <desc id="desc">Lower is better; oracle is restricted to autonomously permitted actions</desc>
+  <rect width="1200" height="680" fill="#07111d"/>
+  <rect x="24" y="24" width="1152" height="632" rx="24" fill="#0c1724" stroke="#203247"/>
+  <text x="64" y="80" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="30" font-weight="700">Mean oracle regret by policy</text>
+  <text x="64" y="112" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="16">Lower is better; oracle is restricted to autonomously permitted actions</text>
+  <line x1="330.0" y1="154" x2="330.0" y2="550" stroke="#26384a"/>
+  <text x="330.0" y="575" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">₹0.0M</text>
+  <line x1="482.0" y1="154" x2="482.0" y2="550" stroke="#26384a"/>
+  <text x="482.0" y="575" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">₹0.8M</text>
+  <line x1="634.0" y1="154" x2="634.0" y2="550" stroke="#26384a"/>
+  <text x="634.0" y="575" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">₹1.7M</text>
+  <line x1="786.0" y1="154" x2="786.0" y2="550" stroke="#26384a"/>
+  <text x="786.0" y="575" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">₹2.5M</text>
+  <line x1="938.0" y1="154" x2="938.0" y2="550" stroke="#26384a"/>
+  <text x="938.0" y="575" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">₹3.3M</text>
+  <line x1="1090.0" y1="154" x2="1090.0" y2="550" stroke="#26384a"/>
+  <text x="1090.0" y="575" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">₹4.2M</text>
+  <text x="64" y="213" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="17">Random</text>
+  <rect x="330" y="188" width="678.6" height="38" rx="9" fill="#61a8ff"/>
+  <text x="1020.6" y="213" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="15" font-weight="700">₹3,726,842</text>
+  <text x="64" y="301" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="17">Fixed rules</text>
+  <rect x="330" y="276" width="329.6" height="38" rx="9" fill="#61a8ff"/>
+  <text x="671.6" y="301" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="15" font-weight="700">₹1,810,249</text>
+  <text x="64" y="389" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="17">LinUCB</text>
+  <rect x="330" y="364" width="311.2" height="38" rx="9" fill="#61a8ff"/>
+  <text x="653.2" y="389" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="15" font-weight="700">₹1,708,933</text>
+  <text x="64" y="477" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="17">RecoverIQ incremental value</text>
+  <rect x="330" y="452" width="59.2" height="38" rx="9" fill="#24d39a"/>
+  <text x="401.2" y="477" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="15" font-weight="700">₹324,936</text>
+  <text x="64" y="626" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="14">Synthetic paired evaluation — not measured merchant uplift</text>
+</svg>

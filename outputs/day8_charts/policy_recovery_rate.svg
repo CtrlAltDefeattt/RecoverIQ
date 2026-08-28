@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">Mean recovery rate by policy</title>
+  <desc id="desc">30 paired seeds × 10,000 cases</desc>
+  <rect width="1200" height="680" fill="#07111d"/>
+  <rect x="24" y="24" width="1152" height="632" rx="24" fill="#0c1724" stroke="#203247"/>
+  <text x="64" y="80" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="30" font-weight="700">Mean recovery rate by policy</text>
+  <text x="64" y="112" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="16">30 paired seeds × 10,000 cases</text>
+  <line x1="330.0" y1="154" x2="330.0" y2="550" stroke="#26384a"/>
+  <text x="330.0" y="575" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">0%</text>
+  <line x1="482.0" y1="154" x2="482.0" y2="550" stroke="#26384a"/>
+  <text x="482.0" y="575" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">13%</text>
+  <line x1="634.0" y1="154" x2="634.0" y2="550" stroke="#26384a"/>
+  <text x="634.0" y="575" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">25%</text>
+  <line x1="786.0" y1="154" x2="786.0" y2="550" stroke="#26384a"/>
+  <text x="786.0" y="575" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">38%</text>
+  <line x1="938.0" y1="154" x2="938.0" y2="550" stroke="#26384a"/>
+  <text x="938.0" y="575" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">51%</text>
+  <line x1="1090.0" y1="154" x2="1090.0" y2="550" stroke="#26384a"/>
+  <text x="1090.0" y="575" text-anchor="middle" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">63%</text>
+  <text x="64" y="213" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="17">Random</text>
+  <rect x="330" y="188" width="506.5" height="38" rx="9" fill="#61a8ff"/>
+  <text x="848.5" y="213" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="16" font-weight="700">42.28%</text>
+  <text x="64" y="301" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="17">Fixed rules</text>
+  <rect x="330" y="276" width="607.3" height="38" rx="9" fill="#61a8ff"/>
+  <text x="949.3" y="301" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="16" font-weight="700">50.70%</text>
+  <text x="64" y="389" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="17">LinUCB</text>
+  <rect x="330" y="364" width="601.5" height="38" rx="9" fill="#61a8ff"/>
+  <text x="943.5" y="389" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="16" font-weight="700">50.22%</text>
+  <text x="64" y="477" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="17">RecoverIQ incremental value</text>
+  <rect x="330" y="452" width="678.6" height="38" rx="9" fill="#24d39a"/>
+  <text x="1020.6" y="477" fill="#e7edf5" font-family="Inter,Segoe UI,sans-serif" font-size="16" font-weight="700">56.65%</text>
+  <text x="64" y="626" fill="#98a7b8" font-family="Inter,Segoe UI,sans-serif" font-size="14">Synthetic paired evaluation — not measured merchant uplift</text>
+</svg>
