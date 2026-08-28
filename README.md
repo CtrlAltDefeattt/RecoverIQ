@@ -8,7 +8,7 @@ RecoverIQ is an adaptive decision system for Razorpay AI Buildathon Track 03 —
 
 It is intentionally not an LLM-first system. Money-path decisions are measurable, bounded and auditable.
 
-> **Project status:** Day-6 durable recovery foundation. RecoverIQ now uses SQLite unique constraints and transactional ledgers for webhook events, cases, decisions, actions, outcomes and audits. Captures are terminal across process restarts, execution is reserved before the external call, and a seven-scenario Safety Gauntlet verifies the critical failure paths. The real Test Mode call and public webhook receipt remain pending until deployment secrets are configured; no credentials belong in this repository.
+> **Project status:** Day-7 reviewer dashboard. RecoverIQ now has a deployed four-screen command center for operations, decision explanation, paired learning evidence, and persisted safety audits. Dashboard values are fetched from its backend route and retain synthetic-data labels. The real Test Mode call and public webhook receipt remain pending until deployment secrets are configured; no credentials belong in this repository.
 
 ## Why this project
 
@@ -59,11 +59,16 @@ Razorpay already supplies recovery primitives such as Payment Links, reminders, 
 - Terminal capture ordering that survives service restarts
 - Pre-execution action reservation and persisted execution status
 - Seven-scenario persisted Safety Gauntlet
+- Responsive four-screen reviewer dashboard
+- Command Center with bounded journey and batch-budget posture
+- Decision Detail with probability, uplift, value and policy-gate explanations
+- Learning Lab with paired confidence intervals and calibration metrics
+- Safety & Audit trace backed by the Day-6 persisted gauntlet
+- Dashboard backend route with loading and failure states
 - Safety, adapter, signature, webhook and ordering tests
 
 ## Planned before September 5
 
-- Four-screen React dashboard
 - End-to-end Razorpay Test Mode recovery demo
 
 ## Recovery actions
@@ -107,6 +112,12 @@ opt-out, high-value approval, attempt exhaustion, capture-before-failure,
 exactly-once execution and audit completeness. All seven pass, with one fake
 adapter execution and zero real network calls. The full suite contains 55 tests.
 
+Day 7 packages the committed Day 4–6 artifacts into a reviewer-facing command
+center. Its four interactive screens use a dashboard backend route rather than
+embedding showcase values in presentation markup. The production build, lint,
+and five frontend contract tests pass. Open the deployed dashboard at
+[recoveriq-command-center.vitkarprajwal.chatgpt.site](https://recoveriq-command-center.vitkarprajwal.chatgpt.site).
+
 ## Architecture
 
 ```text
@@ -135,6 +146,10 @@ Razorpay Test Mode / RecoveryGym
  Durable outcome + audit
        |
  Reward + learning
+       |
+ Dashboard read model
+       |
+ Four-screen command center
 ```
 
 The model proposes; the safety engine disposes. A proposal that was blocked or is awaiting approval is not treated as a failed customer outcome.
@@ -181,6 +196,14 @@ Run the API:
 uvicorn backend.app.main:app --reload
 ```
 
+Run the dashboard:
+
+```bash
+cd frontend
+npm ci
+npm run dev
+```
+
 Endpoints:
 
 ```text
@@ -213,6 +236,7 @@ python -m scripts.razorpay_test_mode_smoke --amount-paise 100
 - See `docs/DAY4_INCREMENTAL_VALUE.md` for the learner, leakage boundary and results.
 - See `docs/DAY5_JOURNEY_BUDGET.md` for the state machine, allocation rules and scenario results.
 - See `docs/DAY6_PERSISTENCE_SAFETY.md` for transaction boundaries, schema and Safety Gauntlet evidence.
+- See `docs/DAY7_DASHBOARD.md` for the screen contract, backend data boundary and deployed URL.
 
 References:
 

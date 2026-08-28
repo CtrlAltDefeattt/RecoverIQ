@@ -135,3 +135,23 @@ asynchronous delivery remains a production-hardening step beyond this V1.
 Capture is terminal in the database, including when it arrives before a failure
 or across process restarts. Later failure events are retained as ignored audit
 records but cannot reopen the case.
+
+## Day-7 dashboard boundary
+
+The dashboard is a separate Vinext/React application with four interactive
+views. It requests one structured read model from `GET /api/dashboard`; screen
+components never contain standalone metric constants. The route composes the
+committed Day 4–6 evaluation, journey, budget and safety artifacts and labels
+the source as synthetic.
+
+```text
+Committed benchmark + journey + gauntlet artifacts
+                       |
+              Dashboard API read model
+                       |
+  Command Center / Decision / Learning / Safety & Audit
+```
+
+The deployed dashboard is reviewer-facing and read-only. It does not enable
+production charging or bypass the webhook service's policy and persistence
+boundaries.
