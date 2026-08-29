@@ -1,3 +1,4 @@
+import os
 from functools import lru_cache
 from typing import Literal
 
@@ -11,7 +12,11 @@ class Settings(BaseSettings):
     recoveriq_mode: Literal["shadow", "assisted", "autonomous"] = "shadow"
     recoveriq_execute_razorpay_actions: bool = False
     recoveriq_autonomous_limit_paise: int = 1_000_000
-    recoveriq_database_path: str = "data/recoveriq.sqlite3"
+    recoveriq_database_path: str = (
+        "/tmp/recoveriq.sqlite3"
+        if os.getenv("VERCEL")
+        else "data/recoveriq.sqlite3"
+    )
 
     model_config = SettingsConfigDict(
         env_file=".env",
