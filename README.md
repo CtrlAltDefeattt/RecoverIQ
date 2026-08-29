@@ -8,7 +8,7 @@ RecoverIQ is an adaptive decision system for Razorpay AI Buildathon Track 03 —
 
 It is intentionally not an LLM-first system. Money-path decisions are measurable, bounded and auditable.
 
-> **Project status:** Day-8 final experiments. RecoverIQ now has a frozen 30-seed × 10,000-case paired benchmark, complete variability and negative-seed reporting, deterministic reviewer charts, a four-screen command center, and persisted safety audits. The real Test Mode call, public webhook receipt, and Vercel deployment remain pending until external configuration is completed; no credentials belong in this repository.
+> **Project status:** Day-9 deployment and repository polish. RecoverIQ now has a frozen 30-seed × 10,000-case paired benchmark, a four-screen command center, persisted safety audits, deterministic demo seeding, automated repository hygiene checks, and separate Vercel deployments for the dashboard and API. Both aliases are Vercel-auth protected while the repository is private. The genuine Razorpay Test Mode call and webhook receipt remain pending; no credentials belong in this repository.
 
 ## Why this project
 
@@ -69,6 +69,11 @@ Razorpay already supplies recovery primitives such as Payment Links, reminders, 
 - Learning Lab with paired confidence intervals and calibration metrics
 - Safety & Audit trace backed by the Day-6 persisted gauntlet
 - Dashboard backend route with loading and failure states
+- Native Next.js production build for Vercel
+- FastAPI Vercel entrypoint with safe ephemeral demo storage under `/tmp`
+- Deterministic shadow-mode demo ledger seed with zero network calls
+- CI repository hygiene gate for secrets, local databases and deployment metadata
+- Accessible deployment architecture graphic and complete setup guide
 - Safety, adapter, signature, webhook and ordering tests
 
 ## Planned before September 5
@@ -125,12 +130,19 @@ adapter execution and zero real network calls. The full suite contains 55 tests.
 Day 7 packages the committed Day 4–6 artifacts into a reviewer-facing command
 center. Its four interactive screens use a dashboard backend route rather than
 embedding showcase values in presentation markup. The production build, lint,
-and five frontend contract tests pass. The public deployment target is Vercel.
+and five frontend contract tests pass. The deployment target is Vercel.
 
 Day 8 freezes the final evaluation contract and adds a canonical configuration
 digest, 30-seed evidence, negative-seed analysis, committed raw results and
 three reviewer-ready SVG charts. See `docs/DAY8_FINAL_EXPERIMENTS.md` for the
 exact configuration, results, limitations and submission-safe claim.
+
+Day 9 deploys the native Next.js dashboard and FastAPI API independently on
+Vercel, adds a deterministic 12-case shadow ledger seed, enforces a CI hygiene
+scan, and publishes the architecture and deployment runbook. The protected
+production aliases are `recoveriq-dashboard-prajwal-ai.vercel.app` and
+`recoveriq-api-prajwal-ai.vercel.app`; Vercel authentication is intentionally
+required while the project is private.
 
 ## Architecture
 
@@ -203,6 +215,9 @@ python -m experiments.run_day5_scenarios --journey-cases 500 \
   --output outputs/day5_journey_budget_demo.json
 python -m experiments.run_day6_safety_gauntlet \
   --output outputs/day6_safety_gauntlet.json
+python -m scripts.seed_demo_data --database data/recoveriq-demo.sqlite3 \
+  --cases 12 --seed 42 --output outputs/day9_demo_seed_summary.json
+python -m scripts.check_repo_hygiene
 ```
 
 Run the API:
@@ -253,6 +268,7 @@ python -m scripts.razorpay_test_mode_smoke --amount-paise 100
 - See `docs/DAY6_PERSISTENCE_SAFETY.md` for transaction boundaries, schema and Safety Gauntlet evidence.
 - See `docs/DAY7_DASHBOARD.md` for the screen contract and backend data boundary.
 - See `docs/DAY8_FINAL_EXPERIMENTS.md` for the frozen final benchmark, charts, variability and limitations.
+- See `docs/SETUP_AND_DEPLOYMENT.md` for the Day-9 architecture, seeded demo and Vercel runbook.
 
 References:
 

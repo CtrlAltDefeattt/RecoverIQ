@@ -1,14 +1,16 @@
 # RecoverIQ setup and deployment
 
-RecoverIQ runs as one Vercel project with two services:
+RecoverIQ runs as two independently deployable Vercel projects:
 
-| Route | Runtime | Purpose |
+| Project | Runtime | Purpose |
 | --- | --- | --- |
-| `/` | Next.js / Node.js 22 | Reviewer command center and synthetic dashboard read model |
-| `/backend` | FastAPI / Python 3.12 | Health, readiness, simulation, and signed Razorpay webhook endpoints |
+| `recoveriq-dashboard` | Next.js / Node.js 22 | Reviewer command center and synthetic dashboard read model |
+| `recoveriq-api` | FastAPI / Python 3.12 | Health, readiness, simulation, and signed Razorpay webhook endpoints |
 
-The root `vercel.json` is the source of truth for this routing. Keep the Vercel
-Framework Preset set to **Services**.
+The dashboard project uses `frontend/` as its project root. The API project uses
+the repository root and discovers `main:app` through the root `pyproject.toml`.
+Keeping the runtimes separate avoids coupling a dashboard release to the Python
+function build.
 
 ![RecoverIQ architecture](assets/recoveriq-architecture.svg)
 
@@ -72,23 +74,32 @@ repository uses durable managed storage or a service with a persistent disk.
 
 ## Vercel deployment
 
-1. Import the private `CtrlAltDefeattt/RecoverIQ` repository into the intended
-   Vercel team.
-2. Leave the project root at the repository root.
-3. Select the **Services** Framework Preset.
-4. Create a preview deployment from `main`.
-5. Verify the dashboard and both runtimes before promotion:
+Create two projects in the intended Vercel team:
+
+1. `recoveriq-dashboard`: root directory `frontend`, Framework Preset **Next.js**.
+2. `recoveriq-api`: repository root, Framework Preset **FastAPI**.
+3. Keep the Razorpay values unset and the execution switch false in the API
+   project until a genuine Test Mode exercise.
+4. Create previews from the same `main` commit and verify both before promotion:
 
 ```bash
-vercel curl / --deployment <preview-url>
-vercel curl /api/dashboard --deployment <preview-url>
-vercel curl /backend/health --deployment <preview-url>
-vercel curl /backend/readiness --deployment <preview-url>
+vercel curl / --deployment <dashboard-preview-url>
+vercel curl /api/dashboard --deployment <dashboard-preview-url>
+vercel curl /health --deployment <api-preview-url>
+vercel curl /readiness --deployment <api-preview-url>
 ```
 
 Expected readiness in the safe reviewer configuration is `degraded`: the API is
 healthy while Razorpay webhook credentials are intentionally absent. Promote the
-exact verified artifact with `vercel promote <preview-url>`.
+exact verified artifacts with `vercel promote <preview-url>`.
+
+Current protected production aliases:
+
+- `https://recoveriq-dashboard-prajwal-ai.vercel.app`
+- `https://recoveriq-api-prajwal-ai.vercel.app`
+
+Both aliases require Vercel authentication. That is intentional while the
+repository and work-in-progress demo remain private.
 
 The GitHub repository remains private. Vercel only needs repository installation
 access for builds; no source visibility change is required.

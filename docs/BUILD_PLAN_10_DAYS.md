@@ -119,6 +119,12 @@ configuration and committed report.
 
 ## September 3 — Deployment and repository polish
 
+**Code status:** the dashboard and FastAPI backend are deployed as separate,
+Vercel-auth-protected production projects. Native Next.js and FastAPI entrypoints,
+a deterministic shadow-mode demo seed, CI secret/local-state scanning, a complete
+setup and deployment guide, and an accessible architecture SVG are committed.
+The repository remains private and both production aliases require Vercel login.
+
 - Deploy backend and frontend
 - Add architecture graphic and setup instructions
 - Add seeded demo-data workflow

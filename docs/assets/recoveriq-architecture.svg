@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" viewBox="0 0 1280 820" role="img" aria-labelledby="title desc">
   <title id="title">RecoverIQ deployment and decision architecture</title>
-  <desc id="desc">Razorpay Test Mode and RecoveryGym feed the FastAPI backend. Events pass through durable claiming, incremental-value estimation, journey and safety controls, then the Razorpay adapter and outcome learning loop. A Next.js dashboard presents synthetic evidence and audit data. Vercel routes the dashboard at the root and the API under backend.</desc>
+  <desc id="desc">Razorpay Test Mode and RecoveryGym feed the FastAPI backend. Events pass through durable claiming, incremental-value estimation, journey and safety controls, then the Razorpay adapter and outcome learning loop. A Next.js dashboard presents synthetic evidence and audit data. Vercel hosts the dashboard and API as separate protected deployments.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07111f"/><stop offset="1" stop-color="#0b1729"/></linearGradient>
     <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#123348"/><stop offset="1" stop-color="#0d2538"/></linearGradient>
@@ -14,9 +14,9 @@
   <text x="64" y="96" class="subtitle">Safety-constrained decisions, auditable execution, and a reviewer-facing deployment</text>
 
   <rect x="64" y="132" width="1152" height="92" rx="18" fill="#0d1c30" stroke="#263d59" filter="url(#shadow)"/>
-  <text x="88" y="164" class="tag">VERCEL SERVICES · SINGLE DOMAIN</text>
-  <rect x="88" y="180" width="500" height="28" rx="9" fill="#12283b" stroke="#28506a"/><text x="108" y="199" class="small">/ · Next.js command center</text>
-  <rect x="608" y="180" width="584" height="28" rx="9" fill="#12283b" stroke="#28506a"/><text x="628" y="199" class="small">/backend · FastAPI service</text>
+  <text x="88" y="164" class="tag">VERCEL · TWO PROTECTED PROJECTS</text>
+  <rect x="88" y="180" width="500" height="28" rx="9" fill="#12283b" stroke="#28506a"/><text x="108" y="199" class="small">recoveriq-dashboard · Next.js command center</text>
+  <rect x="608" y="180" width="584" height="28" rx="9" fill="#12283b" stroke="#28506a"/><text x="628" y="199" class="small">recoveriq-api · FastAPI service</text>
 
   <rect x="64" y="270" width="244" height="108" rx="18" fill="url(#blue)" class="box" filter="url(#shadow)"/><text x="88" y="304" class="tag">INPUTS</text><text x="88" y="335" class="label">Razorpay Test Mode</text><text x="88" y="358" class="small">or paired RecoveryGym events</text>
   <rect x="382" y="270" width="244" height="108" rx="18" fill="#101f33" class="box" filter="url(#shadow)"/><text x="406" y="304" class="tag">INGEST</text><text x="406" y="335" class="label">Validate + normalize</text><text x="406" y="358" class="small">HMAC, identity, context</text>
