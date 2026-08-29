@@ -1,5 +1,7 @@
 # Architecture
 
+![RecoverIQ deployment and decision architecture](assets/recoveriq-architecture.svg)
+
 ```text
 Razorpay Test Mode / RecoveryGym
              |

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" viewBox="0 0 1280 820" role="img" aria-labelledby="title desc">
+  <title id="title">RecoverIQ deployment and decision architecture</title>
+  <desc id="desc">Razorpay Test Mode and RecoveryGym feed the FastAPI backend. Events pass through durable claiming, incremental-value estimation, journey and safety controls, then the Razorpay adapter and outcome learning loop. A Next.js dashboard presents synthetic evidence and audit data. Vercel routes the dashboard at the root and the API under backend.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07111f"/><stop offset="1" stop-color="#0b1729"/></linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#123348"/><stop offset="1" stop-color="#0d2538"/></linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#123c37"/><stop offset="1" stop-color="#0d292a"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="9" stdDeviation="10" flood-color="#000814" flood-opacity=".35"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 10 5 0 10z" fill="#5eead4"/></marker>
+    <style>.title{font:700 32px Inter,system-ui;fill:#f8fafc}.subtitle{font:400 15px Inter,system-ui;fill:#94a3b8}.label{font:700 15px Inter,system-ui;fill:#e2e8f0}.small{font:400 12px Inter,system-ui;fill:#94a3b8}.tag{font:700 11px Inter,system-ui;fill:#67e8f9;letter-spacing:1.5px}.box{stroke:#27435b;stroke-width:1.5}.flow{fill:none;stroke:#5eead4;stroke-width:2;marker-end:url(#arrow)}.dash{fill:none;stroke:#64748b;stroke-width:1.5;stroke-dasharray:6 7;marker-end:url(#arrow)}</style>
+  </defs>
+  <rect width="1280" height="820" rx="28" fill="url(#bg)"/>
+  <text x="64" y="68" class="title">RecoverIQ architecture</text>
+  <text x="64" y="96" class="subtitle">Safety-constrained decisions, auditable execution, and a reviewer-facing deployment</text>
+
+  <rect x="64" y="132" width="1152" height="92" rx="18" fill="#0d1c30" stroke="#263d59" filter="url(#shadow)"/>
+  <text x="88" y="164" class="tag">VERCEL SERVICES · SINGLE DOMAIN</text>
+  <rect x="88" y="180" width="500" height="28" rx="9" fill="#12283b" stroke="#28506a"/><text x="108" y="199" class="small">/ · Next.js command center</text>
+  <rect x="608" y="180" width="584" height="28" rx="9" fill="#12283b" stroke="#28506a"/><text x="628" y="199" class="small">/backend · FastAPI service</text>
+
+  <rect x="64" y="270" width="244" height="108" rx="18" fill="url(#blue)" class="box" filter="url(#shadow)"/><text x="88" y="304" class="tag">INPUTS</text><text x="88" y="335" class="label">Razorpay Test Mode</text><text x="88" y="358" class="small">or paired RecoveryGym events</text>
+  <rect x="382" y="270" width="244" height="108" rx="18" fill="#101f33" class="box" filter="url(#shadow)"/><text x="406" y="304" class="tag">INGEST</text><text x="406" y="335" class="label">Validate + normalize</text><text x="406" y="358" class="small">HMAC, identity, context</text>
+  <rect x="700" y="270" width="244" height="108" rx="18" fill="#101f33" class="box" filter="url(#shadow)"/><text x="724" y="304" class="tag">PERSIST</text><text x="724" y="335" class="label">Claim exactly once</text><text x="724" y="358" class="small">SQLite UNIQUE + audit ledger</text>
+  <rect x="972" y="270" width="244" height="108" rx="18" fill="#142033" stroke="#44506a" stroke-width="1.5" filter="url(#shadow)"/><text x="996" y="304" class="tag">STORAGE NOTE</text><text x="996" y="333" class="small">Local SQLite is durable.</text><text x="996" y="355" class="small">Vercel /tmp is demo-only.</text>
+  <path d="M308 324h62" class="flow"/><path d="M626 324h62" class="flow"/><path d="M944 324h16" class="dash"/>
+
+  <rect x="64" y="432" width="244" height="124" rx="18" fill="url(#blue)" class="box" filter="url(#shadow)"/><text x="88" y="468" class="tag">ESTIMATE</text><text x="88" y="499" class="label">Incremental-value policy</text><text x="88" y="523" class="small">Natural recovery + uplift</text><text x="88" y="542" class="small">Observable features only</text>
+  <rect x="382" y="432" width="244" height="124" rx="18" fill="#101f33" class="box" filter="url(#shadow)"/><text x="406" y="468" class="tag">ORCHESTRATE</text><text x="406" y="499" class="label">Journey + budget</text><text x="406" y="523" class="small">Wait, stop, two-action limit</text><text x="406" y="542" class="small">Portfolio allocation</text>
+  <rect x="700" y="432" width="244" height="124" rx="18" fill="url(#green)" stroke="#2c665b" stroke-width="1.5" filter="url(#shadow)"/><text x="724" y="468" class="tag">CONTROL</text><text x="724" y="499" class="label">Safety engine</text><text x="724" y="523" class="small">ALLOW · APPROVE · BLOCK</text><text x="724" y="542" class="small">Final non-model veto</text>
+  <rect x="972" y="432" width="244" height="124" rx="18" fill="#101f33" class="box" filter="url(#shadow)"/><text x="996" y="468" class="tag">ACT</text><text x="996" y="499" class="label">Razorpay adapter</text><text x="996" y="523" class="small">Shadow by default</text><text x="996" y="542" class="small">Reserve before API call</text>
+  <path d="M822 378v32H186v10" class="flow"/><path d="M308 494h62" class="flow"/><path d="M626 494h62" class="flow"/><path d="M944 494h16" class="flow"/>
+
+  <rect x="64" y="612" width="562" height="132" rx="18" fill="#101f33" class="box" filter="url(#shadow)"/><text x="88" y="648" class="tag">LEARN + AUDIT</text><text x="88" y="680" class="label">Outcome, reward, and complete decision trace</text><text x="88" y="706" class="small">Only executed actions produce learning observations.</text><text x="88" y="728" class="small">Blocked and approval-pending actions are not mislabeled.</text>
+  <rect x="700" y="612" width="516" height="132" rx="18" fill="url(#blue)" class="box" filter="url(#shadow)"/><text x="724" y="648" class="tag">REVIEW</text><text x="724" y="680" class="label">Four-screen command center</text><text x="724" y="706" class="small">Operations · decision · learning · safety</text><text x="724" y="728" class="small">Synthetic evidence is labelled at the source.</text>
+  <path d="M1094 556v32H345v12" class="flow"/><path d="M626 678h62" class="flow"/><path d="M958 612v-24H186v-20" class="dash"/>
+  <text x="64" y="786" class="small">The model proposes; the safety engine disposes. Production money movement remains disabled.</text>
+</svg>
