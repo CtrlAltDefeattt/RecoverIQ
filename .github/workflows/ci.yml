@@ -21,6 +21,9 @@ jobs:
           python-version: "3.12"
           cache: pip
 
+      - name: Check repository hygiene
+        run: python -m scripts.check_repo_hygiene
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -52,6 +55,11 @@ jobs:
         run: >-
           python -m experiments.run_day6_safety_gauntlet
           --output /tmp/recoveriq_ci_day6.json
+
+      - name: Seed deterministic demo ledger
+        run: >-
+          python -m scripts.seed_demo_data --database /tmp/recoveriq-demo.sqlite3
+          --output /tmp/recoveriq-demo-summary.json
 
       - name: Install dashboard dependencies
         working-directory: frontend

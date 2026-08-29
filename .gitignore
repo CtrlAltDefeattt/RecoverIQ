@@ -9,6 +9,9 @@ venv/
 .env
 .env.*
 !.env.example
+.vercel/
+*.key
+*.pem
 
 # Editors and operating systems
 .idea/
@@ -19,6 +22,7 @@ Thumbs.db
 # Frontend
 node_modules/
 dist/
+.next/
 
 # Local databases and logs
 *.db
