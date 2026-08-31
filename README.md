@@ -142,7 +142,7 @@ Day 9 deploys the native Next.js dashboard and FastAPI API independently on
 Vercel, adds a deterministic 12-case shadow ledger seed, enforces a CI hygiene
 scan, and publishes the architecture and deployment runbook. The public
 production aliases are `recoveriq-dashboard-prajwal-ai.vercel.app` and
-`recoveriq-api-prajwal-ai.vercel.app`; keeping the GitHub repository private
+`recoveriq-api.vercel.app`; keeping the GitHub repository private
 does not require reviewer authentication on the deployed applications.
 
 Day 10 adds a dedicated Neon Postgres project and a production repository

@@ -98,7 +98,7 @@ exact verified artifacts with `vercel promote <preview-url>`.
 Current public production aliases:
 
 - `https://recoveriq-dashboard-prajwal-ai.vercel.app`
-- `https://recoveriq-api-prajwal-ai.vercel.app`
+- `https://recoveriq-api.vercel.app`
 
 Both aliases are intentionally public for reviewers. The source repository
 remains private; public deployment access does not expose repository contents.
