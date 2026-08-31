@@ -13,6 +13,7 @@ from backend.app.domain.events import (
 from backend.app.domain.models import RecoveryAction, RecoveryContext
 from backend.app.policies.baselines import RuleBasedPolicy
 from backend.app.safety.engine import CONTACT_ACTIONS, SafetyEngine
+from backend.app.storage.factory import RecoveryRepository
 from backend.app.storage.sqlite import SQLiteRecoveryRepository
 
 
@@ -31,7 +32,7 @@ class RazorpayIntegrationService:
         self,
         policy: RuleBasedPolicy | None = None,
         safety: SafetyEngine | None = None,
-        repository: SQLiteRecoveryRepository | None = None,
+        repository: RecoveryRepository | None = None,
     ):
         self.policy = policy or RuleBasedPolicy()
         self.safety = safety or SafetyEngine()

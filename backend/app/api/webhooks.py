@@ -9,16 +9,22 @@ from fastapi import APIRouter, Header, HTTPException, Request
 from backend.app.adapters.razorpay import RazorpayAdapter
 from backend.app.core.config import get_settings
 from backend.app.services.razorpay_integration import RazorpayIntegrationService
-from backend.app.storage.sqlite import SQLiteRecoveryRepository
+from backend.app.storage.factory import create_recovery_repository
 
 
 router = APIRouter(prefix="/webhooks", tags=["webhooks"])
 
 
 @lru_cache
-def get_integration_service(database_path: str) -> RazorpayIntegrationService:
+def get_integration_service(
+    database_path: str,
+    database_url: str = "",
+) -> RazorpayIntegrationService:
     return RazorpayIntegrationService(
-        repository=SQLiteRecoveryRepository(database_path)
+        repository=create_recovery_repository(
+            database_url=database_url,
+            database_path=database_path,
+        )
     )
 
 
@@ -46,6 +52,8 @@ async def razorpay_webhook(
         raise HTTPException(status_code=400, detail="Missing Razorpay event id")
     if not settings.webhook_configured:
         raise HTTPException(status_code=503, detail="Webhook secret not configured")
+    if not settings.durable_database_configured:
+        raise HTTPException(status_code=503, detail="Durable database not configured")
 
     adapter = _adapter()
     if not adapter.verify_webhook_signature(raw_body, x_razorpay_signature):
@@ -58,7 +66,8 @@ async def razorpay_webhook(
 
     try:
         integration_service = get_integration_service(
-            settings.recoveriq_database_path
+            settings.recoveriq_database_path,
+            settings.database_url,
         )
         integration_service.safety.autonomous_limit_paise = (
             settings.recoveriq_autonomous_limit_paise

@@ -26,6 +26,8 @@ def readiness():
         "mode": settings.recoveriq_mode,
         "webhook_configured": settings.webhook_configured,
         "razorpay_api_configured": settings.razorpay_api_configured,
+        "database_backend": settings.database_backend,
+        "durable_database_configured": settings.durable_database_configured,
         "razorpay_execution_enabled": (
             settings.recoveriq_execute_razorpay_actions
             and settings.razorpay_api_configured

@@ -96,4 +96,24 @@ def test_readiness_does_not_expose_secrets(monkeypatch, tmp_path):
 
     assert response.status_code == 200
     assert response.json()["webhook_configured"] is True
+    assert response.json()["database_backend"] == "sqlite"
+    assert response.json()["durable_database_configured"] is True
     assert "webhook-secret" not in response.text
+
+
+def test_vercel_webhook_requires_durable_database(monkeypatch, tmp_path):
+    configure_test_environment(monkeypatch, tmp_path)
+    monkeypatch.setenv("VERCEL", "1")
+    get_settings.cache_clear()
+    raw_body = json.dumps(payment_payload("payment.failed")).encode()
+
+    with TestClient(app) as client:
+        response = client.post(
+            "/webhooks/razorpay",
+            content=raw_body,
+            headers=signed_headers(raw_body, "evt_api_no_database"),
+        )
+
+    assert response.status_code == 503
+    assert response.json()["detail"] == "Durable database not configured"
+    get_settings.cache_clear()
