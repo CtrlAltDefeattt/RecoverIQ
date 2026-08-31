@@ -77,7 +77,8 @@ complete. All scenario invariants are machine-checked.
 **Code status:** SQLite event/case/decision/action/outcome/audit tables,
 database-enforced event and action idempotency, terminal out-of-order capture
 handling, pre-call execution reservation and a seven-scenario persisted Safety
-Gauntlet are complete. The repository now passes 55 tests.
+Gauntlet are complete. The repository now passes 64 Python tests, with one
+additional Neon integration test enabled when a test database URL is available.
 
 - Replace in-memory event IDs with SQLite unique constraints
 - Persist cases, events, decisions, actions and outcomes
@@ -120,10 +121,10 @@ configuration and committed report.
 ## September 3 — Deployment and repository polish
 
 **Code status:** the dashboard and FastAPI backend are deployed as separate,
-Vercel-auth-protected production projects. Native Next.js and FastAPI entrypoints,
-a deterministic shadow-mode demo seed, CI secret/local-state scanning, a complete
+public Vercel production projects. Native Next.js and FastAPI entrypoints, a
+deterministic shadow-mode demo seed, CI secret/local-state scanning, a complete
 setup and deployment guide, and an accessible architecture SVG are committed.
-The repository remains private and both production aliases require Vercel login.
+The source repository remains private while reviewer-facing aliases are public.
 
 - Deploy backend and frontend
 - Add architecture graphic and setup instructions

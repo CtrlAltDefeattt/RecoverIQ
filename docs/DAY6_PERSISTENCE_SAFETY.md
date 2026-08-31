@@ -65,3 +65,8 @@ adapter call is not a distributed transaction. Production scale should add a
 transactional outbox/worker, encrypted sensitive fields, retention policies,
 authenticated audit access and managed database backups. No production money
 movement is enabled by this milestone.
+
+Day 10 supersedes the Vercel storage portion of this limitation with Neon
+Postgres while retaining SQLite for local and CI runs. The direct-adapter versus
+database transaction boundary still requires an outbox before production money
+movement.

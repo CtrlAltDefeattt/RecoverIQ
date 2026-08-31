@@ -63,14 +63,15 @@ RECOVERIQ_EXECUTE_RAZORPAY_ACTIONS=false
 ```
 
 Secret values belong in Vercel Project Settings, never in GitHub. Required names
-are `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `RAZORPAY_WEBHOOK_SECRET`,
+are `DATABASE_URL`, `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `RAZORPAY_WEBHOOK_SECRET`,
 `RECOVERIQ_MODE`, `RECOVERIQ_EXECUTE_RAZORPAY_ACTIONS`,
 `RECOVERIQ_AUTONOMOUS_LIMIT_PAISE`, and `RECOVERIQ_DATABASE_PATH`.
 
-The backend automatically uses `/tmp/recoveriq.sqlite3` on Vercel when no path
-is configured. That is enough for health checks and a read-only demo, but Vercel
-function storage is ephemeral. Do not enable live webhook execution until the
-repository uses durable managed storage or a service with a persistent disk.
+Set `DATABASE_URL` on the `recoveriq-api` Vercel project to the pooled Neon
+connection string. The backend selects Postgres whenever this variable exists.
+If it is absent on Vercel, health and simulation routes remain available but the
+signed webhook route fails closed with `503` rather than writing to `/tmp`.
+Local development continues to use `RECOVERIQ_DATABASE_PATH` by default.
 
 ## Vercel deployment
 
@@ -80,7 +81,8 @@ Create two projects in the intended Vercel team:
 2. `recoveriq-api`: repository root, Framework Preset **FastAPI**.
 3. Keep the Razorpay values unset and the execution switch false in the API
    project until a genuine Test Mode exercise.
-4. Create previews from the same `main` commit and verify both before promotion:
+4. Add the pooled Neon `DATABASE_URL` to the API project's Production scope.
+5. Create previews from the same `main` commit and verify both before promotion:
 
 ```bash
 vercel curl / --deployment <dashboard-preview-url>
@@ -93,13 +95,13 @@ Expected readiness in the safe reviewer configuration is `degraded`: the API is
 healthy while Razorpay webhook credentials are intentionally absent. Promote the
 exact verified artifacts with `vercel promote <preview-url>`.
 
-Current protected production aliases:
+Current public production aliases:
 
 - `https://recoveriq-dashboard-prajwal-ai.vercel.app`
 - `https://recoveriq-api-prajwal-ai.vercel.app`
 
-Both aliases require Vercel authentication. That is intentional while the
-repository and work-in-progress demo remain private.
+Both aliases are intentionally public for reviewers. The source repository
+remains private; public deployment access does not expose repository contents.
 
 The GitHub repository remains private. Vercel only needs repository installation
 access for builds; no source visibility change is required.

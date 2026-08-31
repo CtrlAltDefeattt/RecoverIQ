@@ -9,7 +9,7 @@ Razorpay Test Mode / RecoveryGym
       Event Ingestion
              |
  Signature / Durable Event Claim
-        (SQLite UNIQUE)
+   (Postgres/SQLite UNIQUE)
              |
       Event Normalizer
  (failed / captured / ignored)
@@ -57,7 +57,8 @@ Simulator      Razorpay
                  Audit / Metrics
                        |
                        v
-              SQLite Durable Ledger
+          Durable Recovery Ledger
+       Neon Postgres / local SQLite
        events / cases / decisions / actions /
                   outcomes / audit
 ```
@@ -122,11 +123,13 @@ of a failed event being followed by capture for the same transaction.
 
 ## Day-6 persistence boundary
 
-SQLite is now the source of truth for webhook identity and case terminality.
-The service claims an event using a primary-key insert before normalization or
-decision work. A duplicate insert fails atomically and produces no second
-decision or action. Supported events then update case state and ledgers through
-`BEGIN IMMEDIATE` transactions.
+The recovery repository is the source of truth for webhook identity and case
+terminality. Neon Postgres serves production; SQLite provides a deterministic
+local and CI implementation of the same contract. The service claims an event
+using a primary-key insert before normalization or decision work. A duplicate
+insert fails atomically and produces no second decision or action. Supported
+events then update state through database transactions. Postgres uses atomic
+conflict handling and row locks; SQLite uses `BEGIN IMMEDIATE` transactions.
 
 An autonomous external action is inserted with a unique idempotency key and a
 `pending_execution` status before the adapter call. Success or failure is then

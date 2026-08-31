@@ -8,7 +8,7 @@ RecoverIQ is an adaptive decision system for Razorpay AI Buildathon Track 03 —
 
 It is intentionally not an LLM-first system. Money-path decisions are measurable, bounded and auditable.
 
-> **Project status:** Day-9 deployment and repository polish. RecoverIQ now has a frozen 30-seed × 10,000-case paired benchmark, a four-screen command center, persisted safety audits, deterministic demo seeding, automated repository hygiene checks, and separate Vercel deployments for the dashboard and API. Both aliases are Vercel-auth protected while the repository is private. The genuine Razorpay Test Mode call and webhook receipt remain pending; no credentials belong in this repository.
+> **Project status:** Day-10 durable deployment hardening. RecoverIQ now has a frozen 30-seed × 10,000-case paired benchmark, a four-screen command center, persisted safety audits, deterministic demo seeding, automated repository hygiene checks, public Vercel deployments, and a Neon Postgres production ledger. The genuine Razorpay Test Mode call and webhook receipt remain pending; no credentials belong in this repository.
 
 ## Why this project
 
@@ -58,7 +58,7 @@ Razorpay already supplies recovery primitives such as Payment Links, reminders, 
 - 24-hour inter-intervention cooldown and no repeated action within a journey
 - Batch allocator with budget, action-count and one-action-per-case constraints
 - Journey and batch simulation API endpoints
-- Durable SQLite event, case, decision, action, outcome and audit storage
+- Neon Postgres production storage with SQLite retained for local development
 - Database-enforced webhook and action idempotency
 - Terminal capture ordering that survives service restarts
 - Pre-execution action reservation and persisted execution status
@@ -70,7 +70,7 @@ Razorpay already supplies recovery primitives such as Payment Links, reminders, 
 - Safety & Audit trace backed by the Day-6 persisted gauntlet
 - Dashboard backend route with loading and failure states
 - Native Next.js production build for Vercel
-- FastAPI Vercel entrypoint with safe ephemeral demo storage under `/tmp`
+- FastAPI Vercel entrypoint that fails closed if durable storage is absent
 - Deterministic shadow-mode demo ledger seed with zero network calls
 - CI repository hygiene gate for secrets, local databases and deployment metadata
 - Accessible deployment architecture graphic and complete setup guide
@@ -125,7 +125,8 @@ That value is a model estimate inside RecoveryGym, not realized merchant uplift.
 Day 6 runs seven persisted safety scenarios: duplicate delivery, customer
 opt-out, high-value approval, attempt exhaustion, capture-before-failure,
 exactly-once execution and audit completeness. All seven pass, with one fake
-adapter execution and zero real network calls. The full suite contains 55 tests.
+adapter execution and zero real network calls. The Python suite contains 64
+passing tests plus one conditional Neon integration test.
 
 Day 7 packages the committed Day 4–6 artifacts into a reviewer-facing command
 center. Its four interactive screens use a dashboard backend route rather than
@@ -139,10 +140,15 @@ exact configuration, results, limitations and submission-safe claim.
 
 Day 9 deploys the native Next.js dashboard and FastAPI API independently on
 Vercel, adds a deterministic 12-case shadow ledger seed, enforces a CI hygiene
-scan, and publishes the architecture and deployment runbook. The protected
+scan, and publishes the architecture and deployment runbook. The public
 production aliases are `recoveriq-dashboard-prajwal-ai.vercel.app` and
-`recoveriq-api-prajwal-ai.vercel.app`; Vercel authentication is intentionally
-required while the project is private.
+`recoveriq-api-prajwal-ai.vercel.app`; keeping the GitHub repository private
+does not require reviewer authentication on the deployed applications.
+
+Day 10 adds a dedicated Neon Postgres project and a production repository
+implementation using the pooled `DATABASE_URL`. Event claims, case terminality,
+decision/action idempotency and audit records now survive Vercel instance
+rotation. SQLite remains the deterministic local/CI backend.
 
 ## Architecture
 
@@ -152,7 +158,7 @@ Razorpay Test Mode / RecoveryGym
       Event validation
              |
     Durable event claim
-      (SQLite UNIQUE)
+   (Postgres/SQLite UNIQUE)
              |
        Context builder
              |
@@ -258,8 +264,8 @@ python -m scripts.razorpay_test_mode_smoke --amount-paise 100
 - Duplicate events are identified with `x-razorpay-event-id`.
 - A captured payment is terminal, so a later failure for the same payment is ignored.
 - Live execution requires both `RECOVERIQ_MODE=autonomous` and `RECOVERIQ_EXECUTE_RAZORPAY_ACTIONS=true`.
-- Webhook event IDs and action idempotency keys are enforced by SQLite unique constraints.
-- Set `RECOVERIQ_DATABASE_PATH` to a writable durable path; the default is `data/recoveriq.sqlite3`.
+- Webhook event IDs and action idempotency keys are enforced by database unique constraints.
+- Production uses Neon through `DATABASE_URL`; local development defaults to `RECOVERIQ_DATABASE_PATH=data/recoveriq.sqlite3`.
 - The large-scale benchmark uses `RecoveryGym`; it does not create thousands of Test Mode Payment Links.
 - See `docs/DAY2_INTEGRATION.md` for deployment and webhook configuration.
 - See `docs/DAY3_EVALUATION.md` for the evaluation contract and metric definitions.
@@ -268,6 +274,7 @@ python -m scripts.razorpay_test_mode_smoke --amount-paise 100
 - See `docs/DAY6_PERSISTENCE_SAFETY.md` for transaction boundaries, schema and Safety Gauntlet evidence.
 - See `docs/DAY7_DASHBOARD.md` for the screen contract and backend data boundary.
 - See `docs/DAY8_FINAL_EXPERIMENTS.md` for the frozen final benchmark, charts, variability and limitations.
+- See `docs/DAY10_NEON_PERSISTENCE.md` for the production storage boundary and migration verification.
 - See `docs/SETUP_AND_DEPLOYMENT.md` for the Day-9 architecture, seeded demo and Vercel runbook.
 
 References:
