@@ -8,7 +8,7 @@ RecoverIQ is an adaptive decision system for Razorpay AI Buildathon Track 03 —
 
 It is intentionally not an LLM-first system. Money-path decisions are measurable, bounded and auditable.
 
-> **Project status:** Day-10 durable deployment hardening. RecoverIQ now has a frozen 30-seed × 10,000-case paired benchmark, a four-screen command center, persisted safety audits, deterministic demo seeding, automated repository hygiene checks, public Vercel deployments, and a Neon Postgres production ledger. The genuine Razorpay Test Mode call and webhook receipt remain pending; no credentials belong in this repository.
+> **Project status:** Submission-ready except for the credential-dependent genuine Razorpay Test Mode exercise. RecoverIQ has a frozen 30-seed × 10,000-case paired benchmark, a four-screen command center, persisted safety audits, public Vercel deployments, a Neon Postgres production ledger, a live database probe, and recording-ready pitch/demo assets. No credentials belong in this repository.
 
 ## Why this project
 
@@ -75,8 +75,11 @@ Razorpay already supplies recovery primitives such as Payment Links, reminders, 
 - CI repository hygiene gate for secrets, local databases and deployment metadata
 - Accessible deployment architecture graphic and complete setup guide
 - Safety, adapter, signature, webhook and ordering tests
+- Live database connectivity health endpoint
+- Signed production webhook and duplicate-delivery smoke script
+- Five-minute pitch, demo runbook and final submission checklist
 
-## Planned before September 5
+## Final credential-dependent check
 
 - End-to-end Razorpay Test Mode recovery demo
 
@@ -244,6 +247,7 @@ Endpoints:
 
 ```text
 GET  /health
+GET  /health/database
 GET  /readiness
 GET  /api/simulations/decision?seed=42&event_index=0
 GET  /api/simulations/journey?seed=42&event_index=0
@@ -256,6 +260,13 @@ Test Mode Payment Link smoke test, after configuring Test credentials locally:
 
 ```bash
 python -m scripts.razorpay_test_mode_smoke --amount-paise 100
+```
+
+Signed production webhook and idempotency smoke test, after setting the same
+webhook secret in the local shell and Vercel:
+
+```bash
+python -m scripts.razorpay_webhook_smoke --verify-idempotency
 ```
 
 ## Razorpay integration notes
@@ -276,6 +287,9 @@ python -m scripts.razorpay_test_mode_smoke --amount-paise 100
 - See `docs/DAY8_FINAL_EXPERIMENTS.md` for the frozen final benchmark, charts, variability and limitations.
 - See `docs/DAY10_NEON_PERSISTENCE.md` for the production storage boundary and migration verification.
 - See `docs/SETUP_AND_DEPLOYMENT.md` for the Day-9 architecture, seeded demo and Vercel runbook.
+- See `docs/DEMO_RUNBOOK.md` for the final production and Test Mode walkthrough.
+- See `docs/FIVE_MINUTE_PITCH.md` for the timestamped recording script and reviewer questions.
+- See `docs/SUBMISSION_CHECKLIST.md` for the final handoff and link checks.
 
 References:
 

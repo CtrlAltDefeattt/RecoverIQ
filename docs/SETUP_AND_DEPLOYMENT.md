@@ -88,8 +88,13 @@ Create two projects in the intended Vercel team:
 vercel curl / --deployment <dashboard-preview-url>
 vercel curl /api/dashboard --deployment <dashboard-preview-url>
 vercel curl /health --deployment <api-preview-url>
+vercel curl /health/database --deployment <api-preview-url>
 vercel curl /readiness --deployment <api-preview-url>
 ```
+
+`/health/database` performs a real `SELECT 1` against the configured recovery
+ledger and returns only backend type and reachability. It never exposes a
+connection string or database error details.
 
 Expected readiness in the safe reviewer configuration is `degraded`: the API is
 healthy while Razorpay webhook credentials are intentionally absent. Promote the

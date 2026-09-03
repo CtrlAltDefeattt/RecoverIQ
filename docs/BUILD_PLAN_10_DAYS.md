@@ -133,6 +133,11 @@ The source repository remains private while reviewer-facing aliases are public.
 
 ## September 4 — Five-minute pitch
 
+**Code status:** the live database probe, signed production webhook smoke test,
+timestamped pitch script, demo runbook and submission checklist are complete.
+The genuine Test Mode delivery and Payment Link receipt remain
+credential-dependent.
+
 - Record one real Test Mode recovery
 - Show one blocked or approval-required action
 - Show the learning curve and batch comparison
