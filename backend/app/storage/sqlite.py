@@ -560,6 +560,11 @@ class SQLiteRecoveryRepository:
             ):
                 connection.execute(f"DELETE FROM {table}")
 
+    def ping(self) -> bool:
+        with self._lock:
+            row = self._connection.execute("SELECT 1 AS healthy").fetchone()
+            return bool(row and row["healthy"] == 1)
+
     def _one(self, query: str, parameters: tuple) -> dict | None:
         with self._lock:
             row = self._connection.execute(query, parameters).fetchone()

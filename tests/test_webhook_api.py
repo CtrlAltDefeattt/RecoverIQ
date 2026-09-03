@@ -11,6 +11,7 @@ from tests.test_razorpay_events import payment_payload
 
 
 def configure_test_environment(monkeypatch, tmp_path):
+    monkeypatch.delenv("DATABASE_URL", raising=False)
     monkeypatch.setenv("RAZORPAY_WEBHOOK_SECRET", "webhook-secret")
     monkeypatch.setenv("RECOVERIQ_MODE", "shadow")
     monkeypatch.setenv("RECOVERIQ_EXECUTE_RAZORPAY_ACTIONS", "false")
@@ -99,6 +100,41 @@ def test_readiness_does_not_expose_secrets(monkeypatch, tmp_path):
     assert response.json()["database_backend"] == "sqlite"
     assert response.json()["durable_database_configured"] is True
     assert "webhook-secret" not in response.text
+
+
+def test_database_health_probes_configured_backend(monkeypatch, tmp_path):
+    configure_test_environment(monkeypatch, tmp_path)
+
+    with TestClient(app) as client:
+        response = client.get("/health/database")
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "status": "ok",
+        "backend": "sqlite",
+        "reachable": True,
+    }
+
+
+def test_database_health_fails_closed_on_vercel_without_database(
+    monkeypatch,
+    tmp_path,
+):
+    configure_test_environment(monkeypatch, tmp_path)
+    monkeypatch.setenv("VERCEL", "1")
+    get_settings.cache_clear()
+
+    with TestClient(app) as client:
+        response = client.get("/health/database")
+
+    assert response.status_code == 503
+    assert response.json() == {
+        "status": "unavailable",
+        "backend": "sqlite",
+        "reachable": False,
+        "reason": "durable_database_not_configured",
+    }
+    get_settings.cache_clear()
 
 
 def test_vercel_webhook_requires_durable_database(monkeypatch, tmp_path):
