@@ -19,7 +19,7 @@
   webhook transaction.
 - [x] Razorpay Test Mode webhook secret configured without exposing its value.
 - [x] Genuine `payment.failed` Test Mode webhook delivery persisted in Neon.
-- [ ] One Test Mode Payment Link created through the committed adapter.
+- [x] One ₹1 Test Mode Payment Link created through the committed adapter.
 
 ## Recording
 

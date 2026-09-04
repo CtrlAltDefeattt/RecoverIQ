@@ -102,6 +102,19 @@ This receipt proves Razorpay Test Mode → public Vercel webhook → signature
 validation → recovery decision → Neon Postgres persistence. Shadow Mode ensured
 that no external recovery action or real money movement occurred.
 
+### Verified Payment Link API call — September 4, 2026
+
+The manual `Razorpay Test Mode Smoke` workflow successfully created a ₹1
+Standard Payment Link through the committed adapter:
+
+- Payment Link ID: `plink_TXuWfcOQDHt6zg`
+- Razorpay status: `created`
+- Reference ID: `recoveriq-smoke-1788514198`
+- Workflow run: <https://github.com/CtrlAltDefeattt/RecoverIQ/actions/runs/33858565099>
+
+The short URL is intentionally not committed, and the encrypted Test Mode API
+credentials were not printed.
+
 ## Recording order
 
 1. Problem and one-line thesis.

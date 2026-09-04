@@ -136,8 +136,8 @@ The source repository remains private while reviewer-facing aliases are public.
 **Code status:** the live database probe, signed production webhook smoke test,
 timestamped pitch script, demo runbook and submission checklist are complete. A
 genuine Razorpay Test Mode `payment.failed` delivery has been processed through
-Vercel and persisted in Neon with the full decision/audit trace. A Payment Link
-API call through the committed adapter remains optional final evidence.
+Vercel and persisted in Neon with the full decision/audit trace. A genuine ₹1
+Test Mode Payment Link has also been created through the committed adapter.
 
 - Record one real Test Mode recovery
 - Show one blocked or approval-required action
