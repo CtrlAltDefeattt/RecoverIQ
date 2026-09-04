@@ -1,0 +1,40 @@
+name: Razorpay Test Mode Smoke
+
+on:
+  workflow_dispatch:
+    inputs:
+      amount_paise:
+        description: Test Payment Link amount in paise
+        required: true
+        default: "100"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  create-test-payment-link:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      RAZORPAY_KEY_ID: ${{ secrets.RAZORPAY_KEY_ID }}
+      RAZORPAY_KEY_SECRET: ${{ secrets.RAZORPAY_KEY_SECRET }}
+      SMOKE_AMOUNT_PAISE: ${{ inputs.amount_paise }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install runtime dependencies
+        run: pip install -r requirements.txt
+
+      - name: Create Razorpay Test Mode Payment Link
+        run: >-
+          python -m scripts.razorpay_test_mode_smoke
+          --amount-paise "$SMOKE_AMOUNT_PAISE"
