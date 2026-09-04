@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+
 from backend.app.api.simulations import router as simulation_router
 from backend.app.api.webhooks import router as webhook_router
 from backend.app.core.config import get_settings

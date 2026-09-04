@@ -10,7 +10,6 @@ import uuid
 
 import httpx
 
-
 DEFAULT_API_URL = "https://recoveriq-api.vercel.app"
 
 

@@ -9,7 +9,6 @@ from typing import Iterator
 
 from backend.app.domain.events import NormalizedPaymentEvent
 
-
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS schema_meta (
     version INTEGER PRIMARY KEY,

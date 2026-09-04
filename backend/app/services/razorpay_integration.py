@@ -16,7 +16,6 @@ from backend.app.safety.engine import CONTACT_ACTIONS, SafetyEngine
 from backend.app.storage.factory import RecoveryRepository
 from backend.app.storage.sqlite import SQLiteRecoveryRepository
 
-
 Mode = Literal["shadow", "assisted", "autonomous"]
 LINK_ACTIONS = {
     RecoveryAction.PAYMENT_LINK,

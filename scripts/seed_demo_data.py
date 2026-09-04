@@ -8,7 +8,6 @@ from pathlib import Path
 from backend.app.services.razorpay_integration import RazorpayIntegrationService
 from backend.app.storage.sqlite import SQLiteRecoveryRepository
 
-
 PAYMENT_METHODS = ("upi", "card", "netbanking", "wallet")
 FAILURE_REASONS = (
     "insufficient_funds",

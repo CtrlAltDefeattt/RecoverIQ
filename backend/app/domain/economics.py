@@ -1,6 +1,5 @@
 from backend.app.domain.models import RecoveryAction, RecoveryContext
 
-
 BASE_ACTION_COST_PAISE = {
     RecoveryAction.NO_ACTION: 0,
     RecoveryAction.REMINDER: 100,

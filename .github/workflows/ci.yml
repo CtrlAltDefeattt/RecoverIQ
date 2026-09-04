@@ -5,12 +5,21 @@ on:
     branches: [main]
   pull_request:
 
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 jobs:
-  test:
+  backend:
+    name: Backend, safety, and evaluation
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PYTHONUNBUFFERED: "1"
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -21,8 +30,58 @@ jobs:
           python-version: "3.12"
           cache: pip
 
+      - name: Install dependencies
+        run: pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Validate dependency graph
+        run: python -m pip check
+
       - name: Check repository hygiene
         run: python -m scripts.check_repo_hygiene
+
+      - name: Lint Python
+        run: python -m ruff check .
+
+      - name: Run test suite
+        run: python -m pytest -q
+
+      - name: Run deterministic benchmark smoke test
+        run: python -m experiments.run_benchmark --events 1000 --seed 42
+
+      - name: Run paired evaluation smoke test
+        run: >-
+          python -m experiments.run_multiseed --events 100 --seeds 3 --workers 2
+          --output /tmp/recoveriq-ci-multiseed.json
+
+      - name: Run bounded journey and budget smoke test
+        run: >-
+          python -m experiments.run_day5_scenarios --journey-cases 50
+          --batch-cases 25 --seed 42 --budget-paise 2000 --max-actions 5
+          --output /tmp/recoveriq-ci-journey.json
+
+      - name: Run persistence Safety Gauntlet
+        run: >-
+          python -m experiments.run_day6_safety_gauntlet
+          --output /tmp/recoveriq-ci-safety.json
+
+      - name: Seed deterministic demo ledger
+        run: >-
+          python -m scripts.seed_demo_data --database /tmp/recoveriq-demo.sqlite3
+          --output /tmp/recoveriq-demo-summary.json
+
+  frontend:
+    name: Dashboard build and contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: frontend
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -32,43 +91,13 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
-        run: pip install -r requirements.txt -r requirements-dev.txt
-
-      - name: Run tests
-        run: python -m pytest -q
-
-      - name: Run deterministic smoke benchmark
-        run: python -m experiments.run_benchmark --events 1000 --seed 42
-
-      - name: Run paired multi-seed evaluation smoke test
-        run: >-
-          python -m experiments.run_multiseed --events 100 --seeds 3 --workers 2
-          --output /tmp/recoveriq_ci_multiseed.json
-
-      - name: Run bounded journey and budget smoke test
-        run: >-
-          python -m experiments.run_day5_scenarios --journey-cases 50
-          --batch-cases 25 --seed 42 --budget-paise 2000 --max-actions 5
-          --output /tmp/recoveriq_ci_day5.json
-
-      - name: Run persistence Safety Gauntlet
-        run: >-
-          python -m experiments.run_day6_safety_gauntlet
-          --output /tmp/recoveriq_ci_day6.json
-
-      - name: Seed deterministic demo ledger
-        run: >-
-          python -m scripts.seed_demo_data --database /tmp/recoveriq-demo.sqlite3
-          --output /tmp/recoveriq-demo-summary.json
-
-      - name: Install dashboard dependencies
-        working-directory: frontend
         run: npm ci
 
       - name: Lint dashboard
-        working-directory: frontend
         run: npm run lint
 
-      - name: Test dashboard
-        working-directory: frontend
+      - name: Type-check dashboard
+        run: npm run typecheck
+
+      - name: Build and test dashboard
         run: npm test

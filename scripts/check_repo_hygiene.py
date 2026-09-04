@@ -4,7 +4,6 @@ import re
 import subprocess
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 MAX_TEXT_BYTES = 2_000_000
 FORBIDDEN_NAMES = {".env", ".env.local", ".env.production", ".env.preview"}

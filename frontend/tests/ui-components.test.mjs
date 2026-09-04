@@ -98,4 +98,5 @@ test("serves the frozen final benchmark in the reviewer dashboard", async () => 
   });
   assert.equal(data.safety.passed, 7);
   assert.equal(data.safety.total, 7);
+  assert.equal(data.system.tests, 68);
 });

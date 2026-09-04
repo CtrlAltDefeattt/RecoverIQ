@@ -1,7 +1,8 @@
 from __future__ import annotations
+
+import hashlib
 import math
 import random
-import hashlib
 
 from backend.app.domain.economics import intervention_cost_paise
 from backend.app.domain.models import (

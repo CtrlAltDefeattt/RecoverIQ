@@ -2,6 +2,12 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+*.egg-info/
 .venv/
 venv/
 
@@ -23,6 +29,7 @@ Thumbs.db
 node_modules/
 dist/
 .next/
+*.tsbuildinfo
 
 # Local databases and logs
 *.db

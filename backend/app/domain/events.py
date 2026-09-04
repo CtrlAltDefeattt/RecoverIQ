@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-
 SUPPORTED_PAYMENT_EVENTS = {"payment.failed", "payment.captured"}
 
 

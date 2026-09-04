@@ -3,7 +3,6 @@ from __future__ import annotations
 from html import escape
 from pathlib import Path
 
-
 WIDTH = 1200
 HEIGHT = 680
 INK = "#e7edf5"

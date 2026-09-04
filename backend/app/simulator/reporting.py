@@ -5,7 +5,6 @@ import json
 import math
 from statistics import mean, median, stdev
 
-
 POLICIES = ("random", "rules", "linucb", "incremental_value")
 
 

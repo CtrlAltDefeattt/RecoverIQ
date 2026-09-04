@@ -10,7 +10,6 @@ from backend.app.domain.models import (
 from backend.app.policies.incremental_value import IncrementalValuePolicy
 from backend.app.simulator.environment import RecoveryGym
 
-
 LoggedOutcome = tuple[RecoveryContext, RecoveryAction, RecoveryOutcome]
 
 

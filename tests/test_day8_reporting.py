@@ -12,7 +12,6 @@ from backend.app.simulator.reporting import (
     validate_final_config,
 )
 
-
 FROZEN_CONFIG = {
     "benchmark_id": "recoveriq-day8-final-v1",
     "events_per_seed": 20,

@@ -3,7 +3,6 @@ from __future__ import annotations
 from backend.app.storage.postgres import PostgresRecoveryRepository
 from backend.app.storage.sqlite import SQLiteRecoveryRepository
 
-
 RecoveryRepository = PostgresRecoveryRepository | SQLiteRecoveryRepository
 
 

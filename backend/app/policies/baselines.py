@@ -1,4 +1,5 @@
 import random
+
 from backend.app.domain.models import RecoveryAction, RecoveryContext
 from backend.app.policies.base import RecoveryPolicy
 

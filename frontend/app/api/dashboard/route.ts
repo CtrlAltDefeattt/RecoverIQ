@@ -10,7 +10,7 @@ export async function GET() {
       mode: "SHADOW",
       model: "observable-logistic-tlearner-v1",
       storage: "Neon Postgres",
-      tests: 64,
+      tests: 68,
     },
     journey: {
       total: 500,
