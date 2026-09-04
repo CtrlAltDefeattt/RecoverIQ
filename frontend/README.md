@@ -1,7 +1,6 @@
 # RecoverIQ Command Center
 
-The Day-7 frontend is a responsive Vinext/React reviewer dashboard. Its public
-deployment target is Vercel.
+The frontend is a responsive Next.js reviewer dashboard deployed on Vercel.
 
 ## Screens
 
@@ -23,6 +22,8 @@ npm run dev
 Quality gates:
 
 ```bash
-npm run lint
-npm test
+npm run check
 ```
+
+The dashboard is read-only. It renders committed synthetic evaluation and
+persisted safety evidence; it cannot initiate a payment or recovery action.

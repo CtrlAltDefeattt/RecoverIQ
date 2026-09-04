@@ -83,3 +83,19 @@ test("renders sidebar skeletons deterministically", async () => {
   assert.equal(first, second);
   assert.match(first, /--skeleton-width:70%/);
 });
+
+test("serves the frozen final benchmark in the reviewer dashboard", async () => {
+  const { GET } = await vite.ssrLoadModule("/app/api/dashboard/route.ts");
+  const response = await GET();
+  const data = await response.json();
+
+  assert.equal(data.learning.paired_seeds, 30);
+  assert.equal(data.learning.seed_wins, 30);
+  assert.equal(data.learning.relative_gain_pct, 11.697);
+  assert.deepEqual(data.learning.relative_gain_ci95, {
+    lower: 11.35,
+    upper: 12.043,
+  });
+  assert.equal(data.safety.passed, 7);
+  assert.equal(data.safety.total, 7);
+});

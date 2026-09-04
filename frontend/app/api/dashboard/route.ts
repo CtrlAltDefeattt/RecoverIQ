@@ -1,16 +1,16 @@
 export async function GET() {
   return Response.json({
-    generated_at: "2026-08-28T07:30:00.000Z",
+    generated_at: "2026-09-04T09:34:37.000Z",
     source: {
-      label: "Committed Day 4–6 RecoveryGym artifacts",
+      label: "Frozen RecoveryGym evaluation and persisted safety evidence",
       seed: 42,
       synthetic: true,
     },
     system: {
       mode: "SHADOW",
       model: "observable-logistic-tlearner-v1",
-      storage: "SQLite WAL",
-      tests: 55,
+      storage: "Neon Postgres",
+      tests: 64,
     },
     journey: {
       total: 500,
@@ -72,14 +72,14 @@ export async function GET() {
     },
     learning: {
       evaluation_cases: 10_000,
-      paired_seeds: 10,
-      mean_additional_revenue_rupees: 122_335,
-      relative_gain_pct: 9.61,
-      relative_gain_ci95: { lower: 7.47, upper: 11.75 },
-      seed_wins: 10,
-      selected_probability_mae_pct: 5.89,
-      natural_probability_mae_pct: 7.84,
-      selected_brier_score: 0.2248,
+      paired_seeds: 30,
+      mean_additional_revenue_rupees: 1_485_657.564,
+      relative_gain_pct: 11.697,
+      relative_gain_ci95: { lower: 11.35, upper: 12.043 },
+      seed_wins: 30,
+      selected_probability_mae_pct: 5.166,
+      natural_probability_mae_pct: 5.504,
+      selected_brier_score: 0.2212,
       observations_per_action: 4_000,
       actions: ["NO ACTION", "REMINDER", "RETRY 24H", "PAYMENT LINK", "ALT PAYMENT", "PARTIAL PAYMENT"],
     },
