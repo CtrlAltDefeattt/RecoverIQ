@@ -15,10 +15,10 @@
 - [x] Public dashboard deployed on Vercel.
 - [x] Public FastAPI deployment on Vercel.
 - [x] Neon Postgres schema migrated and `DATABASE_URL` configured.
-- [ ] `/health/database` returns `postgresql` and `reachable: true` after the
-  latest deployment.
-- [ ] Razorpay Test Mode secrets configured in Vercel without exposing values.
-- [ ] Genuine Test Mode webhook delivery persisted in Neon.
+- [x] Vercel API connectivity to Neon verified through a persisted production
+  webhook transaction.
+- [x] Razorpay Test Mode webhook secret configured without exposing its value.
+- [x] Genuine `payment.failed` Test Mode webhook delivery persisted in Neon.
 - [ ] One Test Mode Payment Link created through the committed adapter.
 
 ## Recording

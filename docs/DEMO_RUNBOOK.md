@@ -85,6 +85,23 @@ The first response should be `decision_recorded`; the second should be
 This is the only step that can truthfully be called a genuine Razorpay Test Mode
 integration exercise.
 
+### Verified Test Mode receipt — September 4, 2026
+
+The production webhook received and processed one genuine Razorpay Test Mode
+`payment.failed` event:
+
+- Event ID: `TXsVF0xwZ2tUAr`
+- Processing status: `PROCESSED`
+- Recommended action: `PAYMENT_LINK`
+- Policy decision: `ALLOW`
+- Execution status: `shadow_logged`
+- Durable audit sequence: `EVENT_RECEIVED`, `CASE_OPENED`,
+  `DECISION_RECORDED`, `ACTION_RECORDED`, `EVENT_COMPLETED`
+
+This receipt proves Razorpay Test Mode → public Vercel webhook → signature
+validation → recovery decision → Neon Postgres persistence. Shadow Mode ensured
+that no external recovery action or real money movement occurred.
+
 ## Recording order
 
 1. Problem and one-line thesis.

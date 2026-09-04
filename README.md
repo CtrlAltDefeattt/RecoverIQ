@@ -8,7 +8,7 @@ RecoverIQ is an adaptive decision system for Razorpay AI Buildathon Track 03 —
 
 It is intentionally not an LLM-first system. Money-path decisions are measurable, bounded and auditable.
 
-> **Project status:** Submission-ready except for the credential-dependent genuine Razorpay Test Mode exercise. RecoverIQ has a frozen 30-seed × 10,000-case paired benchmark, a four-screen command center, persisted safety audits, public Vercel deployments, a Neon Postgres production ledger, a live database probe, and recording-ready pitch/demo assets. No credentials belong in this repository.
+> **Project status:** Submission-ready with a genuine Razorpay Test Mode `payment.failed` webhook verified end to end through Vercel and Neon Postgres. RecoverIQ also has a frozen 30-seed × 10,000-case paired benchmark, a four-screen command center, persisted safety audits, public Vercel deployments, a live database probe, and recording-ready pitch/demo assets. A genuine Payment Link API call through the committed adapter remains optional final evidence; no credentials belong in this repository.
 
 ## Why this project
 
@@ -79,9 +79,9 @@ Razorpay already supplies recovery primitives such as Payment Links, reminders, 
 - Signed production webhook and duplicate-delivery smoke script
 - Five-minute pitch, demo runbook and final submission checklist
 
-## Final credential-dependent check
+## Final optional integration check
 
-- End-to-end Razorpay Test Mode recovery demo
+- Create one Test Mode Payment Link through the committed API adapter
 
 ## Recovery actions
 
