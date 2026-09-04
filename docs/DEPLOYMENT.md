@@ -79,8 +79,8 @@ Create two projects in the intended Vercel team:
 
 1. `recoveriq-dashboard`: root directory `frontend`, Framework Preset **Next.js**.
 2. `recoveriq-api`: repository root, Framework Preset **FastAPI**.
-3. Keep the Razorpay values unset and the execution switch false in the API
-   project until a genuine Test Mode exercise.
+3. Add Razorpay Test Mode credentials only through the API project's encrypted
+   environment settings; keep the execution switch false.
 4. Add the pooled Neon `DATABASE_URL` to the API project's Production scope.
 5. Create previews from the same `main` commit and verify both before promotion:
 
@@ -96,20 +96,18 @@ vercel curl /readiness --deployment <api-preview-url>
 ledger and returns only backend type and reachability. It never exposes a
 connection string or database error details.
 
-Expected readiness in the safe reviewer configuration is `degraded`: the API is
-healthy while Razorpay webhook credentials are intentionally absent. Promote the
-exact verified artifacts with `vercel promote <preview-url>`.
+Expected readiness is `ready` after the webhook secret is configured. The
+`razorpay_execution_enabled` field must remain `false` in the reviewer
+deployment. Promote the exact verified artifacts with
+`vercel promote <preview-url>`.
 
 Current public production aliases:
 
 - `https://recoveriq-dashboard-prajwal-ai.vercel.app`
 - `https://recoveriq-api.vercel.app`
 
-Both aliases are intentionally public for reviewers. The source repository
-remains private; public deployment access does not expose repository contents.
-
-The GitHub repository remains private. Vercel only needs repository installation
-access for builds; no source visibility change is required.
+Both aliases and the GitHub repository are intentionally public for buildathon
+review. Deployment credentials remain private Vercel environment variables.
 
 ## Repository hygiene
 

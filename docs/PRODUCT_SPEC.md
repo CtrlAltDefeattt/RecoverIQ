@@ -9,7 +9,7 @@ Merchants lose revenue after failed or abandoned payment journeys. Existing reco
 3. **When should we stop?**
 4. **How do we learn from the outcome without allowing unsafe autonomous actions?**
 
-RecoverIQ treats revenue recovery as a **sequential, safety-constrained decision problem**. The Day-5 implementation combines an observable incremental-value learner with a bounded two-intervention journey state machine and a constrained batch allocator.
+RecoverIQ treats revenue recovery as a **sequential, safety-constrained decision problem**. The implementation combines an observable incremental-value learner with a bounded two-intervention journey state machine and a constrained batch allocator.
 
 ## 2. Product hypothesis
 
@@ -94,7 +94,7 @@ presented as a globally optimal knapsack solver.
 
 ### Durable enforcement
 
-Day 6 persists webhook events, recovery cases, decisions, action reservations,
+The persistence layer stores webhook events, recovery cases, decisions, action reservations,
 observed outcomes and append-only audit entries in SQLite. Event IDs and action
 idempotency keys have database unique constraints. A `payment.captured` state is
 terminal, so a later failure is recorded as stale without reopening the case.

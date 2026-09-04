@@ -1,9 +1,18 @@
-# Day 6 — Persistence and Safety Gauntlet
+# Persistence and Safety
 
-Day 6 replaces process-local webhook memory with a transactional SQLite ledger.
-The goal is deterministic prevention and evidence: duplicate or unsafe work
-must be stopped by persisted state, and a reviewer must be able to reconstruct
-what happened afterward.
+RecoverIQ uses one repository contract across Neon Postgres in production and
+SQLite in local development and CI. Duplicate or unsafe work is stopped by
+persisted state, and a reviewer can reconstruct what happened afterward.
+
+| Environment | Backend | Configuration |
+|---|---|---|
+| Vercel production | Neon Postgres | pooled `DATABASE_URL` |
+| Local development | SQLite | `RECOVERIQ_DATABASE_PATH` |
+| CI | SQLite | isolated temporary paths |
+
+The webhook route fails with `503` on Vercel when `DATABASE_URL` is absent. A
+correctly signed event is never acknowledged after writing state that could
+disappear with the function instance.
 
 ## Durable tables
 
@@ -16,8 +25,11 @@ what happened afterward.
 | `outcomes` | Observed capture outcomes | one row per event |
 | `audit_log` | Ordered case/event transition evidence | append-only IDs |
 
-SQLite foreign keys, a five-second busy timeout and WAL mode are enabled for
-file-backed databases. Mutations use `BEGIN IMMEDIATE` transactions.
+Postgres uses atomic conflict handling, transactions, and row locks. SQLite
+enables foreign keys, a five-second busy timeout, WAL mode, and `BEGIN IMMEDIATE`
+transactions. Database constraints enforce event identity, payment-case
+identity, one decision per event, one action per decision, and unique action
+idempotency keys in both implementations.
 
 ## Processing contract
 
@@ -58,15 +70,10 @@ The committed run passes 7/7 scenarios, produces one fake-adapter call and
 performs zero real network calls. Its ledger contains 9 events, 6 cases, 7
 decisions, 7 actions, 1 observed outcome and 44 audit entries.
 
-## Honest limitation
+## Production boundary
 
-This V1 closes the in-process memory and restart gap, but SQLite plus a direct
-adapter call is not a distributed transaction. Production scale should add a
-transactional outbox/worker, encrypted sensitive fields, retention policies,
-authenticated audit access and managed database backups. No production money
-movement is enabled by this milestone.
-
-Day 10 supersedes the Vercel storage portion of this limitation with Neon
-Postgres while retaining SQLite for local and CI runs. The direct-adapter versus
-database transaction boundary still requires an outbox before production money
-movement.
+Neon closes the serverless restart gap, but a direct adapter call and database
+transaction do not form a distributed transaction. Production scale should add
+a transactional outbox and worker, encrypted sensitive fields, retention
+policies, authenticated audit access, and managed backup verification. No live
+production money movement is enabled in this project.

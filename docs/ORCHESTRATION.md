@@ -1,9 +1,9 @@
-# Day 5 — Bounded Journeys and Batch Budgets
+# Bounded Journeys and Batch Budgets
 
-Day 5 turns the single-decision learner into a bounded recovery system. A case
-can wait, execute a safe intervention, recover, stop, exhaust its intervention
-limit or escalate for approval. A separate portfolio allocator decides which
-positive-value cases fit inside a batch budget.
+RecoverIQ turns the single-decision learner into a bounded recovery system. A
+case can wait, execute a safe intervention, recover, stop, exhaust its
+intervention limit, or escalate for approval. A separate portfolio allocator
+decides which positive-value cases fit inside a batch budget.
 
 ## Journey state machine
 
@@ -78,5 +78,6 @@ GET  /api/simulations/journey?seed=42&event_index=0
 POST /api/simulations/batch?events=100&seed=42&budget_paise=5000&max_actions=25
 ```
 
-The next persistence milestone must make journey transitions, approvals and
-executions durable and idempotent before any real autonomous deployment.
+Production event claims, decisions, action reservations, outcomes, and audit
+records are durable in Neon Postgres. A transactional outbox remains required
+before any live autonomous deployment.

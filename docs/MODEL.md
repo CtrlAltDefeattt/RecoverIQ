@@ -1,11 +1,11 @@
-# Day 4 — Observable Incremental-Value Learning
+# Observable Incremental-Value Model
 
 ## What changed
 
-Day 3 proved that cold-start LinUCB underperformed the rules baseline. Day 4 adds
-an explicit outcome-modeling policy that estimates natural recovery and every
-permitted intervention from observable context, then selects the highest
-expected net value.
+RecoverIQ uses an explicit outcome-modeling policy that estimates natural
+recovery and every permitted intervention from observable context, then selects
+the highest expected net value. A cold-start LinUCB policy is retained as an
+honest experimental baseline rather than presented as the final policy.
 
 ## Model
 
@@ -47,7 +47,7 @@ recovery estimate, candidate recovery estimate, estimated uplift, action cost,
 expected net value, expected incremental value and the selected action. It does
 not expose evaluator truth.
 
-## Paired Day-4 result
+## Preliminary paired result
 
 Configuration:
 

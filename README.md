@@ -1,315 +1,227 @@
-# RecoverIQ — Safety-Constrained Adaptive Revenue Recovery
+# RecoverIQ
 
-RecoverIQ is an adaptive decision system for Razorpay AI Buildathon Track 03 — AI Revenue Recovery.
+### Safety-constrained adaptive revenue recovery for Razorpay
 
-## One-line thesis
+[![RecoverIQ CI](https://github.com/CtrlAltDefeattt/RecoverIQ/actions/workflows/ci.yml/badge.svg)](https://github.com/CtrlAltDefeattt/RecoverIQ/actions/workflows/ci.yml)
+![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![Next.js 16](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white)
+![Deployment](https://img.shields.io/badge/Deployment-Vercel-000000?logo=vercel&logoColor=white)
+![Mode](https://img.shields.io/badge/Execution-Shadow%20Mode-F59E0B)
 
-**RecoverIQ estimates which permitted intervention is most valuable for the current failed-payment context, executes through a bounded safety layer, and learns only from actions whose outcomes were actually observed.**
+> RecoverIQ estimates which permitted intervention is most valuable for the
+> current failed-payment context, executes through a bounded safety layer, and
+> learns only from actions whose outcomes were actually observed.
 
-It is intentionally not an LLM-first system. Money-path decisions are measurable, bounded and auditable.
+**Razorpay AI Buildathon · Track 03 — AI Revenue Recovery**
 
-> **Project status:** Submission-ready with a genuine Razorpay Test Mode `payment.failed` webhook verified end to end through Vercel and Neon Postgres, plus a genuine ₹1 Test Mode Payment Link created through the committed API adapter. RecoverIQ also has a frozen 30-seed × 10,000-case paired benchmark, a four-screen command center, persisted safety audits, public Vercel deployments, a live database probe, and recording-ready pitch/demo assets. No credentials belong in this repository.
+[Live Command Center](https://recoveriq-dashboard-prajwal-ai.vercel.app) ·
+[API Health](https://recoveriq-api.vercel.app/health) ·
+[Architecture](docs/ARCHITECTURE.md) ·
+[Verified Razorpay Test Mode evidence](docs/RAZORPAY_TEST_MODE_EVIDENCE.md)
 
-## Why this project
+---
 
-Razorpay already supplies recovery primitives such as Payment Links, reminders, partial payments and subscription retry workflows. RecoverIQ does not rebuild them. It provides the decision layer above those primitives:
+## The problem
 
-1. Should the system intervene?
-2. Which permitted action has the best expected value?
-3. Should it execute, request approval or stop?
-4. What outcome should be used for learning?
+A failed payment is not one uniform recovery problem. Some customers recover
+naturally, some benefit from a reminder or a new payment path, and some should
+not be contacted because of consent, attempt, amount, or terminal-state rules.
 
-## Implemented now
+Static workflows can optimize the probability of payment while missing the
+more useful question: **did the intervention create incremental value compared
+with doing nothing?** RecoverIQ provides the decision and control layer above
+existing recovery primitives such as Payment Links and reminders.
 
-- Correlated synthetic `RecoveryGym` environment
-- Random and static-rule baselines
-- LinUCB contextual-bandit policy
-- Observable-feature incremental-value policy with one response model per action
-- Balanced 6,000-case logged-history warm start with no counterfactual training labels
-- Online update of only the executed action's response model
-- Per-action natural recovery, intervention recovery, uplift and net-value estimates
-- Reviewer-facing decision explanation endpoint
-- Money-denominated reward
-- `ALLOW`, `REQUIRE_APPROVAL` and `BLOCK` safety decisions
-- Autonomous action masking before policy selection, plus final safety veto
-- No model update for blocked or approval-pending actions
-- Razorpay webhook HMAC-SHA256 verification
-- `payment.failed` and `payment.captured` normalization
-- Duplicate-event protection for the current single-process API
-- Protection against a late failure reopening an already captured payment
-- Shadow, Assisted and Autonomous execution gates
-- Standard and partial Payment Link adapter
-- Payment Link SMS/email notification adapter
-- Fail-closed execution switch and credential readiness endpoint
-- Render deployment blueprint and Test Mode smoke script
-- Deterministic single-seed and multi-seed benchmarks
-- Evaluator-only potential outcomes unavailable to policy selection or learning
-- Paired cases and latent outcomes across every policy
-- Explicit natural recovery, probability uplift and incremental net value
-- Realized net-value oracle regret over autonomously permitted actions
-- Segment/action diagnostics and synthetic-data validation
-- Paired 95% confidence intervals with automatic claim guardrails
-- Frozen 30-seed × 10,000-case final benchmark with canonical config digest
-- Deterministic parallel execution with identical sequential results
-- Per-seed variability, win/loss and negative-seed reporting
-- Three accessible, dependency-free SVG evidence charts
-- Two-intervention journey orchestration with explicit `WAIT` and `STOP` commands
-- Recovered, stopped, exhausted and approval-escalated terminal states
-- 24-hour inter-intervention cooldown and no repeated action within a journey
-- Batch allocator with budget, action-count and one-action-per-case constraints
-- Journey and batch simulation API endpoints
-- Neon Postgres production storage with SQLite retained for local development
-- Database-enforced webhook and action idempotency
-- Terminal capture ordering that survives service restarts
-- Pre-execution action reservation and persisted execution status
-- Seven-scenario persisted Safety Gauntlet
-- Responsive four-screen reviewer dashboard
-- Command Center with bounded journey and batch-budget posture
-- Decision Detail with probability, uplift, value and policy-gate explanations
-- Learning Lab with paired confidence intervals and calibration metrics
-- Safety & Audit trace backed by the Day-6 persisted gauntlet
-- Dashboard backend route with loading and failure states
-- Native Next.js production build for Vercel
-- FastAPI Vercel entrypoint that fails closed if durable storage is absent
-- Deterministic shadow-mode demo ledger seed with zero network calls
-- CI repository hygiene gate for secrets, local databases and deployment metadata
-- Accessible deployment architecture graphic and complete setup guide
-- Safety, adapter, signature, webhook and ordering tests
-- Live database connectivity health endpoint
-- Signed production webhook and duplicate-delivery smoke script
-- Five-minute pitch, demo runbook and final submission checklist
+## What makes RecoverIQ different
 
-## Verified external integration
+| Concern | RecoverIQ approach |
+|---|---|
+| Action selection | Estimates natural recovery and per-action response from observable context |
+| Objective | Maximizes expected incremental net value, not contact volume |
+| Journey control | Supports `WAIT`, `STOP`, approval escalation, cooldowns, and a two-action ceiling |
+| Portfolio control | Allocates a shared budget across positive-value, safety-permitted cases |
+| Learning boundary | Updates only the executed action model from its observed outcome |
+| Safety | Masks unsafe actions before selection and applies a final deterministic veto |
+| Reliability | Uses database-enforced event and action idempotency with terminal capture ordering |
+| Explainability | Persists the context, estimates, reason codes, decision, action, and audit sequence |
 
-- Genuine `payment.failed` Test Mode event persisted through Vercel into Neon
-- Genuine ₹1 Test Mode Payment Link created through the committed API adapter
+Money-path decisions are intentionally measurable and bounded. The core does
+not depend on an LLM to approve or execute financial actions.
+
+## System architecture
+
+![RecoverIQ deployment and decision architecture](docs/assets/recoveriq-architecture.svg)
+
+The model proposes; the safety engine disposes. A blocked or approval-pending
+proposal is not treated as a failed customer outcome and cannot update the
+learner.
+
+Read the complete [architecture and boundary design](docs/ARCHITECTURE.md).
+
+## Evidence at a glance
+
+| Evidence | Verified result |
+|---|---|
+| Frozen evaluation | 30 paired seeds × 10,000 synthetic cases per seed |
+| Incremental-value policy vs fixed rules | +11.697% mean simulated recovered revenue |
+| Paired 95% interval | +11.350% to +12.043% |
+| Seed wins | 30 / 30 |
+| Selected-action probability MAE | 5.166 percentage points |
+| Persisted Safety Gauntlet | 7 / 7 scenarios passed |
+| Incoming Razorpay path | Genuine Test Mode `payment.failed` event processed through Vercel and Neon |
+| Outgoing Razorpay path | Genuine ₹1 Test Mode Payment Link created by the committed adapter |
+
+The benchmark is synthetic engineering evidence, not measured merchant uplift
+or a causal production claim. The repository retains negative baseline results
+and publishes its confidence intervals, evaluator boundary, and limitations.
+
+- [Evaluation methodology and final results](docs/EVALUATION.md)
+- [Razorpay Test Mode integration receipt](docs/RAZORPAY_TEST_MODE_EVIDENCE.md)
+- [Persistence and Safety Gauntlet](docs/PERSISTENCE_AND_SAFETY.md)
 
 ## Recovery actions
 
-1. `NO_ACTION`
-2. `REMINDER`
-3. `RETRY_24H`
-4. `PAYMENT_LINK`
-5. `ALT_PAYMENT`
-6. `PARTIAL_PAYMENT`
-
-`RETRY_24H` is currently a simulator action. A live implementation must restrict it to an eligible subscription or mandate workflow; it is not presented as a generic API-driven retry for arbitrary payments.
-
-## Current benchmark language
-
-The benchmark compares policies inside a synthetic environment. Its comparison metric is named:
-
 ```text
-additional simulated revenue versus fixed rules
+NO_ACTION · REMINDER · RETRY_24H · PAYMENT_LINK · ALT_PAYMENT · PARTIAL_PAYMENT
 ```
 
-This is deliberately not described as real merchant uplift or a proven causal effect. Final submission numbers will use paired multi-seed runs and will be reported with variability and limitations.
+`RETRY_24H` is a simulator action. A live implementation must restrict it to an
+eligible subscription or mandate workflow; RecoverIQ does not present it as a
+generic retry API for arbitrary payments.
 
-Day 3 established that cold-start LinUCB trails rules. The frozen Day-8 run uses
-30 paired seeds with 10,000 evaluation cases per seed. The incremental-value
-policy beats rules by a mean ₹1,485,657.56 in simulated recovered revenue per
-seed, or 11.697%; the paired 95% interval for relative gain is 11.350% to
-12.043%, and it wins all 30 seeds. Its mean selected-action probability MAE
-against evaluator truth is 5.166 percentage points. The evaluator emits
-`INCREMENTAL_VALUE_AHEAD`. These remain synthetic engineering results, not
-merchant-performance claims.
-
-Cold-start LinUCB remains inconclusive in the same final run: its mean relative
-gain is 0.788%, its 95% interval crosses zero (-0.160% to 1.737%), and it has 11
-negative seeds. The repository retains those negative results rather than
-hiding them.
-
-The committed Day-5 scenario runs 500 bounded journeys and a 100-case batch.
-Every journey reaches a terminal state, no journey exceeds two interventions,
-and all 163 required cooldowns are observed. With a synthetic ₹50 intervention
-budget and a 25-action cap, the allocator spends exactly ₹50 on 21 unique,
-positive-value cases and reports ₹17,634.44 of estimated incremental value.
-That value is a model estimate inside RecoveryGym, not realized merchant uplift.
-
-Day 6 runs seven persisted safety scenarios: duplicate delivery, customer
-opt-out, high-value approval, attempt exhaustion, capture-before-failure,
-exactly-once execution and audit completeness. All seven pass, with one fake
-adapter execution and zero real network calls. The Python suite contains 64
-passing tests plus one conditional Neon integration test.
-
-Day 7 packages the committed Day 4–6 artifacts into a reviewer-facing command
-center. Its four interactive screens use a dashboard backend route rather than
-embedding showcase values in presentation markup. The production build, lint,
-and five frontend contract tests pass. The deployment target is Vercel.
-
-Day 8 freezes the final evaluation contract and adds a canonical configuration
-digest, 30-seed evidence, negative-seed analysis, committed raw results and
-three reviewer-ready SVG charts. See `docs/DAY8_FINAL_EXPERIMENTS.md` for the
-exact configuration, results, limitations and submission-safe claim.
-
-Day 9 deploys the native Next.js dashboard and FastAPI API independently on
-Vercel, adds a deterministic 12-case shadow ledger seed, enforces a CI hygiene
-scan, and publishes the architecture and deployment runbook. The public
-production aliases are `recoveriq-dashboard-prajwal-ai.vercel.app` and
-`recoveriq-api.vercel.app`; keeping the GitHub repository private
-does not require reviewer authentication on the deployed applications.
-
-Day 10 adds a dedicated Neon Postgres project and a production repository
-implementation using the pooled `DATABASE_URL`. Event claims, case terminality,
-decision/action idempotency and audit records now survive Vercel instance
-rotation. SQLite remains the deterministic local/CI backend.
-
-## Architecture
+## Repository structure
 
 ```text
-Razorpay Test Mode / RecoveryGym
-             |
-      Event validation
-             |
-    Durable event claim
-   (Postgres/SQLite UNIQUE)
-             |
-       Context builder
-             |
-      Adaptive policy
-             |
-    Journey orchestrator
-    (wait / stop / limit)
-             |
-        Safety engine
-       /      |      \
-    ALLOW  APPROVE  BLOCK
-       |
-   Execution adapter
-       |
-     Outcome
-       |
- Durable outcome + audit
-       |
- Reward + learning
-       |
- Dashboard read model
-       |
- Four-screen command center
+RecoverIQ/
+├── backend/app/
+│   ├── adapters/       # Razorpay execution boundary
+│   ├── api/            # Simulation and signed webhook routes
+│   ├── domain/         # Events, recovery actions, and economics
+│   ├── journeys/       # Bounded orchestration and batch allocation
+│   ├── policies/       # Rules, LinUCB, and incremental-value policy
+│   ├── safety/         # Deterministic policy engine
+│   ├── services/       # Integration workflow
+│   ├── simulator/      # RecoveryGym and evaluation tooling
+│   └── storage/        # SQLite/Postgres repository implementations
+├── experiments/        # Reproducible benchmark entrypoints and frozen config
+├── frontend/           # Next.js reviewer command center
+├── scripts/            # Hygiene, seeding, and Test Mode smoke utilities
+├── tests/              # Unit, integration, ordering, and safety tests
+├── outputs/            # Committed reproducibility artifacts and charts
+└── docs/               # Architecture, evaluation, operations, and evidence
 ```
 
-The model proposes; the safety engine disposes. A proposal that was blocked or is awaiting approval is not treated as a failed customer outcome.
+## Quick start
 
-## Run locally
+### Requirements
+
+- Python 3.12+
+- Node.js 22.13+
+- npm 10+
+
+### Backend
 
 ```bash
 python -m venv .venv
-```
-
-Windows:
-
-```bash
-.venv\Scripts\activate
-pip install -r requirements.txt
-pip install -r requirements-dev.txt
-```
-
-macOS/Linux:
-
-```bash
 source .venv/bin/activate
-pip install -r requirements.txt
-pip install -r requirements-dev.txt
-```
-
-Run the tests and benchmark:
-
-```bash
-pytest -q
-python -m experiments.run_benchmark --events 1000 --seed 42
-python -m experiments.run_multiseed --events 10000 --seeds 10 \
-  --output outputs/multiseed_results.json
-python -m experiments.run_day8_final
-python -m experiments.run_day5_scenarios --journey-cases 500 \
-  --batch-cases 100 --seed 42 --budget-paise 5000 --max-actions 25 \
-  --output outputs/day5_journey_budget_demo.json
-python -m experiments.run_day6_safety_gauntlet \
-  --output outputs/day6_safety_gauntlet.json
-python -m scripts.seed_demo_data --database data/recoveriq-demo.sqlite3 \
-  --cases 12 --seed 42 --output outputs/day9_demo_seed_summary.json
-python -m scripts.check_repo_hygiene
-```
-
-Run the API:
-
-```bash
+pip install -r requirements.txt -r requirements-dev.txt
+cp .env.example .env
+python -m pytest -q
 uvicorn backend.app.main:app --reload
 ```
 
-Run the dashboard:
+On Windows, activate the environment with `.venv\\Scripts\\activate` and copy
+`.env.example` to `.env` manually.
+
+### Dashboard
 
 ```bash
 cd frontend
 npm ci
+npm run check
 npm run dev
 ```
 
-Endpoints:
+The dashboard is available at `http://localhost:3000`; the API defaults to
+`http://localhost:8000`.
 
-```text
-GET  /health
-GET  /health/database
-GET  /readiness
-GET  /api/simulations/decision?seed=42&event_index=0
-GET  /api/simulations/journey?seed=42&event_index=0
-POST /api/simulations/run?events=1000&seed=42
-POST /api/simulations/batch?events=100&seed=42&budget_paise=5000&max_actions=25
-POST /webhooks/razorpay
+## Safe configuration
+
+The committed defaults are intentionally fail-closed:
+
+```dotenv
+RECOVERIQ_MODE=shadow
+RECOVERIQ_EXECUTE_RAZORPAY_ACTIONS=false
 ```
 
-Test Mode Payment Link smoke test, after configuring Test credentials locally:
+Copy `.env.example` locally and supply credentials only through local or Vercel
+environment variables. Never commit Razorpay keys, the webhook secret, or a
+Neon connection string.
+
+Production uses the pooled `DATABASE_URL` for Neon Postgres. Local development
+and CI use SQLite through the same repository contract. On Vercel, the signed
+webhook route returns `503` when durable storage is unavailable rather than
+acknowledging work that could disappear with the function instance.
+
+See [deployment and configuration](docs/DEPLOYMENT.md) for the complete runbook.
+
+## API surface
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `GET` | `/health` | Process health |
+| `GET` | `/health/database` | Durable ledger connectivity without secret disclosure |
+| `GET` | `/readiness` | Safe configuration booleans and execution posture |
+| `GET` | `/api/simulations/decision` | Explain one context-aware recommendation |
+| `GET` | `/api/simulations/journey` | Simulate one bounded recovery journey |
+| `POST` | `/api/simulations/run` | Run a deterministic policy benchmark |
+| `POST` | `/api/simulations/batch` | Allocate a constrained batch budget |
+| `POST` | `/webhooks/razorpay` | Receive signed Razorpay payment events |
+
+Interactive API documentation is available at
+[`/docs`](https://recoveriq-api.vercel.app/docs).
+
+## Reproduce the evidence
 
 ```bash
-python -m scripts.razorpay_test_mode_smoke --amount-paise 100
+python -m experiments.run_benchmark --events 1000 --seed 42
+python -m experiments.run_day5_scenarios \
+  --journey-cases 500 --batch-cases 100 --seed 42 \
+  --budget-paise 5000 --max-actions 25 \
+  --output outputs/day5_journey_budget_demo.json
+python -m experiments.run_day6_safety_gauntlet \
+  --output outputs/day6_safety_gauntlet.json
+python -m scripts.check_repo_hygiene
 ```
 
-Signed production webhook and idempotency smoke test, after setting the same
-webhook secret in the local shell and Vercel:
+The frozen 30-seed benchmark is intentionally separate because it is more
+expensive:
 
 ```bash
-python -m scripts.razorpay_webhook_smoke --verify-idempotency
+python -m experiments.run_day8_final
 ```
 
-## Razorpay integration notes
+## Documentation
 
-- Webhook signatures use the unmodified raw request body.
-- Duplicate events are identified with `x-razorpay-event-id`.
-- A captured payment is terminal, so a later failure for the same payment is ignored.
-- Live execution requires both `RECOVERIQ_MODE=autonomous` and `RECOVERIQ_EXECUTE_RAZORPAY_ACTIONS=true`.
-- Webhook event IDs and action idempotency keys are enforced by database unique constraints.
-- Production uses Neon through `DATABASE_URL`; local development defaults to `RECOVERIQ_DATABASE_PATH=data/recoveriq.sqlite3`.
-- The large-scale benchmark uses `RecoveryGym`; it does not create thousands of Test Mode Payment Links.
-- See `docs/DAY2_INTEGRATION.md` for deployment and webhook configuration.
-- See `docs/DAY3_EVALUATION.md` for the evaluation contract and metric definitions.
-- See `docs/DAY4_INCREMENTAL_VALUE.md` for the learner, leakage boundary and results.
-- See `docs/DAY5_JOURNEY_BUDGET.md` for the state machine, allocation rules and scenario results.
-- See `docs/DAY6_PERSISTENCE_SAFETY.md` for transaction boundaries, schema and Safety Gauntlet evidence.
-- See `docs/DAY7_DASHBOARD.md` for the screen contract and backend data boundary.
-- See `docs/DAY8_FINAL_EXPERIMENTS.md` for the frozen final benchmark, charts, variability and limitations.
-- See `docs/DAY10_NEON_PERSISTENCE.md` for the production storage boundary and migration verification.
-- See `docs/SETUP_AND_DEPLOYMENT.md` for the Day-9 architecture, seeded demo and Vercel runbook.
-- See `docs/DEMO_RUNBOOK.md` for the final production and Test Mode walkthrough.
-- See `docs/RAZORPAY_TEST_MODE_EVIDENCE.md` for the verified incoming webhook and outgoing Payment Link API receipts.
-- See `docs/FIVE_MINUTE_PITCH.md` for the timestamped recording script and reviewer questions.
-- See `docs/SUBMISSION_CHECKLIST.md` for the final handoff and link checks.
+| Document | Purpose |
+|---|---|
+| [Documentation index](docs/README.md) | Reviewer and developer navigation |
+| [Product specification](docs/PRODUCT_SPEC.md) | Scope, domain model, metrics, and constraints |
+| [Architecture](docs/ARCHITECTURE.md) | Component and data-boundary design |
+| [Decision model](docs/MODEL.md) | Observable incremental-value learner |
+| [Journey orchestration](docs/ORCHESTRATION.md) | State machine and batch allocator |
+| [Persistence and safety](docs/PERSISTENCE_AND_SAFETY.md) | Idempotency, ordering, and Safety Gauntlet |
+| [Evaluation](docs/EVALUATION.md) | Frozen experiment contract and results |
+| [Deployment](docs/DEPLOYMENT.md) | Vercel and Neon setup |
+| [Demo runbook](docs/DEMO_RUNBOOK.md) | Safe reviewer walkthrough |
 
-References:
+## Current operating boundary
 
-- https://razorpay.com/buildathon/
-- https://razorpay.com/docs/webhooks/validate-test/
-- https://razorpay.com/docs/api/payments/payment-links/create-standard/
-- https://razorpay.com/docs/api/payments/payment-links/resend/
-- https://razorpay.com/docs/payments/subscriptions/payment-retries/
+- Razorpay execution is disabled by default and the public reviewer deployment
+  remains in Shadow Mode.
+- The dashboard is read-only and labels synthetic values explicitly.
+- A full transactional outbox, authenticated operator access, encrypted
+  sensitive fields, retention policies, and a randomized merchant holdout are
+  required before any live-money rollout.
 
-## Submission claim rule
-
-No number enters the pitch unless it is generated by a committed benchmark configuration. Synthetic findings will always be labelled synthetic, and unsupported claims about real merchant recovery performance are explicitly excluded.
-
-## Non-goals before September 5
-
-- Chatbot or voice agent
-- LLM decision-making in the money path
-- Deep reinforcement learning
-- Production charging
-- Complex authentication or multi-tenant administration
-- Unsupported causal claims from observational merchant data
+For responsible vulnerability reporting, see [SECURITY.md](SECURITY.md).

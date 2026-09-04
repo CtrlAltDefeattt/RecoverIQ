@@ -71,7 +71,7 @@ The policy knows how to select actions.
 The safety engine can veto actions.
 These components remain separable so benchmark logic cannot accidentally depend on Razorpay network calls.
 
-## Day-3 evaluation boundary
+## Evaluation boundary
 
 Every policy receives the same generated contexts and hidden recovery ranks.
 The selected action is executed before the `CounterfactualEvaluator` is called.
@@ -83,7 +83,7 @@ regret metric compares realized net value, after intervention and contact-fatigu
 costs, rather than comparing recovery probability alone. Multi-seed comparisons
 use paired per-seed differences and Student-t 95% confidence intervals.
 
-## Day-4 learning boundary
+## Learning boundary
 
 The incremental-value policy imports no simulator or evaluator component. It
 uses 26 observable context features and maintains one online logistic response
@@ -99,7 +99,7 @@ observed outcome per case. During live simulation, only the executed action's
 model is updated. Unchosen potential outcomes remain available solely to the
 post-decision evaluator for calibration and regret reporting.
 
-## Day-5 journey and budget boundary
+## Journey and budget boundary
 
 The journey orchestrator owns temporal case state. Before execution it checks
 terminal status, the two-intervention ceiling, the 24-hour cooldown, previously
@@ -114,14 +114,14 @@ portfolio budget, action-count cap and one-action-per-case constraint. The
 journey simulator and API use deep-copied demo policies so one request cannot
 mutate another request's cached model.
 
-## Day-2 terminal-state rule
+## Terminal-state ordering
 
 `payment.captured` is terminal for the payment ID. If a late or out-of-order
 `payment.failed` event arrives afterward, RecoverIQ records it as stale and does
 not reopen or execute recovery. This matches Razorpay's documented possibility
 of a failed event being followed by capture for the same transaction.
 
-## Day-6 persistence boundary
+## Persistence boundary
 
 The recovery repository is the source of truth for webhook identity and case
 terminality. Neon Postgres serves production; SQLite provides a deterministic
@@ -141,12 +141,12 @@ Capture is terminal in the database, including when it arrives before a failure
 or across process restarts. Later failure events are retained as ignored audit
 records but cannot reopen the case.
 
-## Day-7 dashboard boundary
+## Dashboard boundary
 
-The dashboard is a separate Vinext/React application with four interactive
+The dashboard is a separate Next.js/React application with four interactive
 views. It requests one structured read model from `GET /api/dashboard`; screen
 components never contain standalone metric constants. The route composes the
-committed Day 4–6 evaluation, journey, budget and safety artifacts and labels
+committed final evaluation, journey, budget, and safety artifacts and labels
 the source as synthetic.
 
 ```text

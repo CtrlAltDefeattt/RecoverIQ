@@ -1,5 +1,9 @@
 # Day 2 — Razorpay Integration
 
+> Historical snapshot: the Render staging plan below was superseded by the
+> current Vercel and Neon deployment. See [`../DEPLOYMENT.md`](../DEPLOYMENT.md)
+> for the active runbook.
+
 ## Implemented
 
 - HMAC-SHA256 verification against the unmodified webhook body

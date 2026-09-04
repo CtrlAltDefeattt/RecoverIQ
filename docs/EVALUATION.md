@@ -1,4 +1,4 @@
-# Day 8 — Frozen Final Experiments
+# Frozen Evaluation
 
 ## Outcome
 
@@ -13,7 +13,8 @@ result, not measured merchant uplift.
 
 ## Frozen configuration
 
-The source of truth is `experiments/configs/day8_final.json`.
+The source of truth is the committed frozen configuration at
+`experiments/configs/day8_final.json`.
 
 | Setting | Frozen value |
 |---|---:|
@@ -34,7 +35,7 @@ Canonical configuration SHA-256:
 3b739c1beef6874a5d6b245e8292a556976dbaa2a308dcfcd6fd74b68446558b
 ```
 
-Changing JSON key order does not change the digest. The Day 8 runner validates
+Changing JSON key order does not change the digest. The final runner validates
 the settings before execution and rejects a seed count below 30.
 
 ## Final results

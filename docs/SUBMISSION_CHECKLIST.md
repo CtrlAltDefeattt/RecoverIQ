@@ -33,9 +33,7 @@
 
 ## Submission form
 
-- [ ] Confirm the buildathon accepts a private repository. If it does, grant the
-  evaluator account access; otherwise make the repository public only when you
-  are ready to submit.
+- [x] Make the repository public for buildathon review.
 - [ ] Add the repository URL.
 - [ ] Add the public dashboard URL.
 - [ ] Add the public API URL if requested.
