@@ -1,23 +1,25 @@
 # RecoverIQ
 
-### Safety-constrained adaptive revenue recovery for Razorpay
+### Open-source, safety-constrained adaptive revenue recovery
 
 [![RecoverIQ CI](https://github.com/CtrlAltDefeattt/RecoverIQ/actions/workflows/ci.yml/badge.svg)](https://github.com/CtrlAltDefeattt/RecoverIQ/actions/workflows/ci.yml)
+[![MIT License](https://img.shields.io/badge/License-MIT-2EA44F.svg)](LICENSE)
 ![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![Next.js 16](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white)
 ![Deployment](https://img.shields.io/badge/Deployment-Vercel-000000?logo=vercel&logoColor=white)
 ![Mode](https://img.shields.io/badge/Execution-Shadow%20Mode-F59E0B)
 
-> RecoverIQ estimates which permitted intervention is most valuable for the
-> current failed-payment context, executes through a bounded safety layer, and
-> learns only from actions whose outcomes were actually observed.
-
-**Razorpay AI Buildathon · Track 03 — AI Revenue Recovery**
+> RecoverIQ is an inspectable reference implementation for choosing safe,
+> context-aware payment-recovery actions. It estimates incremental value,
+> applies deterministic safety controls, and learns only from executed actions
+> whose outcomes were actually observed.
 
 [Live Command Center](https://recoveriq-dashboard-prajwal-ai.vercel.app) ·
 [API Health](https://recoveriq-api.vercel.app/health) ·
 [Architecture](docs/ARCHITECTURE.md) ·
-[Verified Razorpay Test Mode evidence](docs/RAZORPAY_TEST_MODE_EVIDENCE.md)
+[Evaluation](docs/EVALUATION.md) ·
+[Contributing](CONTRIBUTING.md) ·
+[Roadmap](ROADMAP.md)
 
 ---
 
@@ -31,6 +33,25 @@ Static workflows can optimize the probability of payment while missing the
 more useful question: **did the intervention create incremental value compared
 with doing nothing?** RecoverIQ provides the decision and control layer above
 existing recovery primitives such as Payment Links and reminders.
+
+The core decision, evaluation, orchestration, and safety modules are separated
+from provider execution. The repository currently includes a Razorpay Test Mode
+adapter as its reference integration.
+
+## Open-source scope
+
+RecoverIQ is an **early-stage reference project**, not a production payment
+processor or a claim of merchant adoption. It is intended for engineers,
+researchers, and contributors exploring:
+
+- safe decision policies for payment-recovery journeys;
+- incremental-value evaluation against a do-nothing baseline;
+- deterministic controls around adaptive or learned policies; and
+- reproducible testing of idempotency, event ordering, and audit trails.
+
+The public deployment runs in Shadow Mode. Contributions are welcome in the
+decision engine, evaluation harness, safety controls, provider adapters,
+documentation, and developer tooling.
 
 ## What makes RecoverIQ different
 
@@ -130,7 +151,7 @@ python -m pytest -q
 uvicorn backend.app.main:app --reload
 ```
 
-On Windows, activate the environment with `.venv\\Scripts\\activate` and copy
+On Windows, activate the environment with `.venv\Scripts\activate` and copy
 `.env.example` to `.env` manually.
 
 ### Dashboard
@@ -225,3 +246,28 @@ python -m experiments.run_day8_final
   required before any live-money rollout.
 
 For responsible vulnerability reporting, see [SECURITY.md](SECURITY.md).
+
+## Contributing and maintenance
+
+RecoverIQ is actively maintained by
+[@CtrlAltDefeattt](https://github.com/CtrlAltDefeattt). Start with
+[CONTRIBUTING.md](CONTRIBUTING.md), review the
+[maintainer policy](MAINTAINERS.md), and open an issue before beginning a large
+change. Good first contributions include tests for edge cases, documentation
+corrections, evaluation improvements, and new provider adapters that preserve
+the safety boundary.
+
+Current priorities and deliberately deferred work are tracked in
+[ROADMAP.md](ROADMAP.md). Please report security concerns privately according
+to [SECURITY.md](SECURITY.md).
+
+## Project origin
+
+RecoverIQ began as a submission for the Razorpay AI Buildathon, Track 03 (AI
+Revenue Recovery). It is now maintained as an independent open-source reference
+implementation. Buildathon evidence is retained in the documentation for
+traceability; it should not be interpreted as Razorpay endorsement.
+
+## License
+
+RecoverIQ is released under the [MIT License](LICENSE).

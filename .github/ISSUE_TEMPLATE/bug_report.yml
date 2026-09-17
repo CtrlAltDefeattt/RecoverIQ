@@ -1,0 +1,63 @@
+name: Bug report
+description: Report a reproducible problem in RecoverIQ
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve RecoverIQ. Do not include credentials,
+        customer data, webhook secrets, or security vulnerabilities here.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What happened, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Provide a minimal, deterministic reproduction when possible.
+      placeholder: |
+        1. Configure ...
+        2. Run ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python/Node versions, commit SHA, and relevant configuration without secrets.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Decision policy
+        - Safety or journey controls
+        - Webhook or persistence
+        - Provider adapter
+        - Evaluation or simulator
+        - Dashboard
+        - Documentation or tooling
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Logs or evidence
+      description: Add redacted logs, test output, or screenshots if useful.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Safety checks
+      options:
+        - label: I removed secrets, customer data, and reusable payment URLs.
+          required: true
+        - label: This is not a security vulnerability; I will use the private reporting process for security issues.
+          required: true
