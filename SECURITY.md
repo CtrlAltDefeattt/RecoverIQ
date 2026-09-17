@@ -2,7 +2,7 @@
 
 ## Supported version
 
-The `main` branch is the only supported version of this buildathon project.
+RecoverIQ is currently pre-1.0. The `main` branch is the only supported version.
 
 ## Reporting a vulnerability
 
@@ -24,6 +24,7 @@ secrets, database URLs, or reusable Payment Link URLs.
 - Secrets are supplied through deployment environment variables and are scanned
   out of repository content by CI.
 
-RecoverIQ is a demonstration system. It requires authenticated operator access,
-a transactional outbox, retention controls, encrypted sensitive fields, and a
-merchant validation programme before any live-money rollout.
+RecoverIQ is an early-stage reference implementation. It requires authenticated
+operator access, a transactional outbox, retention controls, encrypted
+sensitive fields, independent security review, and a merchant validation
+programme before any live-money rollout.

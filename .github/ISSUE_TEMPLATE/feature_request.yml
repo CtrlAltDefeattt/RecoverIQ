@@ -1,0 +1,37 @@
+name: Feature request
+description: Propose a scoped improvement to RecoverIQ
+title: "[Feature]: "
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: User need
+      description: What problem would this solve, and for whom?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the smallest useful change.
+    validations:
+      required: true
+  - type: textarea
+    id: safety
+    attributes:
+      label: Safety and failure modes
+      description: How could this affect money paths, customer contact, idempotency, or learning boundaries?
+    validations:
+      required: true
+  - type: textarea
+    id: evaluation
+    attributes:
+      label: Evaluation plan
+      description: How should the change be tested and compared with the current behavior?
+    validations:
+      required: true
+  - type: textarea
+    id: maintenance
+    attributes:
+      label: Maintenance impact
+      description: Note dependencies, migration needs, documentation, and long-term maintenance cost.
